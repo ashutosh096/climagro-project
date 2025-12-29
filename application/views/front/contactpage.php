@@ -8,17 +8,35 @@ include("navbar2.php");
     <div class="container">
         <div class="breadcrumb__content">
             <h2 class="breadcrumb__title">Contact Us</h2>
-            <ul class="bread-crumb clearfix ul_li_center">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item">Contact Us</li>
-            </ul>
-        </div>
     </div>
 </section>
 <!-- breadcrumb end -->
 
-
-<div class="footer-contact sooter">
+<style>
+        /* Page-specific override: remove underlines in header/menu */
+        #xb-header-area a,
+        .main-menu ul li a,
+        .xb-menu-primary li a,
+        .header-btn a {
+            text-decoration: none !important;
+        }
+        #xb-header-area a:hover,
+        .main-menu ul li a:hover,
+        .xb-menu-primary li a:hover,
+        .header-btn a:hover {
+            text-decoration: none !important;
+        }
+        /* Remove underlines for footer / contact links on this page */
+        .footer-apps a,
+        .footer-apps a:hover,
+        .footer-contact a,
+        .footer-contact a:hover,
+        .xb-contact-form a,
+        .xb-contact-form a:hover {
+            text-decoration: none !important;
+        }
+    </style>
+<div id="formcontact" class="footer-contact sooter">
     <!-- <div class="footer-bg bg_img" data-background="assest/img/footer/footer-bg.png"></div> -->
     <div class="container">
         <div class="xb-contact-form">
@@ -27,7 +45,7 @@ include("navbar2.php");
                     <div class="xb-inner">
                         <h5 class="xb-item--sub-title text-white"><span><img src="assest/img/footer/contact.svg" alt=""></span> Contact Us</h5>
                         <h2 class="xb-item--title text-white">Do you have questions or went more information?</h2>
-                        <form class="xb-item--form" action="#!">
+                        <form id="contactForm" action="<?= site_url('contact/submit') ?>" method="POST">
                             <div class="input-group">
                 				<input type="hidden" id="url" name="url" value="<?php echo base_url();?>">
                 			</div> 
@@ -35,26 +53,70 @@ include("navbar2.php");
                                 <div class="col-lg-6">
                                     <div class="xb-item--field">
                                         <span><img src="assest/img/footer/contact-user.svg" alt=""></span>
-                                        <input type="text" placeholder="Steven Kevin" name="name">
+                                        <input type="text" placeholder="Full name" name="name">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="xb-item--field">
                                         <span><img src="assest/img/footer/contact-call.svg" alt=""></span>
-                                        <input type="text" placeholder="+91 081 0256 023" name="phone">
+                                        <input type="tel" placeholder="Phone number" name="phone" id="phone" inputmode="numeric" pattern="[0-9]*" maxlength="12" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="xb-item--field">
                                         <span><img src="assest/img/footer/contact-email.svg" alt=""></span>
-                                        <input type="email" placeholder="example@climagroanlytics.com" name="email">
+                                        <input type="email" placeholder="Enter your email" name="email">
                                     </div>
                                 </div>
+                                <div class="col-lg-12">
+                                    <div class="xb-item--field">
+                                        <span><img src="assest/img/footer/contact-massage.svg" alt="   "></span>
+                                        <select name="title" style="
+                                            height: 50px; 
+                                            padding: 2px 2px 2px 45px;  /* Added left padding */
+                                            border-radius: 8px;          /* Added border radius */
+                                            border: 1px solid #ccc;      /* Added border for better visibility */
+                                            width: 100%;                 /* Ensure full width */
+                                            background-color: white;     /* Ensure white background */
+                                        ">
+                                            <option value="">Help us understand how we can support you better.</option>
+                                            <option value="Government / Policy Maker">Government / Policy Maker</option>
+                                            <option value="Researcher / Academic">Researcher / Academic</option>
+                                            <option value="Financial Institution / Insurer">Financial Institution / Insurer</option>
+                                            <option value="NGO / Nonprofit">NGO / Nonprofit</option>
+                                            <option value="Student">Student</option>
+                                            <option value="Corporate Sustainability / ESG Professional">Corporate Sustainability / ESG Professional</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 ">
+                                    <div class="xb-item--field">
+                                    <span><img src="assest/img/footer/contact-massage.svg" alt="   "></span>
+                                        <select name="interested" style="
+                                            height: 50px; 
+                                            padding: 2px 2px 2px 45px;  /* Added left padding */
+                                            border-radius: 8px;          /* Added border radius */
+                                            border: 1px solid #ccc;      /* Added border for better visibility */
+                                            width: 100%;                 /* Ensure full width */
+                                            background-color: white;     /* Ensure white background */
+                                        ">
+                                            <option value="" >Interested In (Optional)</option>
+                                            <option value="AgRI.ai">Climate data portal</option>
+                                            <option value="AgRI.ai">AgRI.ai</option>
+                                            <option value="CityAdapt.ai">CityAdapt.ai</option>
+                                            <option value="Climate Data Services">Climate Data Services</option>
+                                            <option value="Climate Consulting">Climate Consulting</option>
+                                            <option value="Collaborations">Collaborations / Research</option>
+                                            <option value="Others">Others</option>
+                                        </select>
+                                    </div>
+                                </div> 
                                 
                                 
                                 <div class="col-lg-12 xb-item--text-msg">
                                     <span><img src="assest/img/footer/contact-massage.svg" alt=""></span>
-                                    <textarea class="xb-item--massage" name="comment" id="message" cols="30" rows="10" placeholder="Simultaneously we had a problem..."></textarea>
+                                    <textarea class="xb-item--massage" name="comment" id="message" cols="30" rows="10" placeholder="Your query...."></textarea>
                                 </div>
                                 <div class="col-lg-12 xb-item--contact-btn">
                                     <button class="them-btn" type="submit">
@@ -89,12 +151,16 @@ include("navbar2.php");
 
                             <h3 class="text-white">Address</h3>
                             <p>
-                            
-                                <i class="fas fa-map-marker-alt" style="color:var(--color-primary);"></i>  Registered: <a href="" class="text-white">253-C, Nankari, IIT Kanpur, Kalyanpur, Kanpur Nagar, Uttar Pradesh - 208016 </a><br>
+                                <i class="fas fa-map-marker-alt" style="color:var(--color-primary);"></i>
+                                <?php if(!empty($getCompany->comp_address)): ?>
+                                    Office: <a href="https://www.google.com/maps/search/?api=1&query=<?php echo urlencode($getCompany->comp_address); ?>" target="_blank" class="text-white"><?php echo $getCompany->comp_address; ?></a>
+                                <?php else: ?>
+                                    Office: <a href="https://www.google.com/maps/search/?api=1&query=<?php echo urlencode('CSJM Innovation Foundation Chhatrapati Shahu Ji Maharaj University, Kanpur- 208024'); ?>" target="_blank" class="text-white">CSJM Innovation Foundation Chhatrapati Shahu Ji Maharaj University, Kanpur- 208024</a>
+                                <?php endif; ?>
                                 <br>
-                                <i class="fas fa-map-marker-alt" style="color:var(--color-primary);"></i>  Corporate: <a href="" class="text-white"><?php echo $getCompany->comp_address; ?></a>
+                                <br>
                             </p>
-                            
+
                         </div>
                         <!-- <div class="xb-border" style="padding: 10px 30px 0px 30px;">
 
@@ -129,26 +195,64 @@ include("navbar2.php");
         <div style="padding:20px; border-radius:20px;">
             <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3570.717953418603!2d80.26476517566593!3d26.497024677830698!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1728493913797!5m2!1sen!2sin" style="border:0;width:100%;height:350px; border-radius:20px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
+        <div class="form-results d-none"></div>
+
 
 <?php include("footer.php"); ?>
 
 <script>
     $(document).ready(function() {
-        $('#contactForm').on('submit', function(e) {
-            e.preventDefault(); // Prevent traditional form submission
+        // Enforce numeric-only input for phone field (filters pasted text and typing)
+        var $phone = $('input[name="phone"]');
+        $phone.attr({ inputmode: 'numeric', pattern: '[0-9]*', maxlength: 15 });
 
-            var formData = $(this).serialize(); // Serialize form data
+        $phone.on('input', function() {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+
+        $phone.on('paste', function(e) {
+            var paste = (e.originalEvent || e).clipboardData.getData('text/plain');
+            if (!/^[0-9]*$/.test(paste)) {
+                e.preventDefault();
+            }
+        });
+
+        $('#contactForm').on('submit', function(e) {
+            e.preventDefault();
+
+            // Clear previous messages
+            $('.form-results').html('').removeClass('d-none');
+
+            // Client-side validation: phone must be digits only (if provided)
+            var phoneVal = $phone.val().trim();
+            if (phoneVal !== '' && !/^[0-9]+$/.test(phoneVal)) {
+                $('.form-results').html('<div class="alert alert-danger">Please enter a valid phone number (digits only).</div>');
+                return;
+            }
+
+            // Show loading state
+            $('.form-results').html('<div class="alert alert-info">Sending your message...</div>');
 
             $.ajax({
                 type: 'POST',
-                url: '<?php echo site_url('contact/submit'); ?>', // Controller method URL
-                data: formData,
+                url: $(this).attr('action'),
+                data: $(this).serialize(),
                 dataType: 'json',
                 success: function(response) {
-                    $('.form-results').removeClass('d-none').html('<div class="alert alert-success">' + response.message + '</div>');
+                    if (response.success) {
+                        if (response.message.includes('failed')) {
+                            $('.form-results').html('<div class="alert alert-warning">' + response.message + '</div>');
+                        } else {
+                            $('.form-results').html('<div class="alert alert-success">' + response.message + '</div>');
+                            $('#contactForm')[0].reset();
+                        }
+                    } else {
+                        $('.form-results').html('<div class="alert alert-danger">' + response.message + '</div>');
+                    }
                 },
                 error: function(xhr, status, error) {
-                    $('.form-results').removeClass('d-none').html('<div class="alert alert-danger">There was an error sending your message. Please try again later.</div>');
+                    console.error("AJAX Error:", status, error, xhr.responseText);
+                    $('.form-results').html('<div class="alert alert-danger">There was an unexpected error. Please try again later.</div>');
                 }
             });
         });

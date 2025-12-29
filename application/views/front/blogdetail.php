@@ -3,23 +3,24 @@ include_once('header.php');
 include_once('navbar2.php');
 ?>
 <style>
-    p{
-        color: #000!important;;
+    /* This rule targets EVERY element inside the article */
+    .post-details * {
+        font-size: 20px !important;
+        color: #000;
+        line-height: 2 !important; /* Added for common line spacing */
+    }
+
+    /* This new, more specific rule targets ONLY the links */
+    .post-details a {
+        color: blue !important;
+        text-decoration: underline; /* Optional: adds an underline to links */
+    }
+
+    /* Optional: Style for links that have already been visited */
+    .post-details a:visited {
+        color: purple !important;
     }
 </style>
-<!-- breadcrumb start -->
-<section class="breadcrumb bg_img pos-rel" data-background="<?php echo base_url('assest/img/bg/blog.png') ?>">
-    <div class="container">
-        <div class="breadcrumb__content">
-            <h2 class="breadcrumb__title">Blogs</h2>
-            <ul class="bread-crumb clearfix ul_li_center">
-                <li class="breadcrumb-item"><a href="<?= site_url(); ?>">Home</a></li>
-                <li class="breadcrumb-item">Blogs</li>
-            </ul>
-        </div>
-    </div>
-</section>
-<!-- breadcrumb end -->
 
 <!-- blog start -->
 <section class="blog pt-130 pb-130">
@@ -30,22 +31,22 @@ include_once('navbar2.php');
                 // echo "<pre>";
                 // print_r($courseList);
                 // exit;
-                // foreach ($courseList as $courseDetail) { ?> 
+                foreach ($courseList as $courseDetail) { ?> 
                     <div class="blog-post-wrapper">
+                        <h1><center><?php echo htmlspecialchars($courseDetail->page_title); ?></h1>
                         <article class="post-details">
+                            
+                            <ul class="blog__meta ul_li mb-30">
+                                <li><i class="far fa-clock"></i><?php echo date('M j, Y', strtotime($courseDetail->date)); ?></li>
+                            </ul>
                             <div class="post-thumb">
                                 <img src="<?php echo base_url() . '/assest/uploadfile/blogimages/' . $courseDetail->page_image; ?>" alt="">
                             </div>
-                            <ul class="blog__meta ul_li mb-30">
-                                <!-- <li><a href="#!"><i class="far fa-user"></i>Colin Scotland</a></li> -->
-                                <li><i class="far fa-clock"></i><?php echo date('M j, Y', strtotime($courseDetail->date)); ?></li>
-                                <!-- <li><a href="#!"><i class="far fa-comment"></i>(04) Comments</a></li> -->
-                            </ul>
-                            <h2><?php echo $courseDetail->page_title; ?></h2>
-                            <p><?php echo $courseDetail->page_content; ?></p>
+                            <!-- Output page_content as HTML -->
+                            <div><?php echo $courseDetail->page_content; ?></div>
                         </article>
                     </div>
-                <?php //}  ?> 
+                <?php } ?> 
             </div>
         </div>
     </div>

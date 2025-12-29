@@ -3,24 +3,28 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Welcome extends CI_Controller
 {
 	var $data;
-	function __construct()
+	public function __construct()
 	{
 		parent::__construct();
-		if (sizeof($_GET) > 0) {
+
+		// don’t redirect when we’re in list_files()
+		$current_method = $this->router->method;
+		if ($current_method !== 'list_files' && sizeof($_GET) > 0) {
 			redirect(base_url());
 		}
+
+		// the rest of your setup
 		$this->load->model("Publicmodel", "p");
-		// $this->load->model('Blog_model', 'b');
-		$this->data['allmeta'] = $this->p->allmetacontent($this->uri->segment(1));
-		$this->data['geodata'] = $this->p->getalldata("tbl_geocode");
+		$this->data['allmeta']     = $this->p->allmetacontent($this->uri->segment(1));
+		$this->data['geodata']     = $this->p->getalldata("tbl_geocode");
 		$this->data['companydata'] = $this->p->getalldata("tbl_company");
-		$this->data['coursecat'] = $this->p->productlist(0, "id", "tbl_course_category", 'services_short');
+		$this->data['coursecat']   = $this->p->productlist(0, "id", "tbl_course_category", 'services_short');
 	}
+
 
 	public function index()
 
 	{
-		echo "TEST123";
 		$this->data['sliderlist'] = $this->p->productlist(0, "id", "tbl_slider", 'slide_short');
 		$this->data['coursecatlist'] = $this->p->productlist(0, "id", "tbl_course_category", 'services_short');
 		$this->data['courselist'] = $this->p->productlist(0, "id", "tbl_pages", 'page_short');
@@ -32,7 +36,7 @@ class Welcome extends CI_Controller
 		// $this->data['worklist']=$this->p->productlist(0, "id", "tbl_testimonial", 'services_short');
 		// $this->data['aluminilist']=$this->p->getloopdata(0, "teamtype", "tbl_team", 'serialnum');
 		// $this->data['video'] = $this->p->youtubeVideo();
-		$this->load->view('front/frontpage', $this->data);
+		$this->load->view('front/frontpage.php', $this->data);
 	}
 
 	public function team()
@@ -130,10 +134,20 @@ class Welcome extends CI_Controller
 	
 	public function news()
 	{
-		$this->data['coursecatlist'] = $this->p->productlist(0, "id", "tbl_course_category", 'services_short');
+		// 1. Get lang from query param or default to 'en'
+		$lang = $this->input->get('lang') ?? 'en';
+
+		// 2. Fetch content from DB
+		$this->data['coursecatlist'] = $this->p->productlist(0, "id", "tbl_news_category", 'services_short');
 		$this->data['servicelist'] = $this->p->productlist(0, "id", "tbl_news");
+
+		// 3. Store lang to pass to view
+		$this->data['lang'] = $lang;
+
+		// 4. Load view with data
 		$this->load->view('front/news', $this->data);
 	}
+
 	public function article()
 	{
 		$this->data['coursecatlist'] = $this->p->productlist(0, "id", "tbl_course_category", 'services_short');
@@ -256,4 +270,204 @@ class Welcome extends CI_Controller
 		$this->data['whylist'] = $this->p->productlist(0, "id", "tbl_pages", 'page_short');
 		$this->load->view('front/notfound', $this->data);
 	}
+
+	public function submit()
+		{
+			$this->load->library('form_validation');
+			$this->output->set_content_type('application/json');
+
+			// Validation rules
+			$this->form_validation->set_rules('name', 'Name', 'required');
+			$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+			$this->form_validation->set_rules('phone', 'Phone', 'required');
+			$this->form_validation->set_rules('comment', 'Message', 'required');
+
+			if ($this->form_validation->run() == FALSE) {
+				echo json_encode([
+					'success' => false,
+					'message' => validation_errors('<div class="error">', '</div>')
+				]);
+				return;
+			}
+
+			$data = [
+				'name' => $this->input->post('name', TRUE),
+				'email' => $this->input->post('email', TRUE),
+				'phone' => $this->input->post('phone', TRUE),
+				'title' => $this->input->post('title', TRUE),
+				'interested' => $this->input->post('interested', TRUE),
+				'message' => $this->input->post('comment', TRUE),
+			];
+
+			// Save to DB
+			$this->load->model('Contact_model');
+			$success = $this->Contact_model->insert_contact($data);
+
+			if ($success) {
+				// Send email via Gmail SMTP
+				$email_sent = $this->send_gmail($data);
+				
+				if ($email_sent) {
+					echo json_encode([
+						'success' => true,
+						'message' => 'Thank you! Your message has been sent successfully.'
+					]);
+				} else {
+					echo json_encode([
+						'success' => true, // Still success because DB saved
+						'message' => 'Message received! (Email delivery failed)'
+					]);
+				}
+			} else {
+				echo json_encode([
+					'success' => false,
+					'message' => 'Failed to save your message. Please try again.'
+				]);
+			}
+		}
+
+	private function send_gmail($data)
+	{
+		$config = [
+			'protocol'  => 'smtp',
+			'smtp_host' => 'smtp.gmail.com',
+			'smtp_port' => 587,
+			'smtp_user' => 'akshatsan23@gmail.com', // Your Gmail address
+			'smtp_pass' => '',    // Gmail App Password
+			'smtp_crypto' => 'tls',
+			'mailtype'  => 'html',
+			'charset'   => 'utf-8',
+			'wordwrap'  => TRUE,
+			'newline'   => "\r\n"
+		];
+		
+		$this->load->library('email', $config);
+		$this->email->set_newline("\r\n");
+
+		$this->email->from('', $data['name']);
+		$this->email->to(['']); // Where to send notifications
+		$this->email->cc($data['email']); // Optional: CC the submitter
+		$this->email->subject('New Contact Form Submission');
+		
+		$message = "You have received a new contact form submission:<br><br>";
+		$message .= "<strong>Name:</strong> " . $data['name'] . "<br>";
+		$message .= "<strong>Email:</strong> " . $data['email'] . "<br>";
+		$message .= "<strong>Phone:</strong> " . $data['phone'] . "<br>";
+		$message .= "<strong>Title:</strong> " . $data['title'] . "<br>";
+		$message .= "<strong>Interested In :</strong> " . nl2br($data['interested']);
+		$message .= "<strong>Message:</strong> " . nl2br($data['message']);
+		
+		$this->email->message($message);
+
+		if ($this->email->send()) {
+			return true;
+		} else {
+			log_message('error', 'Email Error: ' . $this->email->print_debugger());
+			return false;
+		}
+	}
+
+
+	public function climate($variable = null, $type = null)
+		{
+			// Load dropdown options
+			$this->data['paramByVar'] = [
+				'temperature'   => ['average', 'hotdays'],
+				'precipitation' => ['average', 'wetdays']
+			];
+			$this->data['locByType'] = [
+				'map'        => ['UttarPradesh','MadhyaPradesh','Maharashtra','Haryana'],
+				'timeseries' => ['Mathura','Kanpur','Jhansi','Lucknow','UPAvg','Maharashtra']
+			];
+
+			// Store selected values for the view to pre-select
+			$this->data['selectedVar']  = $variable;
+			$this->data['selectedType'] = $type;
+			$this->data['selectedParam'] = $this->input->get('param');
+			$this->data['selectedLoc']   = $this->input->get('loc');
+
+			// Render a dedicated climate view
+			$this->load->view('front/climatedata', $this->data);
+		}
+
+
+	public function list_files()
+	{
+		$variable = preg_replace('/[^a-z0-9_-]/i','',$this->input->get('variable'));
+		$type     = preg_replace('/[^a-z0-9_-]/i','',$this->input->get('type'));
+		$location = preg_replace('/[^a-z0-9_-]/i','',$this->input->get('location'));
+		if (! $variable || ! $type || ! $location) {
+			return $this->_respond(400,['error'=>'Missing/invalid params']);
+		}
+
+		// adjust to your actual folder name: "assets" vs "assest"
+		$dir = FCPATH . "assest/{$variable}/{$type}/{$location}";
+		if (! is_dir($dir)) {
+			return $this->_respond(404,['error'=>"Folder not found: {$variable}/{$type}/{$location}"]);
+		}
+
+		$files = array_values(array_filter(scandir($dir), function($f) use($dir){
+			return is_file("$dir/$f") && preg_match('/\.(jpe?g|png)$/i',$f);
+		}));
+
+		return $this->_respond(200, $files);
+	}
+	private function _respond($status, $payload)
+	{
+		$this->output
+			->set_status_header($status)
+			->set_content_type('application/json')
+			->set_output(json_encode($payload))
+			->_display();
+		exit;
+	}
+
+	public function subscribe()
+		{
+			try {
+				$input = json_decode($this->input->raw_input_stream, true);
+				$email = isset($input['email']) ? trim($input['email']) : '';
+
+				// make sure your model is loaded
+				$this->load->model('Subscribermodel');
+
+				$ok = $this->Subscribermodel->insert_email($email);
+
+				$status = $ok ? 200 : 409;
+				$resp   = ['success' => (bool)$ok];
+
+				if (! $ok) {
+					$resp['error'] = 'Already subscribed or DB error';
+				}
+
+				return $this->output
+							->set_status_header($status)
+							->set_content_type('application/json')
+							->set_output(json_encode($resp));
+			}
+			catch (\Throwable $e) {
+				// return the exception text so you can debug
+				return $this->output
+							->set_status_header(500)
+							->set_content_type('application/json')
+							->set_output(json_encode([
+								'success' => false,
+								'error'   => 'Exception: ' . $e->getMessage()
+							]));
+			}
+		}
+
+
 }
+
+
+
+
+		
+
+
+
+	
+
+    
+

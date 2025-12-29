@@ -114,8 +114,7 @@ switch (ENVIRONMENT)
  *
  * NO TRAILING SLASH!
  */
-	$application_folder = __DIR__ . '/application';
-
+	$application_folder = 'application';
 
 /*
  *---------------------------------------------------------------
@@ -130,8 +129,7 @@ switch (ENVIRONMENT)
  *
  * NO TRAILING SLASH!
  */
-	$view_folder = __DIR__ . '/application/views';
-
+	$view_folder = '';
 
 
 /*

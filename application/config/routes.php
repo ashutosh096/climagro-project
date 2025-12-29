@@ -49,14 +49,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
+//$route['api/files'] = 'filelist';
+
 $route['default_controller'] = 'Welcome';
 $route['course-category/(:any)'] = 'Courses/index';
 $route['404_override'] = 'welcome/notfound';
 $route['translate_uri_dashes'] = FALSE;
 //$route['([^/]+)/?'] = 'pages/slug_on_the_fly/$1';
 $route['about-us'] = 'Welcome/about/';
+
 $route['services'] = 'Welcome/sercies/';
 $route['contact-us'] = 'Welcome/contact/';
+$route['contact/submit'] = 'Welcome/submit';
 $route['solutions'] = 'Welcome/solutions/';
 $route['resource'] = 'Welcome/resource/';
 $route['our-team'] = 'Welcome/team/';
@@ -67,6 +71,18 @@ $route['portfolio'] = 'Welcome/portfolio/';
 $route['news'] = 'Welcome/news/';
 $route['articles'] = 'Welcome/article/';
 $route['mail'] = 'contact/submit';
+
+$route['news/(:any)'] = 'news/pages/$1';             // News detail
+$route['news/(:any)/(:any)'] = 'errors/error_404';   // Prevent deeper URLs
+
+$route['api/files'] = 'Welcome/list_files';
+$route['email/subscribe']['post'] = 'Welcome/subscribe';
+
+
+$route['climatedata']                  = 'Welcome/climate';
+$route['climatedata/(:any)']          = 'Welcome/climate/$1';
+$route['climatedata/(:any)/(:any)']   = 'Welcome/climate/$1/$2';
+
 
 $route['blogs'] = 'Welcome/blog';
 // $route['blogs/(:any)'] = 'Welcome/blog_detail/$1';
@@ -93,12 +109,12 @@ foreach ($result as $row) {
 }
 
 
-// Fetch all blog posts
+// Fetch all news posts
 $query = $db->get('tbl_news' );
 $result = $query->result();
 
 foreach ($result as $row) {
     $route['news/' . $row->page_url] = 'News/pages';
     
-    $route['news/' . $row->page_url . '/:any'] = 'error404';
+    $route['news/' . $row->page_url . '/:any'] = 'error405';
 }

@@ -1,112 +1,787 @@
 <?php
 include("header.php");
 include("navbar2.php");
-
 ?>
 
-<!-- breadcrumb start -->
-<section class="breadcrumb bg_img pos-rel" data-background="assest/img/bg/offering.png">
-    <div class="container">
-        <div class="breadcrumb__content">
-            <h2 class="breadcrumb__title">Solutions</h2>
-            <ul class="bread-crumb clearfix ul_li_center">
-                <li class="breadcrumb-item"><a href="<?= site_url() ?>">Home</a></li>
-                <li class="breadcrumb-item">Solutions</li>
-            </ul>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Climate Risk Solutions</title>
+    <style>
+        /* Global Styles */
+        html, body {
+            overflow-x: hidden;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;  /* IE 10+ */
+        }
+
+        html::-webkit-scrollbar, body::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Offering Section Styles */
+        .offering-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(to bottom right, #f7f9fc, #ffffff);
+            padding: 0 2rem;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 1024px) {
+            .offering-container {
+                flex-direction: row;
+            }
+        }
+
+        .laptop-frame {
+            width: 100%;
+            padding: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (min-width: 1024px) {
+            .laptop-frame {
+                width: 50%;
+                padding: 4rem;
+            }
+        }
+
+        .laptop-container {
+            position: relative;
+            width: 100%;
+            max-width: 100%;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .laptop-container.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .laptop-screen {
+            background-color: #025b5f;
+            border-radius: 1rem 1rem 0.5rem 0.5rem;
+            padding: 0.5rem;
+            height: 24rem;
+            width: 100%;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 0.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .control-dot {
+            width: 0.625rem;
+            height: 0.625rem;
+            border-radius: 9999px;
+        }
+
+        .content-area {
+            background-color: white;
+            border-radius: 0.5rem;
+            overflow-y: hidden;
+            flex: 1;
+            padding: 1rem;
+        }
+
+        .content-header {
+            padding: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .laptop-base {
+            background-color: #025b5f;
+            height: 0.5rem;
+            margin: 0 2rem;
+            border-radius: 0 0 0.5rem 0.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .product-content {
+            width: 100%;
+            padding: 2rem;
+            display: flex;
+            align-items: center;
+        }
+
+        @media (min-width: 1024px) {
+            .product-content {
+                width: 50%;
+                padding: 4rem;
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .progress-bar {
+            width: 6rem;
+            height: 0.5rem;
+            background-color: #e5e7eb;
+            border-radius: 9999px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 9999px;
+            transition: width 1.5s ease-out;
+        }
+
+        .product-block {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 5rem;
+            padding: 0 2rem;
+        }
+
+        @media (min-width: 1024px) {
+            .product-block {
+                flex-direction: row;
+                align-items: center;
+                gap: 2rem;
+                padding: 0 2rem;
+            }
+
+            .product-block:nth-child(even) {
+                flex-direction: row-reverse;
+            }
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Title and Header Styles */
+        .title-wrapper {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .subtitle-text {
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            color: #4a5568;
+            margin: 0;
+            text-transform: uppercase;
+            margin-top: 10px;
+            font-weight: 500;
+        }
+
+        .corner-decoration {
+            font-size: 2rem;
+            color: #f26a21;
+            position: relative;
+            top: -10px;
+        }
+
+        .main-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #025b5f;
+            margin: 0 30px;
+            display: inline-block;
+        }
+
+        .section-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* Contact Form Styles */
+        .contact-icon {
+            margin-right: 20px !important;
+        }
+
+        .xb-item--field {
+            margin-right: 30px;
+        }
+
+        .form-results {
+            min-height: 60px;
+        }
+
+        .alert {
+            padding: 12px 20px;
+            border-radius: 4px;
+            margin-bottom: 0;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .alert-info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .error {
+            color: #dc3545;
+            font-size: 14px;
+            margin-top: 5px;
+            display: block;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .product-block {
+                gap: 2rem;
+            }
+
+            .product-title {
+                font-size: 1.8rem;
+            }
+
+            .product-description {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .product-block {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .laptop-container {
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .product-content {
+                width: 100%;
+                padding: 0 1rem;
+            }
+
+            .product-title {
+                font-size: 1.6rem;
+                margin-bottom: 1rem;
+            }
+
+            .product-description {
+                font-size: 1rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .product-blocks {
+                gap: 3rem;
+            }
+
+            .xb-item--title {
+                font-size: 2rem;
+            }
+
+            .about-wrap h3 {
+                font-size: 1.5rem;
+            }
+
+            .section-header {
+                margin-bottom: 60px;
+            }
+
+            .corner-decoration {
+                font-size: 2rem;
+                color: #f26a21;
+                position: relative;
+                top: -10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .product-title {
+                font-size: 1.4rem;
+            }
+
+            .product-tag {
+                font-size: 0.75rem;
+            }
+
+            .demo-button {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+
+            .laptop-screen {
+                padding: 0.75rem;
+                padding-top: 1.25rem;
+            }
+
+            .window-controls {
+                top: 0.4rem;
+            }
+
+            .control-dot {
+                width: 10px;
+                height: 10px;
+            }
+
+            .laptop-container {
+                flex: 1;
+                min-width: 0;
+                max-width: 600px;
+                position: relative;
+                aspect-ratio: 16/9;
+            }
+
+            .laptop-screen {
+                background: #1e1e1e;
+                border-radius: 10px 10px 0 0;
+                padding: 4% 4% 0;
+                position: relative;
+                height: 0;
+                padding-bottom: 56.25%;
+            }
+
+            .content-area {
+                position: absolute;
+                top: 8%;
+                left: 4%;
+                right: 4%;
+                bottom: 4%;
+                background: white;
+                border-radius: 0.5rem;
+                overflow: hidden;
+            }
+
+            .window-controls {
+                top: 0.3rem;
+                left: 0.8rem;
+            }
+        }
+        .buttons-container {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 1rem;
+            justify-content: flex-end;
+            align-items: center;
+            width: 100%;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(2, 91, 95, 0.3);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(30, 64, 175, 0.2);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #6b7280;
+            border: 2px solid #d1d5db;
+        }
+
+        .btn-outline:hover {
+            background: #f9fafb;
+            border-color: #025b5f;
+            transform: translateY(-2px);
+        }
+
+        /* Modal Styles */
+        .climate-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .climate-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .climate-modal {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            max-width: 90vw;
+            max-height: 90vh;
+            overflow: hidden;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .climate-modal-overlay.active .climate-modal {
+            transform: scale(1);
+        }
+
+        .climate-modal-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent));
+            color: white;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .climate-modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color : #025b5f;
+        }
+
+        .climate-close-btn {
+            background: none;
+            border: none;
+            color: 025b5f;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            transition: background 0.2s ease;
+        }
+
+        .climate-close-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .climate-modal-body {
+            padding: 1.5rem;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .climate-metrics-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .climate-metrics-table th,
+        .climate-metrics-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .climate-metrics-table th {
+            background: #f9fafb;
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .climate-metrics-table td {
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+
+        .climate-metrics-table tr:hover {
+            background: #f9fafb;
+        }
+
+        .climate-metric-number {
+            font-weight: 600;
+            color: var(--accent);
+            text-align: center;
+            width: 60px;
+        }
+
+        .climate-metric-name {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .product-block {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .laptop-container {
+                order: 2;
+            }
+
+            .product-content {
+                order: 1;
+            }
+
+            .buttons-container {
+                justify-content: center;
+            }
+
+            .climate-modal {
+                margin: 1rem;
+                max-width: calc(100vw - 2rem);
+            }
+
+            .climate-metrics-table {
+                font-size: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Offerings Section -->
+    <section class="offering-container">
+        <div class="container">
+            <div class="section-header text-center mb-5" data-aos="fade-up">
+                <div class="title-wrapper">
+                    <span class="corner-decoration">⌜</span>
+                    <h2 class="main-title">Offerings</h2>
+                    <span class="corner-decoration">⌝</span>
+                </div>
+                <p class="subtitle-text">Your Partners in Risk Intelligence</p>
+            </div>
+    <!-- First Product Block -->
+    <div id="AGRI" class="product-block">
+      <!-- Laptop Frame -->
+      <div class="laptop-container fade-in">
+        <div class="laptop-screen">
+          <div class="window-controls">
+            <div class="control-dot" style="background-color: #ef4444;"></div>
+            <div class="control-dot" style="background-color: #f59e0b;"></div>
+            <div class="control-dot" style="background-color: #10b981;"></div>
+          </div>
+          <div class="content-area" style="padding: 1rem;">
+            <img src="assest/img/about/AgRI.png" alt="Agriculture Risk Analysis Dashboard" style="width: 100%; border-radius: 0.5rem;">
+          </div>
         </div>
+        <div class="laptop-base"></div>
+      </div>
+
+      <!-- Text Content -->
+      <div class="product-content">
+        <div style="max-width: 36rem;">
+          <div class="fade-in" style="margin-bottom: 1rem; color: var(--accent); font-weight: 600; letter-spacing: 0.05em; font-size: 0.875rem;">
+            AGRICULTURE RISK INTELLIGENCE
+          </div>
+          <h2 class="fade-in" style="font-size: 2.25rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--primary-color);">
+            AgRI.ai – Agriculture Risk Intelligence 
+          </h2>
+          <p class="fade-in" style="color: #4b5563; font-size: 1.125rem; margin-bottom: 2rem;">
+            AgRI.ai is a crop-location-specific risk estimator that uses AI and machine learning to analyze crop-climate interactions through historical data. Integrating diverse datasets, AgRI.ai provides historical, current , short-term , medium-term, and long-term risk assessments.
+          </p>
+          <div class="fade-in">
+            <a href="#consult-us" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 0.5rem;">
+              Request Demo
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
-</section>
-<!-- breadcrumb end -->
-
-
-<!-- about section start-->
-<section class="about pos-rel bg-gradient-quartz-white pt-80 pb-80">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="about-wrap pt-70 wow fadeInLeft" data-wow-duration=".7s">
-                    <h2 class="xb-item--title" style="color:var(--primary-color)">Agriculture Risk Intelligence </h2>
-                    <p class="xb-item--content " style="color: #353535;">
-                        AgRI is a crop-location-specific risk estimator that uses AI and machine learning to analyze crop-climate interactions through historical data. Integrating diverse datasets. AgRI provides historical, short-, medium-, and long-term risk assessments. Whether you’re a financial institution seeking risk intelligence for crop loans and insurance or an agribusiness optimizing operational strategies, AgRI AI delivers the critical insights you need for informed decision-making. By utilizing advanced machine learning algorithms, the AgRI enables agricultural and allied sector businesses to anticipate potential risks, improve resource allocation, maximise opportunity and enhance the business resilience to climate change. 
-                    </p>
-                    <div class="header-btn ul_li pb-10">
-                        <a class="login-btn" href="#consult-us">Request Demo</a>
-                        <div class="header-bar-mobile side-menu d-lg-none">
-                            <a class="xb-nav-mobile" href="javascript:void(0);"><i class="far fa-bars"></i></a>
+            <!-- Second Product Block -->
+            <div id="CLIMATE" class="product-block">
+                <div class="laptop-container fade-in">
+                    <div class="laptop-screen">
+                        <div class="window-controls">
+                            <div class="control-dot" style="background-color: #ef4444;"></div>
+                            <div class="control-dot" style="background-color: #f59e0b;"></div>
+                            <div class="control-dot" style="background-color: #10b981;"></div>
+                        </div>
+                        <div class="content-area" style="padding: 1rem;">
+                            <img src="assest/img/about/CityAdapt.png" alt="Agriculture Risk Analysis Dashboard" style="width: 100%; border-radius: 0.5rem;">
                         </div>
                     </div>
-
+                    <div class="laptop-base"></div>
                 </div>
-            </div>
-            <div class="col-lg-6">
-                <img class="wow fadeInRight w-100" data-wow-duration=".7s" data-wow-delay="200ms" src="assest/img/about/about-img.png" alt="">
-            </div>
-        </div>
-        </div>
-        
-        <div>
-            <video width="100%" loop muted autoplay>
-    <source src="assest/video/offering-vid.mp4" type="video/mp4">
-    <source src="assest/video/offering-vid.mp4" type="video/ogg">
-</video>
-        </div>
-<div class="container">
-        <div class="row">
-            <!-- <div class="col-lg-6">
-                <img class="wow fadeInRight w-100" data-wow-duration=".7s" data-wow-delay="200ms" src="assest/img/about/about-img.png" alt="">
-            </div> -->
-            <div class="col-lg-12">
-                <div class="about-wrap pt-70 wow fadeInLeft" data-wow-duration=".7s">
-                    <h2 class="xb-item--title" style="color:var(--primary-color)">Climate Risk Data</h2>
-                    <div class="row">
-                        <div class="col-xl-4 col-lg-6 col-md-6  mt-30">
-                            <div class="cardBox">
-                                <div class="card">
-                                    <span><img src="assest/img/feature/climate-data.png" alt="Card image cap" ></span>
-                                    <h2 class="text-sm">Climate Data Services</h2>
-                                    <div class="content">
-                                        <h3 class="text-white">Climate Data Services</h3>
-                                        <p>Access detailed historical climate data, including variables such as temperature, precipitation, and wind across various spatial and temporal scales. Our processed climate data is transformed into impact-relevant metrics, enabling clients to estimate risks and understand potential climate impacts. We also obtain climate projection data for different scenarios and experiments to aid in future planning and risk assessment.</p>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="product-content">
+                    <div style="max-width: 36rem;">
+                        <div class="fade-in" style="margin-bottom: 1rem; color: var(--accent); font-weight: 600; letter-spacing: 0.05em; font-size: 0.875rem;">
+                            CLIMATE RISK INTELLIGENCE
                         </div>
-                        <div class="col-xl-4 col-lg-6 col-md-6  mt-30">
-                            <div class="cardBox">
-                                <div class="card">
-                                    <span><img src="assest/img/feature/Agri-data.png" alt="Card image cap"></span>
-                                    <h2 class="text-sm">Agricultural Data Services</h2>
-                                    <div class="content">
-                                        <h3 class="text-white">Agricultural Data Services</h3>
-                                        <p>Enhance agricultural planning and decision-making with historical and projected crop yield data. Access soil types and land use patterns to support sustainable practices, urban planning, environmental management, and resource allocation. Benefit from digitized crop management data for easy access and improved usability in planning and analysis. </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-4 col-lg-6 col-md-6  mt-30">
-                            <div class="cardBox">
-                                <div class="card">
-                                    <span><img src="assest/img/feature/Socio-demographic.png" alt="Card image cap"></span>
-                                    <h2 class="text-sm">Socio-Demographic Data Services</h2>
-                                    <div class="content">
-                                        <h3 class="text-white">Socio-Demographic Data Services</h3>
-                                        <p>We offer comprehensive information on various socio-economic indicators for policy formulation and social research. We provide access to future population projections across different spatial scales, assisting planners and policymakers in preparing for demographic changes. </p>
-                                    </div>
-                                </div>
-                            </div>
+                        <h2 class="fade-in" style="font-size: 2.25rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--primary-color);">
+                            CityAdapt.ai – Urban Climate Risk Intelligence
+                        </h2>
+                        <p class="fade-in" style="color: #4b5563; font-size: 1.125rem; margin-bottom: 2rem;">
+                            Gain deep insights into climate risks with ward-level vulnerability assessments and identification of high-risk hotspots. Track projected warming levels up to 2100 with annual updates, monitor greenhouse gas emissions, and access comprehensive socio-economic and demographic profiles to support data-driven urban resilience planning.
+                        </p>
+                        <div class="fade-in">
+                            <a href="#consult-us" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 0.5rem;">
+                                Request Demo
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </a>
                         </div>
                     </div>
-
                 </div>
+            </div>
+
+            <!-- Third Product Block -->
+            <div id="DATA" class="product-block">
+                <div class="laptop-container fade-in">
+                    <div class="laptop-screen">
+                        <div class="window-controls">
+                            <div class="control-dot" style="background-color: #ef4444;"></div>
+                            <div class="control-dot" style="background-color: #f59e0b;"></div>
+                            <div class="control-dot" style="background-color: #10b981;"></div>
+                        </div>
+                        <div class="content-area" style="padding: 1rem;">
+                            <img src="assest/img/about/mokd.png" alt="Agriculture Risk Analysis Dashboard" style="width: 100%; border-radius: 0.5rem;">
+                        </div>
+                    </div>
+                    <div class="laptop-base"></div>
+                </div>
+                <div class="product-content">
+                    <div style="max-width: 36rem;">
+                        <div class="fade-in" style="margin-bottom: 1rem; color: var(--accent); font-weight: 600; letter-spacing: 0.05em; font-size: 0.875rem;">
+                            CLIMATE DATA PORTAL
+                        </div>
+                        <h2 class="fade-in" style="font-size: 2.25rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--primary-color);">
+                            Climate Data Portal
+                        </h2>
+                        <p class="fade-in" style="color: #4b5563; font-size: 1.125rem; margin-bottom: 2rem;">
+                            Access high-resolution climate and weather hazard maps for heatwaves, droughts, floods, and more. Explore multi-resolution climate data across block, district, and regional levels with flexible temporal scales. Get tailored climate risk mapping for vulnerable regions and sectors, along with sector-specific indices like dry/wet spell frequency and extreme heat days to support informed decision-making.
+                        </p>
+
+                        
+                        <div class="fade-in buttons-container">
+                                <a href="#consult-us" class="btn btn-primary">
+                                    Request Demo
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg>
+                                </a>
+                                <a href="<?php echo base_url('climatedata') ?>" class="btn btn-secondary">
+                                    Example Dataset
+                                </a>
+                                <button class="btn btn-outline" id="climateLearnMoreBtn">
+                                    Data Repository
+                                    <!-- <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <path d="m9 12 2 2 4-4"></path>
+                                    </svg> -->
+                                </button>
+                    
+                        </div>
             </div>
         </div>
     </div>
 
-</section>
-<!-- about section end-->
+            <!-- Fourth Product Block -->
+            <div id= "CONSULTING" class="product-block">
+                <div class="laptop-container fade-in">
+                    <div class="laptop-screen">
+                        <div class="window-controls">
+                            <div class="control-dot" style="background-color: #ef4444;"></div>
+                            <div class="control-dot" style="background-color: #f59e0b;"></div>
+                            <div class="control-dot" style="background-color: #10b981;"></div>
+                        </div>
+                        <div class="content-area" style="padding: 1rem;">
+                            <img src="assest/img/about/Consulting.png" alt="Agriculture Risk Analysis Dashboard" style="width: 100%; border-radius: 0.5rem;">
+                        </div>
+                    </div>
+                    <div class="laptop-base"></div>
+                </div>
+                <div class="product-content">
+                    <div style="max-width: 36rem;">
+                        <div class="fade-in" style="margin-bottom: 1rem; color: var(--accent); font-weight: 600; letter-spacing: 0.05em; font-size: 0.875rem;">
+                            CLIMATE CONSULTING SERVICES
+                        </div>
+                        <h2 class="fade-in" style="font-size: 2.25rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--primary-color);">
+                            Climate Consulting Services
+                        </h2>
+                        <p class="fade-in" style="color: #4b5563; font-size: 1.125rem; margin-bottom: 2rem;">
+                            Delivering climate risk assessment reports tailored for corporate institutions, enterprises, governments , and NGOs. our services provide sector-specific climate impact analysis to guide effective risk mitigation. We also offer customized climate adaptation and resilience planning to support long-term sustainability and preparedness.
+                        </p>
+                        <div class="fade-in">
+                            <a href="#consult-us" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 0.5rem;">
+                                Request Demo
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-
-<div class="footer-contact sooter" id="consult-us">
+    <!-- Contact Section -->
+   <div id="consult-us" class="footer-contact sooter">
     <!-- <div class="footer-bg bg_img" data-background="assest/img/footer/footer-bg.png"></div> -->
     <div class="container">
         <div class="xb-contact-form">
@@ -115,39 +790,78 @@ include("navbar2.php");
                     <div class="xb-inner">
                         <h5 class="xb-item--sub-title text-white"><span><img src="assest/img/footer/contact.svg" alt=""></span> Contact Us</h5>
                         <h2 class="xb-item--title text-white">Do you have questions or went more information?</h2>
-                        <form class="xb-item--form" action="#!">
+                        <form id="contactForm" action="<?= site_url('contact/submit') ?>" method="POST">
+                            <div class="input-group">
+                				<input type="hidden" id="url" name="url" value="<?php echo base_url();?>">
+                			</div> 
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="xb-item--field">
                                         <span><img src="assest/img/footer/contact-user.svg" alt=""></span>
-                                        <input type="text" placeholder="Steven Kevin">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="xb-item--field">
-                                        <span><img src="assest/img/footer/contact-email.svg" alt=""></span>
-                                        <input type="email" placeholder="example@cryco.com">
+                                        <input type="text" placeholder="Steven Kevin" name="name">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="xb-item--field">
                                         <span><img src="assest/img/footer/contact-call.svg" alt=""></span>
-                                        <input type="text" placeholder="+91 081 0256 023">
+                                        <input type="tel" placeholder="+91 081 0256 023" name="phone" id="phone" inputmode="numeric" pattern="[0-9]*" maxlength="12" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-12">
                                     <div class="xb-item--field">
-                                        <!-- <span><img src="assest/img/footer/contact-call.svg" alt=""></span> -->
-                                        <select style="height: 57px;padding: 8px;border-radius: 10px;">
-                                            <option value="Climate Data">Climate Data</option>
-                                            <option value="Agricultural Data">Agricultural Data</option>
-                                            <option value="Socio-Demographic Data">Socio-Demographic Data</option>
+                                        <span><img src="assest/img/footer/contact-email.svg" alt=""></span>
+                                        <input type="email" placeholder="example@climagroanlytics.com" name="email">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="xb-item--field">
+                                        <span><img src="assest/img/footer/contact-massage.svg" alt="   "></span>
+                                        <select name="title" style="
+                                            height: 50px; 
+                                            padding: 2px 2px 2px 45px;  /* Added left padding */
+                                            border-radius: 8px;          /* Added border radius */
+                                            border: 1px solid #ccc;      /* Added border for better visibility */
+                                            width: 100%;                 /* Ensure full width */
+                                            background-color: white;     /* Ensure white background */
+                                        ">
+                                            <option value="">Help us understand how we can support you better.</option>
+                                            <option value="Government / Policy Maker">Government / Policy Maker</option>
+                                            <option value="Researcher / Academic">Researcher / Academic</option>
+                                            <option value="Financial Institution / Insurer">Financial Institution / Insurer</option>
+                                            <option value="NGO / Nonprofit">NGO / Nonprofit</option>
+                                            <option value="Student">Student</option>
+                                            <option value="Corporate Sustainability / ESG Professional">Corporate Sustainability / ESG Professional</option>
+                                            <option value="Other">Other</option>
                                         </select>
                                     </div>
                                 </div>
+                                <div class="col-lg-12 ">
+                                    <div class="xb-item--field">
+                                    <span><img src="assest/img/footer/contact-massage.svg" alt="   "></span>
+                                        <select name="interested" style="
+                                            height: 50px; 
+                                            padding: 2px 2px 2px 45px;  /* Added left padding */
+                                            border-radius: 8px;          /* Added border radius */
+                                            border: 1px solid #ccc;      /* Added border for better visibility */
+                                            width: 100%;                 /* Ensure full width */
+                                            background-color: white;     /* Ensure white background */
+                                        ">
+                                            <option value="" >Interested In (Optional)</option>
+                                            <option value="AgRI.ai">Climate data portal</option>
+                                            <option value="AgRI.ai">AgRI.ai</option>
+                                            <option value="CityAdapt.ai">CityAdapt.ai</option>
+                                            <option value="Climate Data Services">Climate Data Services</option>
+                                            <option value="Climate Consulting">Climate Consulting</option>
+                                            <option value="Collaborations">Collaborations / Research</option>
+                                            <option value="Others">Others</option>
+                                        </select>
+                                    </div>
+                                </div> 
+                                
+                                
                                 <div class="col-lg-12 xb-item--text-msg">
                                     <span><img src="assest/img/footer/contact-massage.svg" alt=""></span>
-                                    <textarea class="xb-item--massage" name="message" id="message" cols="30" rows="10" placeholder="Simultaneously we had a problem..."></textarea>
+                                    <textarea class="xb-item--massage" name="comment" id="message" cols="30" rows="10" placeholder="Simultaneously we had a problem..."></textarea>
                                 </div>
                                 <div class="col-lg-12 xb-item--contact-btn">
                                     <button class="them-btn" type="submit">
@@ -186,6 +900,261 @@ include("navbar2.php");
         </div>
     </div>
 </div>
+    <!-- Modal -->
+    <div class="climate-modal-overlay" id="climateModalOverlay">
+        <div class="climate-modal">
+            <div class="climate-modal-header">
+                <h3 class="climate-modal-title">Climate Risk Metrics & Indicators</h3>
+                <button class="climate-close-btn" id="climateCloseBtn">&times;</button>
+            </div>
+            <div class="climate-modal-body">
+                <p style="color: #6b7280; margin-bottom: 1rem;">
+                    CityAdapt.ai provides comprehensive climate risk assessment through 20 key metrics and indicators, covering everything from monsoon patterns to extreme weather events.
+                </p>
+                <table class="climate-metrics-table">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Metric</th>
+                            <th>Definition & Implications</th>
+                        </tr>
+                    </thead>
+                    <tbody id="climateMetricsTableBody">
+                        <!-- Table content will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
+    <!-- JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+       // Climate metrics data
+        const metricsData = [
+            {
+                no: 1,
+                metric: "Trend in monsoon season mean rainfall",
+                definition: "Changes in average monsoon-season (June to September) rainfall, spatially averaged over the specified region",
+                implications: "Agriculture risk; surface and ground water availability"
+            },
+            {
+                no: 2,
+                metric: "Trend in summer season average temperature",
+                definition: "Change in the summer-season (March–May) average of daily mean temperature, spatially averaged over the specified region",
+                implications: "Agriculture risk; human and livestock health risk; Infrastructure risk"
+            },
+            {
+                no: 3,
+                metric: "Monsoon season mean rainfall anomaly",
+                definition: "Deviation of spatially averaged monsoon season (June–September) rainfall relative to the 1981–2010 baseline period",
+                implications: "Identify dry vs wet season; Agricultural risk, water availability"
+            },
+            {
+                no: 4,
+                metric: "Temperature Anomalies",
+                definition: "Deviation of spatially averaged summer season (March-May) daily average temperature relative to the 1981–2010 baseline period",
+                implications: "Identify anomalously hot/cold summer, Agriculture risk; human and livestock health risk; Infrastructure risk"
+            },
+            {
+                no: 5,
+                metric: "Extreme wet days",
+                definition: "Number of days in a year with the standardized precipitation anomaly exceeding 1 with respect to the long-term data (1981-2010)",
+                implications: "Higher (lower) value indicates more (less) number of days in a year with excessive rainfall; Agricultural risk; health risk; soil erosion"
+            },
+            {
+                no: 6,
+                metric: "Extreme warm days",
+                definition: "Number of days when the maximum temperature is greater than 90th percentile of the long-term data (1981-2010) for a moving window of 15 days",
+                implications: "Higher (lower) value indicates more (less) number of days in a year with excessively warm days; Agriculture risk; wildfire risk; health and livestock risk"
+            },
+            {
+                no: 7,
+                metric: "Time-series of seasonal monsoon rainfall",
+                definition: "Long-term annual variations in summer monsoon (June to September) total rainfall, spatially averaged over the specified region",
+                implications: "Agriculture risk; surface and ground water availability; planning of dams and reservoirs; future projections"
+            },
+            {
+                no: 8,
+                metric: "Time-series of summer temperatures",
+                definition: "Long-term annual variations in summer (March to May) daily mean temperature, spatially averaged over the specified region",
+                implications: "Agriculture risk; human and livestock health risk; Infrastructure risk; ecosystem impact"
+            },
+            {
+                no: 9,
+                metric: "Growing degree days",
+                definition: "The amount of heat available for plant growth during a specific period of crop cycle",
+                implications: "Optimal planting dates; tracking the progress; crop management"
+            },
+            {
+                no: 10,
+                metric: "Heat stress index",
+                definition: "Past, present and future estimate of heat discomfort combining temperature and humidity",
+                implications: "Health, livestock, and labor safety"
+            },
+            {
+                no: 11,
+                metric: "Drought index",
+                definition: "Past, present and future indicator of prolonged dry conditions based on rainfall and water loss",
+                implications: "Agriculture, water resources, drought management"
+            },
+            {
+                no: 12,
+                metric: "Flood risk index",
+                definition: "Past, present and future likelihood of flood events based on extreme rainfall and runoff",
+                implications: "Disaster planning, infrastructure, and urban/rural development"
+            },
+            {
+                no: 13,
+                metric: "Projected summer average temperature",
+                definition: "Average daily temperature over summer season (March-May) projected for a future period under climate scenarios",
+                implications: "Crop selection, urban planning, energy demand"
+            },
+            {
+                no: 14,
+                metric: "Projected extreme heat days",
+                definition: "Number of projected days exceeding extreme heat thresholds",
+                implications: "Heatwave planning, human and livestock health sector, labor safety and productivity"
+            },
+            {
+                no: 15,
+                metric: "Projected growing degree days",
+                definition: "Projected cumulative heat units above a base threshold, indicating crop development potential",
+                implications: "Crop yield modeling, agricultural zoning, pest risk assessment"
+            },
+            {
+                no: 16,
+                metric: "Projected hot night frequency",
+                definition: "Number of nights with projected minimum temperature above heat-stress thresholds",
+                implications: "Public health, livestock productivity, energy demand, agriculture"
+            },
+            {
+                no: 17,
+                metric: "Projected monsoon season rainfall total",
+                definition: "Total rainfall projected for monsoon season (June-September)",
+                implications: "Agriculture, water availability"
+            },
+            {
+                no: 18,
+                metric: "Projected monsoon onset and withdrawal dates",
+                definition: "Estimated start and end of monsoon season under future climate scenarios",
+                implications: "Sowing time decisions, farming calendars, and irrigation management"
+            },
+            {
+                no: 19,
+                metric: "Projected heavy rainfall days",
+                definition: "Future count of extreme rainfall days based on threshold exceedance",
+                implications: "Flood risk, urban drainage, infrastructure design"
+            },
+            {
+                no: 20,
+                metric: "Future dry/wet spell frequency",
+                definition: "Number of projected dry/wet spells periods with consecutive rainless/rain-surplus days",
+                implications: "Drought monitoring, crop stress modeling, water planning"
+            }
+        ];
 
-<?php include("footer.php"); ?>
+        // DOM elements
+        const climateLearnMoreBtn = document.getElementById('climateLearnMoreBtn');
+        const climateModalOverlay = document.getElementById('climateModalOverlay');
+        const climateCloseBtn = document.getElementById('climateCloseBtn');
+        const climateMetricsTableBody = document.getElementById('climateMetricsTableBody');
+
+        // Populate table
+        function populateClimateTable() {
+            climateMetricsTableBody.innerHTML = metricsData.map(metric => `
+                <tr>
+                    <td class="climate-metric-number">${metric.no}</td>
+                    <td class="climate-metric-name">${metric.metric}</td>
+                    <td>
+                        <strong>Definition:</strong> ${metric.definition}<br>
+                        <strong>Implications:</strong> ${metric.implications}
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Modal functions
+        function openClimateModal() {
+            climateModalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeClimateModal() {
+            climateModalOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Event listeners
+        climateLearnMoreBtn.addEventListener('click', openClimateModal);
+        climateCloseBtn.addEventListener('click', closeClimateModal);
+        climateModalOverlay.addEventListener('click', (e) => {
+            if (e.target === climateModalOverlay) {
+                closeClimateModal();
+            }
+        });
+
+        // Escape key to close modal
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && climateModalOverlay.classList.contains('active')) {
+                closeClimateModal();
+            }
+        });
+
+        // Initialize
+        populateClimateTable();
+
+        // Add some interactive effects
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px)';
+            });
+            btn.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.fade-in, .laptop-container').forEach(el => observer.observe(el));
+        });
+
+        $(document).ready(function() {
+            $('#contactForm').on('submit', function(e) {
+                e.preventDefault();
+                
+                $('.form-results').html('').removeClass('d-none');
+                
+                $('.form-results').html('<div class="alert alert-info">Sending your message...</div>');
+
+                $.ajax({
+                    type: 'POST',
+                    url: $(this).attr('action'),
+                    data: $(this).serialize(),
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.success) {
+                            $('.form-results').html('<div class="alert alert-success">' + response.message + '</div>');
+                            $('#contactForm')[0].reset();
+                        } else {
+                            $('.form-results').html('<div class="alert alert-danger">' + response.message + '</div>');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("AJAX Error:", status, error, xhr.responseText);
+                        $('.form-results').html('<div class="alert alert-danger">There was an unexpected error. Please try again later.</div>');
+                    }
+                });
+            });
+        });
+    </script>
+
+    <?php include("footer.php"); ?>
+</body>
+</html>

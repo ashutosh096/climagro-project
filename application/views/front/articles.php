@@ -26,7 +26,7 @@ include("navbar2.php");
             <div class="col-lg-8 mt-30">
                 <div class="blog-post-wrap mt-none-30">
                     <article class="blog__item mt-30">
-                        <a class="thumb" href="blog-single.html"><img src="assets/img/blog/post_01.jpg" alt=""></a>
+                        <!-- <a class="thumb" href="blog-single.html"><img src="assets/img/blog/post_01.jpg" alt=""></a>
                         <div class="blog__inner">
                             <ul class="blog__meta ul_li mb-30">
                                 <li><a href="#!"><i class="far fa-user"></i>Colin Scotland</a></li>
@@ -36,47 +36,15 @@ include("navbar2.php");
                             <h2 class="title border_effect"><a href="blog-single.html">Examining the Rise, Evolution, and Future of Token Sales in the Cryptocurrency </a></h2>
                             <p>Our ICO presents a unique opportunity to embark on a journey into the crypto frontier, where groundbreaking ideas and technological advancements converge. </p>
                             <a class="blog-btn" href="blog-single.html">Read MOre</a>
-                        </div>
+                        </div> -->
                     </article>
                     <article class="blog__item mt-30">
-                        <a class="thumb" href="blog-single.html"><img src="assets/img/blog/post_04.jpg" alt=""></a>
-                        <div class="blog__inner">
-                            <ul class="blog__meta ul_li mb-20">
-                                <li><a href="#!"><i class="far fa-user"></i>Chris Matts</a></li>
-                                <li><i class="far fa-clock"></i>Dec 28, 2022</li>
-                                <li><a href="#!"><i class="far fa-comment"></i>(04) Comments</a></li>
-                            </ul>
-                            <h2 class="title border_effect"><a href="blog-single.html">From Concept to Reality Discover the Journey of Our ICO Project</a></h2>
-                            <p>we stand on the threshold of a significant milestone: our ICO campaign. This phase represents the culmination of our efforts an opportunity for you to be part of the journey.</p>
-                            <a class="blog-btn" href="blog-single.html">Read MOre</a>
-                        </div>
+                        
                     </article>
                     <article class="blog__item mt-30">
-                        <a class="thumb" href="blog-single.html"><img src="assets/img/blog/post_03.jpg" alt=""></a>
-                        <div class="blog__inner">
-                            <ul class="blog__meta ul_li mb-30">
-                                <li><a href="#!"><i class="far fa-user"></i>Dan Kurtz</a></li>
-                                <li><i class="far fa-clock"></i>Dec 28, 2022</li>
-                                <li><a href="#!"><i class="far fa-comment"></i>(04) Comments</a></li>
-                            </ul>
-                            <h2 class="title border_effect"><a href="blog-single.html">ICO Launchpad Your Gateway to Exciting Investment Opportunities</a></h2>
-                            <p>The world of blockchain and cryptocurrency is dynamic and ever-evolving. As traditional <br> boundaries shift, new avenues for growth emerge. Our ICO Launchpad is your.</p>
-                            <a class="blog-btn" href="blog-single.html">Read MOre</a>
-                        </div>
+                        
                     </article>
-                    <article class="blog__item mt-30">
-                        <a class="thumb" href="blog-single.html"><img src="assets/img/blog/post_02.jpg" alt=""></a>
-                        <div class="blog__inner">
-                            <ul class="blog__meta ul_li mb-30">
-                                <li><a href="#!"><i class="far fa-user"></i>Derek Gehl</a></li>
-                                <li><i class="far fa-clock"></i>Dec 28, 2022</li>
-                                <li><a href="#!"><i class="far fa-comment"></i>(04) Comments</a></li>
-                            </ul>
-                            <h2 class="title border_effect"><a href="blog-single.html">ICO Revolution Investing in Blockchain Solutions for a Decentralized World</a></h2>
-                            <p>Welcome to the ICO Revolution, where your investments have the power to reshape <br> industries and drive the transformation towards a decentralized future.</p>
-                            <a class="blog-btn" href="blog-single.html">Read MOre</a>
-                        </div>
-                    </article>
+                    
                 </div>
                 <!-- <div class="pagination_wrap pt-50">
                             <ul>
@@ -98,7 +66,7 @@ include("navbar2.php");
                             <button><i class="far fa-search"></i></button>
                         </form>
                     </div>
-                    <div class="widget mt-30">
+                    <!-- <div class="widget mt-30">
                         <h3 class="widget__title">Categories</h3>
                         <ul class="widget__category list-unstyled">
                             <li><a href="#!">Blockchain </a></li>
@@ -109,9 +77,9 @@ include("navbar2.php");
                             <li><a href="#!">UI/UX Design </a></li>
                             <li><a href="#!">Email Marketing </a></li>
                         </ul>
-                    </div>
-                    <div class="widget mt-30">
-                        <h3 class="widget__title">Recent Posts</h3>
+                    </div> -->
+                    <!-- <div class="widget mt-30"> -->
+                        <!-- <h3 class="widget__title">Recent Posts</h3>
                         <div class="widget__post">
                             <div class="widget__post-item ul_li">
                                 <div class="post-thumb">
@@ -139,10 +107,10 @@ include("navbar2.php");
                                     <span class="post-date">July 18,2023</span>
                                     <h4 class="post-title border-effect-2"><a href="blog-single.html">Building intelligent transportation systems</a></h4>
                                 </div>
-                            </div>
+                            </div> -->
 
-                        </div>
-                    </div>
+                        <!-- </div>
+                    </div> -->
                     <div class="widget mt-30">
                         <h3 class="widget__title">Follow Us</h3>
                         <ul class="widget__social ul_li">

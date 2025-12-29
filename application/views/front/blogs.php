@@ -10,14 +10,94 @@ include("navbar2.php");
     <div class="container">
         <div class="breadcrumb__content">
             <h2 class="breadcrumb__title">Blogs</h2>
-            <ul class="bread-crumb clearfix ul_li_center">
-                <li class="breadcrumb-item"><a href="<?= site_url(); ?>">Home</a></li>
-                <li class="breadcrumb-item">Blogs</li>
-            </ul>
         </div>
     </div>
 </section>
 <!-- breadcrumb end -->
+ <style>
+
+
+/* Blog Section Styling */
+.blog {
+  background-color: #f9f9f9;
+}
+.blog__item {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.blog__item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+.blog__item .thumb img {
+  width: 100%;
+  height: 100% ;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+.blog__item:hover .thumb img {
+  transform: scale(1.03);
+}
+.blog__inner {
+  padding: 25px;
+}
+.blog__meta {
+  color: #666;
+  font-size: 14px;
+}
+.blog__meta i {
+  margin-right: 5px;
+  color: #025b5f; /* Your brand color */
+}
+.title {
+  color: #222; /* Dark gray for better readability */
+  font-size: 22px;
+  margin: 15px 0;
+  line-height: 1.4;
+}
+.title a {
+  color: inherit;
+  text-decoration: none;
+}
+.title a:hover {
+  color: #d1dcde; /* Brand color on hover */
+}
+.border_effect {
+  position: relative;
+  padding-bottom: 10px;
+}
+.border_effect:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 50px;
+  height: 2px;
+  background: #025b5f; /* Brand color */
+}
+.blog__inner p {
+  color: #d1dcde; /* Slightly lighter than title */
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+.blog-btn {
+  display: inline-block;
+  color: #025b5f;
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+.blog-btn:hover {
+  color: #02494d;
+  border-bottom-color: #025b5f;
+}
+</style>
+
+
 
 <!-- blog start -->
 <section class="blog pt-130 pb-130">
@@ -28,7 +108,8 @@ include("navbar2.php");
                     <?php
                     foreach ($blog as $list) { ?>
                         <article class="blog__item mt-30">
-                            <a class="thumb" href="<?php echo base_url('blogs/' . $list->page_url); ?>"><img src="<?php echo base_url() . '/assest/uploadfile/blogimages/' . $list->page_image; ?>" alt=""></a>
+                            <a class="thumb" href="<?php echo base_url('blogs/' . $list->page_url); ?>">
+                                <img src="<?php echo base_url() . '/assest/uploadfile/blogimages/' . $list->page_image; ?>" alt=""></a>
                             <div class="blog__inner">
                                 <ul class="blog__meta ul_li mb-30">
                                     <!-- <li><a href="#!"><i class="far fa-user"></i>Colin Scotland</a></li> -->
@@ -58,7 +139,7 @@ include("navbar2.php");
                     <div class="widget mt-30">
                         <h3 class="widget__title">Search</h3>
                         <form class="widget__search" action="#!">
-                            <input type="text" placeholder="Search your keyword">
+                            <input type="text" placeholder="Search your keyword" style = "color:black">
                             <button><i class="far fa-search"></i></button>
                         </form>
                     </div>
