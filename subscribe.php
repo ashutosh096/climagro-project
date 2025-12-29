@@ -1,5 +1,6 @@
 <?php
 header('Content-Type: application/json');
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     echo json_encode(['success' => false, 'message' => 'Method not allowed']);
@@ -13,13 +14,41 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     exit;
 }
 
-$file = __DIR__ . DIRECTORY_SEPARATOR . 'subscriptions.csv';
-$line = date('c') . ',' . $email . PHP_EOL;
-if (file_put_contents($file, $line, FILE_APPEND | LOCK_EX) === false) {
+// Database credentials (same as in application/config/database.php)
+$conn = new mysqli('localhost', 'root', '', 'u404385609_climagro');
+
+if ($conn->connect_error) {
     http_response_code(500);
-    echo json_encode(['success' => false, 'message' => 'Could not save subscription']);
+    echo json_encode(['success' => false, 'message' => 'Database connection failed']);
     exit;
 }
 
-echo json_encode(['success' => true, 'message' => 'Subscribed — check your inbox.']);
+// Check if email already exists
+$stmt = $conn->prepare("SELECT id FROM subscribers WHERE email = ?");
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    echo json_encode(['success' => true, 'message' => 'You are already subscribed!']);
+    $stmt->close();
+    $conn->close();
+    exit;
+}
+$stmt->close();
+
+// Insert new subscriber
+$stmt = $conn->prepare("INSERT INTO subscribers (email) VALUES (?)");
+$stmt->bind_param("s", $email);
+
+if ($stmt->execute()) {
+    echo json_encode(['success' => true, 'message' => 'Subscribed — check your inbox.']);
+} else {
+    http_response_code(500);
+    echo json_encode(['success' => false, 'message' => 'Could not save subscription']);
+}
+
+$stmt->close();
+$conn->close();
 exit;
+

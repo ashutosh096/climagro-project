@@ -78,6 +78,14 @@ $route['news/(:any)/(:any)'] = 'errors/error_404';   // Prevent deeper URLs
 $route['api/files'] = 'Welcome/list_files';
 $route['email/subscribe']['post'] = 'Welcome/subscribe';
 
+// Admin subscriber management routes
+$route['administrator/managesubscribers'] = 'Administrator/managesubscribers';
+$route['administrator/exportsubscribers'] = 'Administrator/exportsubscribers';
+
+// Admin contact form management routes
+$route['administrator/managecontacts'] = 'Administrator/managecontacts';
+$route['administrator/exportcontacts'] = 'Administrator/exportcontacts';
+
 
 $route['climatedata']                  = 'Welcome/climate';
 $route['climatedata/(:any)']          = 'Welcome/climate/$1';

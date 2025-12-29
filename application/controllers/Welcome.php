@@ -295,6 +295,7 @@ class Welcome extends CI_Controller
 				'email' => $this->input->post('email', TRUE),
 				'phone' => $this->input->post('phone', TRUE),
 				'title' => $this->input->post('title', TRUE),
+				'subject' => $this->input->post('title', TRUE),
 				'interested' => $this->input->post('interested', TRUE),
 				'message' => $this->input->post('comment', TRUE),
 			];

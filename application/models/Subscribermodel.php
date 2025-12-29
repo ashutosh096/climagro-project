@@ -9,4 +9,8 @@ class Subscribermodel extends CI_Model {
     }
     return $this->db->insert('subscribers', ['email' => $email]);
   }
+
+  public function get_all_emails() {
+    return $this->db->get('subscribers')->result();
+  }
 }

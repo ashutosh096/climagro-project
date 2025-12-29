@@ -98,6 +98,7 @@
         line-height: 1.2 !important;
         border-radius: 28px 0 0 28px !important;
         background : #ffff;
+        color: #000 !important;
     }
     .subscribe-icon {
         position: absolute;
@@ -273,11 +274,11 @@
                 <div class="footer-contact">
                     <i class="fas fa-map-marker-alt"></i>
                     <?php if(!empty($getCompany->comp_address)): ?>
-                        <a href="https://www.google.com/maps/search/?api=1&query=<?php echo urlencode($getCompany->comp_address); ?>" target="_blank" rel="noopener" style="color: #d1d5db;">
+                        <a href="https://www.google.com/maps/search/?api=1&query=<?php echo urlencode($getCompany->comp_address); ?>" target="_blank" rel="noopener" style="color: #d1d5db; text-decoration: none;">
                             <?php echo $getCompany->comp_address; ?>
                         </a>
                     <?php else: ?>
-                        <a href="https://www.google.com/maps/search/?api=1&query=<?php echo urlencode('CSJM Innovation Foundation Chhatrapati Shahu Ji Maharaj University, Kanpur- 208024'); ?>" target="_blank" rel="noopener" style="color: #d1d5db;">
+                        <a href="https://www.google.com/maps/search/?api=1&query=<?php echo urlencode('CSJM Innovation Foundation Chhatrapati Shahu Ji Maharaj University, Kanpur- 208024'); ?>" target="_blank" rel="noopener" style="color: #d1d5db; text-decoration: none;">
                             CSJM Innovation Foundation Chhatrapati Shahu Ji Maharaj University, Kanpur- 208024
                         </a>
                     <?php endif; ?>

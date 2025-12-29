@@ -6,8 +6,8 @@ $config = array(
 							array(
 									'field'  => 'email',
 									'label'  => '',
-									'rules'  => 'required|trim|alpha',
-									'errors' => array('required'=>'Username is required', 'alpha'=>'Use only alpha in username!')
+									'rules'  => 'required|trim',
+									'errors' => array('required'=>'Username/Email is required')
 							),
 							array(
 									'field'  => 'password',

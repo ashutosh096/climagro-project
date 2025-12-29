@@ -16,36 +16,45 @@ class Contact extends CI_Controller {
     }
 
     public function submit() {
+        $this->output->set_content_type('application/json');
+        
         $this->form_validation->set_rules('name', 'Name', 'required');
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
         $this->form_validation->set_rules('phone', 'Phone', 'required');
-        $this->form_validation->set_rules('subject', 'Subject', 'required');
         $this->form_validation->set_rules('comment', 'Message', 'required');
-        $this->form_validation->set_rules('interested', 'Interest', 'trim'); // Add this line
+        $this->form_validation->set_rules('title', 'Title', 'trim');
+        $this->form_validation->set_rules('interested', 'Interest', 'trim');
 
     
         if ($this->form_validation->run() == FALSE) {
-            redirect('contact-us');
-        } else {
-            $data = [
-                'name' => $this->input->post('name', TRUE),
-                'email' => $this->input->post('email', TRUE),
-                'phone' => $this->input->post('phone', TRUE),
-                'title' => $this->input->post('title', TRUE), 
-                'subject' => $this->input->post('subject', TRUE),
-                'interested' => $this->input->post('interested', TRUE), // Make sure form uses name="interested"  // changed from course to subject
-                'message' => $this->input->post('comment', TRUE),
-                'created' => date("Y-m-d H:i:s")
-            ];
+            echo json_encode([
+                'success' => false,
+                'message' => validation_errors('<div class="error">', '</div>')
+            ]);
+            return;
+        }
+
+        $data = [
+            'name' => $this->input->post('name', TRUE),
+            'email' => $this->input->post('email', TRUE),
+            'phone' => $this->input->post('phone', TRUE),
+            'title' => $this->input->post('title', TRUE), 
+            'subject' => $this->input->post('title', TRUE), // Using title as subject since form doesn't have subject
+            'interested' => $this->input->post('interested', TRUE),
+            'message' => $this->input->post('comment', TRUE)
+            // created_at is auto-filled by database default
+        ];
     
-            $this->Contact_model->insert_contact($data);
+        $success = $this->Contact_model->insert_contact($data);
     
+        if ($success) {
+            // Optionally send email notification
             $config = array(
                 'protocol'  => 'smtp',
                 'smtp_host' => 'smtp.office365.com',
                 'smtp_port' => 587,
                 'smtp_user' => 'akshat@ehmconsultancy.co.in',
-                'smtp_pass' => 'N%661829788191ut',  // your app password
+                'smtp_pass' => 'N%661829788191ut',
                 'smtp_crypto' => 'tls',
                 'mailtype'  => 'html',
                 'charset'   => 'utf-8',
@@ -56,25 +65,35 @@ class Contact extends CI_Controller {
     
             $this->email->from('akshat@ehmconsultancy.co.in', $data['name']);
             $this->email->to('akshatsan23@gmail.com'); 
-            $this->email->subject('New Contact Form Submission: ' . $data['subject']);
+            $this->email->subject('New Contact Form Submission');
             $this->email->message(
                 "You have received a new message:<br><br>" .
                 "Name: " . $data['name'] . "<br>" .
                 "Email: " . $data['email'] . "<br>" .
                 "Phone: " . $data['phone'] . "<br>" .
-                "Subject: " . $data['subject'] . "<br>" .
+                "Title: " . $data['title'] . "<br>" .
+                "Interest: " . $data['interested'] . "<br>" .
                 "Message: " . nl2br($data['message']) . "<br><br>" .
                 "Submitted on: " . $data['created']
             );
     
             if ($this->email->send()) {
-                $this->session->set_flashdata('success', 'Your message has been sent successfully!');
+                echo json_encode([
+                    'success' => true,
+                    'message' => 'Thank you! Your message has been sent successfully.'
+                ]);
             } else {
                 log_message('error', $this->email->print_debugger());
-                $this->session->set_flashdata('error', 'Unable to send email. Please try again later.');
+                echo json_encode([
+                    'success' => true,
+                    'message' => 'Message received! (Email delivery failed)'
+                ]);
             }
-    
-            redirect('contactpage');
+        } else {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Failed to save your message. Please try again.'
+            ]);
         }
     }
     

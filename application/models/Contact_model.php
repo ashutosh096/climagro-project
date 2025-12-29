@@ -13,4 +13,9 @@ class Contact_model extends CI_Model {
         $this->db->insert('contact_form', $data);
         return $this->db->affected_rows() > 0;
     }
+
+    public function get_all_contacts() {
+        $this->db->order_by('created_at', 'DESC');
+        return $this->db->get('contact_form')->result();
+    }
 }
