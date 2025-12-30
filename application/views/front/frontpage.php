@@ -1823,38 +1823,173 @@ html {
     
 
 <!-- faq start -->
-<section class="faq pos-rel mt-130 pb-5">
+<!-- FAQ Redesign Start -->
+<style>
+    .faq-redesign-section {
+        background-color: #fff;
+        padding: 60px 0 100px;
+        position: relative;
+        z-index: 1;
+        margin-top: 100px; /* Adjusted space to prevent overlap with Resources section */
+    }
+    
+    .faq-redesign-title {
+        text-align: center;
+        color: #025b5f;
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 50px;
+    }
 
+    .faq-list-container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .faq-item-new {
+        margin-bottom: 25px;
+        /* No border bottom based on image, just clean text spacing */
+    }
+
+    .faq-question-new {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start; /* Align top in case of multiline */
+        cursor: pointer;
+        padding: 10px 0;
+        transition: all 0.3s ease;
+    }
+
+    .faq-question-text {
+        color: #025b5f;
+        font-size: 1.35rem; /* Large readable text */
+        font-weight: 500;
+        line-height: 1.4;
+        text-align: left;
+        flex: 1;
+        padding-right: 20px;
+    }
+
+    .faq-icon-new {
+        width: 32px;
+        height: 32px;
+        background-color: #025b5f;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        transition: transform 0.3s ease, background-color 0.3s ease;
+        margin-top: 2px; /* Slight visual alignment with text cap height */
+    }
+
+    .faq-icon-new svg {
+        width: 14px;
+        height: 14px;
+        fill: #fff;
+        transition: fill 0.3s ease;
+    }
+
+    .faq-answer-new {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease-out, margin-top 0.3s ease;
+        padding-left: 0;
+        color: #4b5563; /* Gray-600 */
+        font-size: 1.05rem;
+        line-height: 1.6;
+    }
+
+    /* Active State */
+    .faq-item-new.active .faq-answer-new {
+        /* max-height is handled by JS for smooth animation */
+        margin-top: 10px;
+        margin-bottom: 10px;
+        opacity: 1; /* Fade in effect */
+    }
+
+    .faq-answer-new {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease, margin-top 0.3s ease, opacity 0.3s ease;
+        padding-left: 0;
+        color: #4b5563;
+        font-size: 1.05rem;
+        line-height: 1.6;
+        opacity: 0; /* Hidden state opacity */
+    }
+
+    .faq-item-new.active .faq-icon-new {
+        transform: rotate(45deg);
+    }
+    
+    @media (max-width: 768px) {
+        .faq-question-text {
+            font-size: 1.1rem;
+        }
+        .faq-redesign-title {
+            font-size: 2rem;
+        }
+    }
+</style>
+
+<section class="faq-redesign-section">
     <div class="container">
-        <div class="section-title pb-55">
-            <h1 class="section-title">Frequently Asked Questions</h1>
-        </div>
-        <div class="faq__blockchain-two">
-            <ul class="accordion_box clearfix">
-                <?php
-                $i = 1; // Initialize $i
-                foreach ($faq as $faq) {
-                ?>
-                    <li class="accordion block">
-                        <div class="accordion-inner">
-                            <div class="acc-btn">
-                                <?php echo $faq->work_title; ?>
-                            </div>
-                            <div class="acc_body">
-                                <div class="content">
-                                    <?php echo $faq->testimonial; ?>
-                                </div>
-                            </div>
+        <h2 class="faq-redesign-title">Frequently Asked Questions</h2>
+        
+        <div class="faq-list-container">
+            <?php foreach ($faq as $item): ?>
+                <div class="faq-item-new">
+                    <div class="faq-question-new">
+                        <span class="faq-question-text"><?php echo $item->work_title; ?></span>
+                        <div class="faq-icon-new">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 4V20M4 12H20" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
                         </div>
-                    </li>
-                <?php
-                    $i++; // Increment $i after each iteration
-                }
-                ?>
-            </ul>
+                    </div>
+                    <div class="faq-answer-new">
+                        <?php echo $item->testimonial; ?>
+                    </div>
+                </div>
+            <?php endforeach; ?>
         </div>
     </div>
 </section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const faqItems = document.querySelectorAll('.faq-item-new');
+    
+    faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question-new');
+        const answer = item.querySelector('.faq-answer-new');
+        
+        question.addEventListener('click', () => {
+            const isActive = item.classList.contains('active');
+            
+            // Close all others (Optional - keeps UI clean)
+            faqItems.forEach(otherItem => {
+                if (otherItem !== item && otherItem.classList.contains('active')) {
+                    otherItem.classList.remove('active');
+                    otherItem.querySelector('.faq-answer-new').style.maxHeight = null;
+                }
+            });
+
+            // Toggle current
+            if (isActive) {
+                item.classList.remove('active');
+                answer.style.maxHeight = null;
+            } else {
+                item.classList.add('active');
+                answer.style.maxHeight = answer.scrollHeight + "px";
+            }
+        });
+    });
+});
+</script>
+<!-- FAQ Redesign End -->
 
 <!-- faq end -->
 
@@ -1864,6 +1999,9 @@ html {
     <div class="container">
         <div class="section-title pb-55">
                 <h1 class="section-title">Contact</h1>
+                <p class="section-subtitle" style="text-align: center; color: #025b5f; font-size: 1.1rem; margin-top: 15px; font-weight: 500;">
+                    Need guidance or have specific queries? Fill out the form and let’s start a meaningful conversation.
+                </p>
             </div>
         <div class="xb-contact-form">
             <div class="row g-0 mt-none-30">

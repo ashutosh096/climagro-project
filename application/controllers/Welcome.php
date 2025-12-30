@@ -424,39 +424,59 @@ class Welcome extends CI_Controller
 	}
 
 	public function subscribe()
-		{
-			try {
-				$input = json_decode($this->input->raw_input_stream, true);
-				$email = isset($input['email']) ? trim($input['email']) : '';
-
-				// make sure your model is loaded
-				$this->load->model('Subscribermodel');
-
-				$ok = $this->Subscribermodel->insert_email($email);
-
-				$status = $ok ? 200 : 409;
-				$resp   = ['success' => (bool)$ok];
-
-				if (! $ok) {
-					$resp['error'] = 'Already subscribed or DB error';
-				}
-
-				return $this->output
-							->set_status_header($status)
-							->set_content_type('application/json')
-							->set_output(json_encode($resp));
-			}
-			catch (\Throwable $e) {
-				// return the exception text so you can debug
-				return $this->output
-							->set_status_header(500)
-							->set_content_type('application/json')
-							->set_output(json_encode([
-								'success' => false,
-								'error'   => 'Exception: ' . $e->getMessage()
-							]));
-			}
+	{
+		// 1. Check method
+		if ($this->input->server('REQUEST_METHOD') !== 'POST') {
+			$this->output
+				->set_status_header(405)
+				->set_content_type('application/json')
+				->set_output(json_encode(['success' => false, 'message' => 'Method not allowed']));
+			return;
 		}
+
+		// 2. Get email from POST (standard form data)
+		$email = $this->input->post('email', TRUE);
+		$email = trim($email);
+
+		// 3. Validate email
+		if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+			$this->output
+				->set_status_header(400)
+				->set_content_type('application/json')
+				->set_output(json_encode(['success' => false, 'message' => 'Invalid email address']));
+			return;
+		}
+
+		// 4. Load Model & Insert
+		$this->load->model('Subscribermodel');
+		
+		// Check for duplicate manually if model returns false without distinction, 
+		// but checking the model logic: it returns false if exists.
+		// Let's rely on the model but handle the message nicely.
+		
+		// Actually, let's just check existence first for a better error message
+		if ($this->db->where('email', $email)->count_all_results('subscribers') > 0) {
+			$this->output
+				->set_status_header(200) // Return 200 so frontend treats it as 'handled' but with a message
+				->set_content_type('application/json')
+				->set_output(json_encode(['success' => true, 'message' => 'You are already subscribed!']));
+			return;
+		}
+
+		$inserted = $this->Subscribermodel->insert_email($email);
+
+		if ($inserted) {
+			$this->output
+				->set_status_header(200)
+				->set_content_type('application/json')
+				->set_output(json_encode(['success' => true, 'message' => 'Subscribed — check your inbox.']));
+		} else {
+			$this->output
+				->set_status_header(500)
+				->set_content_type('application/json')
+				->set_output(json_encode(['success' => false, 'message' => 'Database error.']));
+		}
+	}
 
 
 }

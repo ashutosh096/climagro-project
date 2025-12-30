@@ -394,7 +394,7 @@
             setState('loading');
 
             // POST to backend subscribe endpoint
-            fetch('<?php echo base_url('subscribe.php'); ?>', {
+            fetch('<?php echo base_url('subscribe'); ?>', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: 'email=' + encodeURIComponent(email)

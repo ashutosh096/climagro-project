@@ -46,6 +46,13 @@
         
         .empty { text-align: center; padding: 40px; color: #64748b; }
         .empty i { font-size: 32px; margin-bottom: 12px; opacity: 0.5; display: block; }
+        
+        /* Pagination */
+        .pagination-wrapper { margin-top: 20px; display: flex; justify-content: flex-end; }
+        .pagination { display: flex; list-style: none; gap: 4px; padding: 0; margin: 0; }
+        .page-link { color: #94a3b8; background: #1e293b; border: 1px solid #334155; padding: 8px 12px; border-radius: 6px; font-size: 13px; text-decoration: none; transition: all 0.2s; display: block; }
+        .page-link:hover { background: #334155; color: #fff; }
+        .page-item.active .page-link { background: #025b5f; border-color: #025b5f; color: #fff; }
     </style>
 </head>
 <body>
@@ -80,10 +87,11 @@
                         <th width="50">#</th>
                         <th>Email</th>
                         <th width="140">Date</th>
+                        <th width="50">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php if (!empty($subscribers)): $i=1; foreach($subscribers as $s): ?>
+                    <?php if (!empty($subscribers)): $i = isset($offset) ? $offset + 1 : 1; foreach($subscribers as $s): ?>
                     <tr>
                         <td><?php echo $i++; ?></td>
                         <td>
@@ -93,6 +101,9 @@
                             </div>
                         </td>
                         <td class="date"><?php echo isset($s->created_at) ? date('M d, Y', strtotime($s->created_at)) : '-'; ?></td>
+                        <td>
+                            <a href="<?php echo base_url('administrator/deleteproduct/' . $s->id . '/id/subscribers/no-image/managesubscribers'); ?>" onclick="return confirm('Are you sure you want to delete this subscriber?');" style="color: #ef4444; font-size: 14px;"><i class="fas fa-trash-alt"></i></a>
+                        </td>
                     </tr>
                     <?php endforeach; else: ?>
                     <tr><td colspan="3"><div class="empty"><i class="fas fa-inbox"></i>No subscribers yet</div></td></tr>
@@ -100,6 +111,9 @@
                 </tbody>
             </table>
         </div>
+        
+        <!-- Pagination Links -->
+        <?php if(isset($links)) echo $links; ?>
     </div>
     
     <script>

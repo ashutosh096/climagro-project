@@ -77,6 +77,7 @@ $route['news/(:any)/(:any)'] = 'errors/error_404';   // Prevent deeper URLs
 
 $route['api/files'] = 'Welcome/list_files';
 $route['email/subscribe']['post'] = 'Welcome/subscribe';
+$route['subscribe'] = 'Welcome/subscribe'; // Handle cleaner URL
 
 // Admin subscriber management routes
 $route['administrator/managesubscribers'] = 'Administrator/managesubscribers';

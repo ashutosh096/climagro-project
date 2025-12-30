@@ -1350,11 +1350,51 @@ class Administrator extends CI_Controller
 		if ($this->usertype == 'seo') {
 			redirect('administrator/manageseo');
 		}
-		
-		// Get subscribers from database
+
+		$this->load->library('pagination');
 		$this->load->model('Subscribermodel');
+
+		// Pagination Config
+		$config = array();
+		$config["base_url"] = base_url() . "administrator/managesubscribers";
+		$config["total_rows"] = $this->db->count_all("subscribers");
+		$config["per_page"] = 20;
+		$config["uri_segment"] = 3;
+
+		// Styling for Pagination (Dark Theme Compatible)
+		$config['full_tag_open'] = '<div class="pagination-wrapper"><ul class="pagination">';
+		$config['full_tag_close'] = '</ul></div>';
+		$config['first_link'] = false;
+		$config['last_link'] = false;
+		$config['first_tag_open'] = '<li class="page-item">';
+		$config['first_tag_close'] = '</li>';
+		$config['prev_link'] = '<i class="fas fa-chevron-left"></i>';
+		$config['prev_tag_open'] = '<li class="page-item">';
+		$config['prev_tag_close'] = '</li>';
+		$config['next_link'] = '<i class="fas fa-chevron-right"></i>';
+		$config['next_tag_open'] = '<li class="page-item">';
+		$config['next_tag_close'] = '</li>';
+		$config['last_tag_open'] = '<li class="page-item">';
+		$config['last_tag_close'] = '</li>';
+		$config['cur_tag_open'] = '<li class="page-item active"><a class="page-link" href="#">';
+		$config['cur_tag_close'] = '</a></li>';
+		$config['num_tag_open'] = '<li class="page-item">';
+		$config['num_tag_close'] = '</li>';
+		$config['attributes'] = array('class' => 'page-link');
+
+		$this->pagination->initialize($config);
+
+		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+
+		// Fetch Data (Newest First)
+		$this->db->order_by('id', 'DESC');
+		$this->db->limit($config["per_page"], $page);
 		$data['subscribers'] = $this->db->get('subscribers')->result();
-		$data['total_count'] = count($data['subscribers']);
+		
+		$data['links'] = $this->pagination->create_links();
+		$data['total_count'] = $config["total_rows"];
+		$data['offset'] = $page; // To calculate SR No correctly across pages
+
 		$data['title'] = "Manage Email Subscribers";
 		$this->load->view("admin-template/manage-subscribers", $data);
 	}

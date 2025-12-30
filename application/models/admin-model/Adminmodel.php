@@ -72,8 +72,14 @@ class Adminmodel extends CI_Model
 
 	public function deleteproduct($id, $column, $table)
 	{
+		// Check if table needs prefix
+		if ($table == 'subscribers' || $table == 'contact_form') {
+			$tableName = $table;
+		} else {
+			$tableName = "tbl_" . $table;
+		}
 
-		$this->db->delete("tbl_" . $table, array($column => $id));
+		$this->db->delete($tableName, array($column => $id));
 		$delete =  $this->db->affected_rows();
 
 		if ($delete) {

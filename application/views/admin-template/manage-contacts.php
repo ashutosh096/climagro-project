@@ -117,6 +117,7 @@
                         <?php if(!empty($c->title)): ?><span class="badge badge-blue"><?php echo htmlspecialchars($c->title); ?></span><?php endif; ?>
                         <?php if(!empty($c->interested)): ?><span class="badge badge-green"><?php echo htmlspecialchars($c->interested); ?></span><?php endif; ?>
                         <span class="date"><?php echo isset($c->created_at) ? date('M d, Y', strtotime($c->created_at)) : '-'; ?></span>
+                        <a href="<?php echo base_url('administrator/deleteproduct/' . $c->id . '/id/contact_form/no-image/managecontacts'); ?>" onclick="return confirm('Are you sure you want to delete this contact?'); event.stopPropagation();" style="color: #64748b; font-size: 13px; margin: 0 8px; transition: color 0.2s;" onmouseover="this.style.color='#ef4444'" onmouseout="this.style.color='#64748b'"><i class="fas fa-trash-alt"></i></a>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                 </div>
