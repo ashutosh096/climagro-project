@@ -333,7 +333,7 @@
  <div class="climate-modal-overlay" id="walkthroughModal">
     <div class="climate-modal">
         <div class="climate-modal-header">
-            <h3 class="climate-modal-title" style="color:white;">Book a Walkthrough</h3>
+            <h3 class="climate-modal-title" style="color:white; font-size: 1.1rem;">Book a Walkthrough</h3>
             <button class="climate-close-btn" id="closeWalkthroughModal">&times;</button>
         </div>
         <div class="climate-modal-body">
@@ -342,17 +342,17 @@
                 <input type="hidden" name="form_type" value="Walkthrough Booking">
                 
                 <div class="row">
-                    <div class="col-lg-6 mb-3">
-                        <input type="text" class="form-control" placeholder="Full name" name="name" required style="padding: 12px; border: 1px solid #e5e7eb; border-radius: 8px; width: 100%;">
+                    <div class="col-lg-6 mb-2">
+                        <input type="text" class="form-control" placeholder="Full name" name="name" required style="padding: 8px 12px; border: 1px solid #e5e7eb; border-radius: 6px; width: 100%; height: auto; font-size: 0.9rem;">
                     </div>
-                    <div class="col-lg-6 mb-3">
-                        <input type="tel" class="form-control" placeholder="Phone number" name="phone" id="walkthroughPhone" required style="padding: 12px; border: 1px solid #e5e7eb; border-radius: 8px; width: 100%;" inputmode="numeric" pattern="[0-9]*" maxlength="15">
+                    <div class="col-lg-6 mb-2">
+                        <input type="tel" class="form-control" placeholder="Phone number" name="phone" id="walkthroughPhone" required style="padding: 8px 12px; border: 1px solid #e5e7eb; border-radius: 6px; width: 100%; height: auto; font-size: 0.9rem;" inputmode="numeric" pattern="[0-9]*" maxlength="15">
                     </div>
-                    <div class="col-lg-12 mb-3">
-                        <input type="email" class="form-control" placeholder="Enter your email" name="email" required style="padding: 12px; border: 1px solid #e5e7eb; border-radius: 8px; width: 100%;">
+                    <div class="col-lg-12 mb-2">
+                        <input type="email" class="form-control" placeholder="Enter your email" name="email" required style="padding: 8px 12px; border: 1px solid #e5e7eb; border-radius: 6px; width: 100%; height: auto; font-size: 0.9rem;">
                     </div>
-                    <div class="col-lg-12 mb-3">
-                        <select name="title" required style="padding: 12px; border: 1px solid #e5e7eb; border-radius: 8px; width: 100%; background-color: white;">
+                    <div class="col-lg-12 mb-2">
+                        <select name="title" class="custom-select-icon" required style="padding: 8px 12px; border: 1px solid #e5e7eb; border-radius: 6px; width: 100%; background-color: white; height: auto; font-size: 0.9rem;">
                             <option value="">Help us understand how we can support you better.</option>
                             <option value="Government / Policy Maker">Government / Policy Maker</option>
                             <option value="Researcher / Academic">Researcher / Academic</option>
@@ -363,8 +363,8 @@
                             <option value="Other">Other</option>
                         </select>
                     </div>
-                    <div class="col-lg-12 mb-3">
-                        <select name="interested" style="padding: 12px; border: 1px solid #e5e7eb; border-radius: 8px; width: 100%; background-color: white;">
+                    <div class="col-lg-12 mb-2">
+                        <select name="interested" class="custom-select-icon" style="padding: 8px 12px; border: 1px solid #e5e7eb; border-radius: 6px; width: 100%; background-color: white; height: auto; font-size: 0.9rem;">
                             <option value="">Interested In (Optional)</option>
                             <option value="AgRI.ai">AgRI.ai</option>
                             <option value="CityAdapt.ai">CityAdapt.ai</option>
@@ -374,16 +374,16 @@
                             <option value="Others">Others</option>
                         </select>
                     </div>
-                    <div class="col-lg-12 mb-4">
-                        <textarea class="form-control" name="comment" cols="30" rows="4" placeholder="Your query or preferred time..." style="padding: 12px; border: 1px solid #e5e7eb; border-radius: 8px; width: 100%;"></textarea>
+                    <div class="col-lg-12 mb-3">
+                        <textarea class="form-control" name="comment" cols="30" rows="3" placeholder="Is there anything you want me to know before our call?" style="padding: 8px 12px; border: 1px solid #e5e7eb; border-radius: 6px; width: 100%; height: auto; font-size: 0.9rem;"></textarea>
                     </div>
-                    <div class="col-lg-12">
-                        <button class="them-btn" type="submit" style="width: 100%; justify-content: center;">
-                            <span class="btn_label" data-text="Book Walkthrough">Book Walkthrough</span>
+                    <div class="col-lg-12" style="display: flex; justify-content: center;">
+                        <button type="submit" class="btn-custom-pill">
+                            Book Walkthrough
                         </button>
                     </div>
                 </div>
-                <div class="walkthrough-form-results mt-3"></div>
+                <div class="walkthrough-form-results mt-2"></div>
             </form>
         </div>
     </div>
@@ -418,8 +418,8 @@
     border-radius: 1rem;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
     width: 90%;
-    max-width: 600px;
-    max-height: 90vh;
+    max-width: 550px;
+    max-height: 95vh;
     overflow-y: auto;
     transform: scale(0.9);
     transition: transform 0.3s ease;
@@ -431,7 +431,7 @@
 
 .climate-modal-header {
     background: #025B5F;
-    padding: 1.5rem;
+    padding: 1rem 1.5rem; /* Reduced padding */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -439,7 +439,7 @@
 }
 
 .climate-modal-title {
-    font-size: 1.25rem;
+    font-size: 1.1rem;
     font-weight: 700;
     margin: 0;
 }
@@ -448,7 +448,7 @@
     background: none;
     border: none;
     color: white;
-    font-size: 2rem;
+    font-size: 1.5rem;
     line-height: 1;
     cursor: pointer;
     padding: 0 0.5rem;
@@ -460,8 +460,41 @@
 }
 
 .climate-modal-body {
-    padding: 2rem;
+    padding: 1.5rem; /* Reduced padding */
 }
+
+.btn-custom-pill {
+    background-color: #025B5F; /* Primary Teal */
+    color: white;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 12px 28px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    letter-spacing: 0.5px;
+}
+
+.btn-custom-pill:hover {
+    background-color: #014346;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.custom-select-icon {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23333333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
+    padding-right: 30px !important; /* Ensure text doesn't overlap arrow */
+}
+
+
 </style>
 
 <script>
