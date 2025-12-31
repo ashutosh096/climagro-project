@@ -113,8 +113,26 @@
     }
 
     .climate-content .btn-primary:hover {
-    background-color: #059669; /* Emerald-600 */
+    background-color: #c8ff08 !important; /* Match inline style #c8ff08 to disable hover change */
+    color: #000 !important; /* Context: inline has color: #000 */
     text-decoration: none;
+    }
+
+    /* Force .them-btn (Hero Section) to stay neon green on hover */
+    .them-btn:hover, .them-btn:focus, .them-btn:active {
+        background-color: #c8ff08 !important;
+        color: #000 !important;
+        border-color: #c8ff08 !important;
+        opacity: 1 !important;
+    }
+
+    /* Force .btn-primary (Solutions/Other) to stay teal on hover */
+    .btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+         /* If in solutions page, this might be redundant but safe */
+         /* But wait, solutions page has its own style block. 
+            Here in frontpagestyle.php, we primarily target the front page.
+            The "At ClimAgro" section uses .btn-primary with inline style #c8ff08.
+         */
     }
 
 

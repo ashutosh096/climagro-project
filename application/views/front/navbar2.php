@@ -195,7 +195,7 @@
                         </div>
                     </div>
                     <div class="header-btn ul_li">
-                        <a class="login-btn" href="<?php echo base_url('contact-us.php').'#formcontact'?>">Book a Call</a>
+                        <a class="login-btn" href="<?php echo base_url('contact-us.php').'#formcontact'?>">Contact Us</a>
                         <div class="header-bar-mobile side-menu d-lg-none ml-20">
                             <a class="xb-nav-mobile" href="javascript:void(0);"><i class="far fa-bars"></i></a>
                         </div>

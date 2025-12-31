@@ -206,6 +206,14 @@
         margin-bottom: 0.25rem;
         color: #d1d5db;
     }
+    .footer-contact a {
+        color: #d1d5db;
+        text-decoration: none;
+        transition: color 0.15s;
+    }
+    .footer-contact a:hover {
+        color: #ffffff;
+    }
     
     .footer-bottom {
         border-top: 1px solid #374151;
@@ -265,11 +273,11 @@
                 <div class="footer-title">Contact</div>
                 <div class="footer-contact">
                     <i class="fas fa-envelope"></i>
-                    <?php echo $getCompany->comp_email; ?>
+                    <a href="mailto:<?php echo $getCompany->comp_email; ?>"><?php echo $getCompany->comp_email; ?></a>
                 </div>
                 <div class="footer-contact">
                     <i class="fas fa-phone"></i>
-                    <?php echo $getCompany->comp_mobile; ?>
+                    <a href="https://wa.me/<?php echo preg_replace('/[^0-9]/', '', $getCompany->comp_mobile); ?>" target="_blank"><?php echo $getCompany->comp_mobile; ?></a>
                 </div>
                 <div class="footer-contact">
                     <i class="fas fa-map-marker-alt"></i>
@@ -320,6 +328,231 @@
         </div>
     </div>
 </footer>
+
+ <!-- Book a Walkthrough Modal -->
+ <div class="climate-modal-overlay" id="walkthroughModal">
+    <div class="climate-modal">
+        <div class="climate-modal-header">
+            <h3 class="climate-modal-title" style="color:white;">Book a Walkthrough</h3>
+            <button class="climate-close-btn" id="closeWalkthroughModal">&times;</button>
+        </div>
+        <div class="climate-modal-body">
+            <form id="walkthroughForm" action="<?= site_url('contact/submit') ?>" method="POST">
+                <input type="hidden" name="url" value="<?php echo current_url(); ?>">
+                <input type="hidden" name="form_type" value="Walkthrough Booking">
+                
+                <div class="row">
+                    <div class="col-lg-6 mb-3">
+                        <input type="text" class="form-control" placeholder="Full name" name="name" required style="padding: 12px; border: 1px solid #e5e7eb; border-radius: 8px; width: 100%;">
+                    </div>
+                    <div class="col-lg-6 mb-3">
+                        <input type="tel" class="form-control" placeholder="Phone number" name="phone" id="walkthroughPhone" required style="padding: 12px; border: 1px solid #e5e7eb; border-radius: 8px; width: 100%;" inputmode="numeric" pattern="[0-9]*" maxlength="15">
+                    </div>
+                    <div class="col-lg-12 mb-3">
+                        <input type="email" class="form-control" placeholder="Enter your email" name="email" required style="padding: 12px; border: 1px solid #e5e7eb; border-radius: 8px; width: 100%;">
+                    </div>
+                    <div class="col-lg-12 mb-3">
+                        <select name="title" required style="padding: 12px; border: 1px solid #e5e7eb; border-radius: 8px; width: 100%; background-color: white;">
+                            <option value="">Help us understand how we can support you better.</option>
+                            <option value="Government / Policy Maker">Government / Policy Maker</option>
+                            <option value="Researcher / Academic">Researcher / Academic</option>
+                            <option value="Financial Institution / Insurer">Financial Institution / Insurer</option>
+                            <option value="NGO / Nonprofit">NGO / Nonprofit</option>
+                            <option value="Student">Student</option>
+                            <option value="Corporate Sustainability / ESG Professional">Corporate Sustainability / ESG Professional</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-12 mb-3">
+                        <select name="interested" style="padding: 12px; border: 1px solid #e5e7eb; border-radius: 8px; width: 100%; background-color: white;">
+                            <option value="">Interested In (Optional)</option>
+                            <option value="AgRI.ai">AgRI.ai</option>
+                            <option value="CityAdapt.ai">CityAdapt.ai</option>
+                            <option value="Climate Data Portal">Climate Data Portal</option>
+                            <option value="Climate Consulting">Climate Consulting</option>
+                             <option value="Collaborations">Collaborations / Research</option>
+                            <option value="Others">Others</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-12 mb-4">
+                        <textarea class="form-control" name="comment" cols="30" rows="4" placeholder="Your query or preferred time..." style="padding: 12px; border: 1px solid #e5e7eb; border-radius: 8px; width: 100%;"></textarea>
+                    </div>
+                    <div class="col-lg-12">
+                        <button class="them-btn" type="submit" style="width: 100%; justify-content: center;">
+                            <span class="btn_label" data-text="Book Walkthrough">Book Walkthrough</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="walkthrough-form-results mt-3"></div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Modal Styles (Global) */
+.climate-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.climate-modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.climate-modal {
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+.climate-modal-overlay.active .climate-modal {
+    transform: scale(1);
+}
+
+.climate-modal-header {
+    background: #025B5F;
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 1rem 1rem 0 0;
+}
+
+.climate-modal-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.climate-close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0 0.5rem;
+    transition: opacity 0.2s;
+}
+
+.climate-close-btn:hover {
+    opacity: 0.8;
+}
+
+.climate-modal-body {
+    padding: 2rem;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Modal Logic
+    const modal = document.getElementById('walkthroughModal');
+    const closeBtn = document.getElementById('closeWalkthroughModal');
+    
+    // Open modal on click of any element with class 'open-walkthrough-modal'
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.open-walkthrough-modal')) {
+            e.preventDefault();
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+    });
+
+    // Close modal
+    if (closeBtn) {
+        closeBtn.addEventListener('click', function() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+    }
+
+    // Close on outside click
+    if (modal) {
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    }
+    
+    // Form Submission Logic
+    const form = document.getElementById('walkthroughForm');
+    const phoneInput = document.getElementById('walkthroughPhone');
+    
+    // Enforce numeric only for phone
+    if (phoneInput) {
+        phoneInput.addEventListener('input', function() {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+    }
+
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const resultsDiv = form.querySelector('.walkthrough-form-results');
+            
+            // Clear prev results
+            resultsDiv.innerHTML = '';
+            
+            // Basic validation
+            const phoneVal = phoneInput.value.trim();
+             if (phoneVal !== '' && !/^[0-9]+$/.test(phoneVal)) {
+                resultsDiv.innerHTML = '<div class="alert alert-danger" style="color:red;">Please enter a valid phone number.</div>';
+                return;
+            }
+
+            resultsDiv.innerHTML = '<div class="alert alert-info" style="color:blue;">Sending request...</div>';
+
+            const formData = new FormData(form);
+            
+            fetch(form.action, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    resultsDiv.innerHTML = '<div class="alert alert-success" style="color:green;">' + data.message + '</div>';
+                    form.reset();
+                    setTimeout(() => {
+                        modal.classList.remove('active');
+                        document.body.style.overflow = '';
+                        resultsDiv.innerHTML = ''; // Request clear
+                    }, 3000);
+                } else {
+                    resultsDiv.innerHTML = '<div class="alert alert-danger" style="color:red;">' + (data.message || 'Submission failed.') + '</div>';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                resultsDiv.innerHTML = '<div class="alert alert-danger" style="color:red;">An error occurred. Please try again.</div>';
+            });
+        });
+    }
+});
+</script>
     <!-- Subscribe JS (handles UI states: loading, success, error + micro-anim) -->
     <script>
     (function(){

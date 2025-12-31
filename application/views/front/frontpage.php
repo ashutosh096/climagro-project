@@ -629,8 +629,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 <p class="xb-item--content wow fadeInUp text-white" data-wow-duration=".7s" data-wow-delay="150ms" style="margin-bottom: 1rem;"><?php echo $slider->content;
                                                                                                                     ?> </p>
                 <div class="hero__btn btns pt-10 wow fadeInUp" data-wow-duration=".7s" data-wow-delay="250ms">
-                    <a class="them-btn" href="<?php echo base_url('contact-us.php').'#contactForm'?>">
-                        <span class="btn_label" data-text="Request Demo">Request Demo</span>
+                    <a class="them-btn open-walkthrough-modal" href="javascript:void(0);">
+                        <span class="btn_label" data-text="Book a Walkthrough">Book a Walkthrough</span>
                         <span class="btn_icon">
                             <svg width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M14.434 0.999999C14.434 0.447714 13.9862 -8.61581e-07 13.434 -1.11446e-06L4.43396 -3.13672e-07C3.88168 -6.50847e-07 3.43396 0.447715 3.43396 0.999999C3.43396 1.55228 3.88168 2 4.43396 2L12.434 2L12.434 10C12.434 10.5523 12.8817 11 13.434 11C13.9862 11 14.434 10.5523 14.434 10L14.434 0.999999ZM2.14107 13.7071L14.1411 1.70711L12.7269 0.292893L0.726853 12.2929L2.14107 13.7071Z" fill="white"></path>
@@ -674,7 +674,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <p></p>
                     <br>
 
-                    <a class="btn btn-primary" style="background-color: #c8ff08; color: #000;" href="<?php echo base_url('solutions').'#consult-us' ?>">Request Demo</a>
+                    <a class="btn btn-primary open-walkthrough-modal" style="background-color: #c8ff08; color: #000;" href="javascript:void(0);">Book a Walkthrough</a>
 
                 </div>
             </div>

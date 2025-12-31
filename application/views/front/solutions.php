@@ -16,6 +16,19 @@ include("navbar2.php");
             scrollbar-width: none; /* Firefox */
             -ms-overflow-style: none;  /* IE 10+ */
         }
+        
+        /* Disable hover effect for primary buttons */
+        .btn-primary {
+            background-color: #025b5f;
+            border-color: #025b5f;
+            color: #fff;
+        }
+        .btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+            background-color: #025b5f !important;
+            border-color: #025b5f !important;
+            color: #fff !important;
+            opacity: 1 !important;
+        }
 
         html::-webkit-scrollbar, body::-webkit-scrollbar {
             display: none;
@@ -27,16 +40,13 @@ include("navbar2.php");
             display: flex;
             flex-direction: column;
             background: linear-gradient(to bottom right, #f7f9fc, #ffffff);
-            padding: 0 2rem;
-            max-width: 1280px;
-            margin: 0 auto;
+            /* padding: 0 2rem;  Removing padding here as .container handles it */
+            width: 100%;       /* Ensure full width */
+            max-width: none;   /* override if any */
+            margin: 0;         /* Reset margin */
         }
-
-        @media (min-width: 1024px) {
-            .offering-container {
-                flex-direction: row;
-            }
-        }
+        
+        /* Removed unnecessary media query for offering-container flex-direction */
 
         .laptop-frame {
             width: 100%;
@@ -171,10 +181,36 @@ include("navbar2.php");
             .product-block:nth-child(even) {
                 flex-direction: row-reverse;
             }
+
+            /* Custom sizing for Data Portal to fit 3 buttons */
+            #DATA .laptop-container {
+                width: 48%;
+                flex: 0 0 48%;
+            }
+            
+            #DATA .product-content {
+                width: 48%;
+                flex: 0 0 48%;
+                padding-left: 0; 
+                /* Removed left padding to align with the laptop container above */
+            }
+
+            /* Ensure image has padding inside the laptop screen in Data Portal (small image look) */
+            #DATA .content-area {
+                padding: 1.5rem !important;
+            }
+            
+            #DATA .content-area img {
+                width: 100%;
+                /* height: 100%;  Let height be auto to maintain aspect ratio */
+                object-fit: contain; /* Ensure it fits nicely */
+                border-radius: 0.5rem;
+                display: block;
+            }
         }
 
         .container {
-            max-width: 1280px;
+            max-width: 1600px;
             margin: 0 auto;
             padding: 0 1.5rem;
         }
@@ -390,9 +426,9 @@ include("navbar2.php");
         }
         .buttons-container {
             display: flex;
-            flex-wrap: nowrap;
+            flex-wrap: wrap;
             gap: 1rem;
-            justify-content: flex-end;
+            justify-content: flex-start;
             align-items: center;
             width: 100%;
         }
@@ -675,8 +711,8 @@ include("navbar2.php");
                             Gain deep insights into climate risks with ward-level vulnerability assessments and identification of high-risk hotspots. Track projected warming levels up to 2100 with annual updates, monitor greenhouse gas emissions, and access comprehensive socio-economic and demographic profiles to support data-driven urban resilience planning.
                         </p>
                         <div class="fade-in">
-                            <a href="#consult-us" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 0.5rem;">
-                                Request Demo
+                            <a href="javascript:void(0);" class="btn btn-primary open-walkthrough-modal" style="display: inline-flex; align-items: center; gap: 0.5rem;">
+                                Book a Walkthrough
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <line x1="5" y1="12" x2="19" y2="12"></line>
                                     <polyline points="12 5 19 12 12 19"></polyline>
@@ -696,8 +732,8 @@ include("navbar2.php");
                             <div class="control-dot" style="background-color: #f59e0b;"></div>
                             <div class="control-dot" style="background-color: #10b981;"></div>
                         </div>
-                        <div class="content-area" style="padding: 1rem;">
-                            <img src="assest/img/about/mokd.png" alt="Agriculture Risk Analysis Dashboard" style="width: 100%; border-radius: 0.5rem;">
+                        <div class="content-area">
+                            <img src="assest/img/about/mokd.png" alt="Agriculture Risk Analysis Dashboard">
                         </div>
                     </div>
                     <div class="laptop-base"></div>
@@ -716,8 +752,8 @@ include("navbar2.php");
 
                         
                         <div class="fade-in buttons-container">
-                                <a href="#consult-us" class="btn btn-primary">
-                                    Request Demo
+                                <a href="javascript:void(0);" class="btn btn-primary open-walkthrough-modal">
+                                    Book a Walkthrough
                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <line x1="5" y1="12" x2="19" y2="12"></line>
                                         <polyline points="12 5 19 12 12 19"></polyline>
@@ -766,8 +802,8 @@ include("navbar2.php");
                             Delivering climate risk assessment reports tailored for corporate institutions, enterprises, governments , and NGOs. our services provide sector-specific climate impact analysis to guide effective risk mitigation. We also offer customized climate adaptation and resilience planning to support long-term sustainability and preparedness.
                         </p>
                         <div class="fade-in">
-                            <a href="#consult-us" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 0.5rem;">
-                                Request Demo
+                            <a href="javascript:void(0);" class="btn btn-primary open-walkthrough-modal" style="display: inline-flex; align-items: center; gap: 0.5rem;">
+                                Book a Walkthrough
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <line x1="5" y1="12" x2="19" y2="12"></line>
                                     <polyline points="12 5 19 12 12 19"></polyline>
