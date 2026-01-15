@@ -134,8 +134,14 @@ include("navbar2.php");
 
         @media (min-width: 1024px) {
             .product-content {
-                width: 50%;
-                padding: 4rem;
+                width: 44%;
+                flex: 0 0 44%;
+                padding: 0; /* Align with laptop container */
+            }
+            
+            .laptop-container {
+                width: 44%;
+                flex: 0 0 44%;
             }
         }
 
@@ -174,39 +180,26 @@ include("navbar2.php");
             .product-block {
                 flex-direction: row;
                 align-items: center;
-                gap: 2rem;
+                gap: 8%; /* Increased spacing */
                 padding: 0 2rem;
+                justify-content: space-between;
             }
 
             .product-block:nth-child(even) {
                 flex-direction: row-reverse;
             }
-
-            /* Custom sizing for Data Portal to fit 3 buttons */
-            #DATA .laptop-container {
-                width: 48%;
-                flex: 0 0 48%;
-            }
             
-            #DATA .product-content {
-                width: 48%;
-                flex: 0 0 48%;
-                padding-left: 0; 
-                /* Removed left padding to align with the laptop container above */
-            }
-
-            /* Ensure image has padding inside the laptop screen in Data Portal (small image look) */
-            #DATA .content-area {
+            /* Global override for content area padding in laptop screen */
+            .content-area {
                 padding: 1.5rem !important;
             }
-            
-            #DATA .content-area img {
-                width: 100%;
-                /* height: 100%;  Let height be auto to maintain aspect ratio */
-                object-fit: contain; /* Ensure it fits nicely */
-                border-radius: 0.5rem;
-                display: block;
-            }
+        }    
+        /* Generic Content Area Image - match Data Portal style */
+        .content-area img {
+            width: 100%;
+            object-fit: contain;
+            border-radius: 0.5rem;
+            display: block;
         }
 
         .container {
@@ -634,7 +627,7 @@ include("navbar2.php");
     <!-- Offerings Section -->
     <section class="offering-container">
         <div class="container">
-            <div class="section-header text-center mb-5" data-aos="fade-up">
+            <div class="section-header text-center mb-5" data-aos="fade-up" style="margin-bottom: 8rem !important;">
                 <div class="title-wrapper">
                     <span class="corner-decoration">⌜</span>
                     <h2 class="main-title">Offerings</h2>
@@ -652,8 +645,8 @@ include("navbar2.php");
             <div class="control-dot" style="background-color: #f59e0b;"></div>
             <div class="control-dot" style="background-color: #10b981;"></div>
           </div>
-          <div class="content-area" style="padding: 1rem;">
-            <img src="assest/img/about/AgRI.png" alt="Agriculture Risk Analysis Dashboard" style="width: 100%; border-radius: 0.5rem;">
+          <div class="content-area">
+            <img src="assest/img/about/AgRI.png" alt="Agriculture Risk Analysis Dashboard">
           </div>
         </div>
         <div class="laptop-base"></div>
@@ -672,7 +665,7 @@ include("navbar2.php");
             AgRI.ai is a crop-location-specific risk estimator that uses AI and machine learning to analyze crop-climate interactions through historical data. Integrating diverse datasets, AgRI.ai provides historical, current , short-term , medium-term, and long-term risk assessments.
           </p>
           <div class="fade-in">
-            <a href="#consult-us" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 0.5rem;">
+            <a href="<?php echo base_url('agri'); ?>" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 0.5rem;">
               Request Demo
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
@@ -693,8 +686,8 @@ include("navbar2.php");
                             <div class="control-dot" style="background-color: #f59e0b;"></div>
                             <div class="control-dot" style="background-color: #10b981;"></div>
                         </div>
-                        <div class="content-area" style="padding: 1rem;">
-                            <img src="assest/img/about/CityAdapt.png" alt="Agriculture Risk Analysis Dashboard" style="width: 100%; border-radius: 0.5rem;">
+                        <div class="content-area">
+                            <img src="assest/img/about/CityAdapt.png" alt="Agriculture Risk Analysis Dashboard">
                         </div>
                     </div>
                     <div class="laptop-base"></div>
@@ -784,8 +777,8 @@ include("navbar2.php");
                             <div class="control-dot" style="background-color: #f59e0b;"></div>
                             <div class="control-dot" style="background-color: #10b981;"></div>
                         </div>
-                        <div class="content-area" style="padding: 1rem;">
-                            <img src="assest/img/about/Consulting.png" alt="Agriculture Risk Analysis Dashboard" style="width: 100%; border-radius: 0.5rem;">
+                        <div class="content-area">
+                            <img src="assest/img/about/Consulting.png" alt="Agriculture Risk Analysis Dashboard">
                         </div>
                     </div>
                     <div class="laptop-base"></div>

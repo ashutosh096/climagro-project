@@ -172,6 +172,12 @@ class Welcome extends CI_Controller
 		$this->data['servicelist'] = $this->p->productlist(0, "id", "tbl_services");
 		$this->load->view('front/solutions', $this->data);
 	}
+	
+	public function agri()
+	{
+		$this->load->view('front/agri', $this->data);
+	}
+	
 	public function sercies()
 	{
 

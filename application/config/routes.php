@@ -62,6 +62,7 @@ $route['services'] = 'Welcome/sercies/';
 $route['contact-us'] = 'Welcome/contact/';
 $route['contact/submit'] = 'Welcome/submit';
 $route['solutions'] = 'Welcome/solutions/';
+$route['agri'] = 'Welcome/agri/';
 $route['resource'] = 'Welcome/resource/';
 $route['our-team'] = 'Welcome/team/';
 $route['our-journey'] = 'Welcome/journey/';
