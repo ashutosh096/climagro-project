@@ -230,10 +230,24 @@
             
             <div class="hero-buttons">
                 <?php if (!empty($hero_data['cta_primary'])): ?>
-                    <a href="<?php echo $hero_data['cta_primary']['url']; ?>" class="hero-btn hero-btn-primary">
+                    <a href="<?php echo $hero_data['cta_primary']['url']; ?>" 
+                       class="hero-btn hero-btn-primary"
+                       <?php if($hero_data['cta_primary']['url'] === '#request-demo') echo 'onclick="openMultiStepModal(); return false;"'; ?>>
                         <?php echo $hero_data['cta_primary']['text']; ?>
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                <?php endif; ?>
+                
+                <?php if (!empty($hero_data['cta_newtab'])): ?>
+                    <a href="<?php echo $hero_data['cta_newtab']['url']; ?>" 
+                       class="hero-btn hero-btn-primary" 
+                       target="_blank"
+                       style="background: linear-gradient(135deg, #04888e, #14b8a6);">
+                        <?php echo $hero_data['cta_newtab']['text']; ?>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
                         </svg>
                     </a>
                 <?php endif; ?>

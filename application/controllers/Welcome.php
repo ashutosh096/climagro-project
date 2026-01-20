@@ -178,6 +178,11 @@ class Welcome extends CI_Controller
 		$this->load->view('front/agri', $this->data);
 	}
 	
+	public function climintellio_form()
+	{
+		$this->load->view('front/climintellio_form', $this->data);
+	}
+	
 	public function sercies()
 	{
 

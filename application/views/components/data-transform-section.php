@@ -121,7 +121,10 @@
         display: none;
         flex-direction: column;
         align-items: center;
-        gap: 8px;
+        justify-content: center;
+        gap: 0;
+        position: relative;
+        min-width: 120px;
     }
     
     @media (min-width: 1024px) {
@@ -131,35 +134,85 @@
     }
     
     .arrow-line {
-        width: 100px;
-        height: 4px;
-        background: linear-gradient(90deg, #f26a21, #14b8a6);
-        border-radius: 2px;
+        width: 120px;
+        height: 6px;
+        background: linear-gradient(90deg, #f26a21 0%, #14b8a6 100%);
+        border-radius: 3px;
         position: relative;
+        box-shadow: 0 0 20px rgba(242, 106, 33, 0.4), 0 0 40px rgba(20, 184, 166, 0.3);
+        overflow: visible;
     }
     
+    /* Animated flow effect */
+    .arrow-line::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 40px;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+        animation: arrow-flow 1.5s ease-in-out infinite;
+        border-radius: 3px;
+    }
+    
+    @keyframes arrow-flow {
+        0% { left: -40px; }
+        100% { left: 120px; }
+    }
+    
+    /* Arrow head */
     .arrow-line::after {
         content: '';
         position: absolute;
-        right: -10px;
+        right: -18px;
         top: 50%;
         transform: translateY(-50%);
-        border: 8px solid transparent;
-        border-left-color: #14b8a6;
+        width: 0;
+        height: 0;
+        border: 12px solid transparent;
+        border-left: 16px solid #14b8a6;
+        filter: drop-shadow(0 0 8px rgba(20, 184, 166, 0.6));
     }
     
+    /* Pulsing start dot */
     .arrow-glow {
-        width: 14px;
-        height: 14px;
-        background: #f26a21;
+        width: 18px;
+        height: 18px;
+        background: radial-gradient(circle, #f26a21 30%, rgba(242, 106, 33, 0.4) 70%);
         border-radius: 50%;
-        animation: arrow-pulse 1.5s infinite;
-        box-shadow: 0 0 20px #f26a21;
+        animation: arrow-pulse 2s ease-in-out infinite;
+        box-shadow: 0 0 15px #f26a21, 0 0 30px rgba(242, 106, 33, 0.5);
+        position: absolute;
+        left: -9px;
+        z-index: 2;
+    }
+    
+    /* Pulsing end dot */
+    .arrow-connector::after {
+        content: '';
+        width: 18px;
+        height: 18px;
+        background: radial-gradient(circle, #14b8a6 30%, rgba(20, 184, 166, 0.4) 70%);
+        border-radius: 50%;
+        animation: arrow-pulse 2s ease-in-out infinite 0.5s;
+        box-shadow: 0 0 15px #14b8a6, 0 0 30px rgba(20, 184, 166, 0.5);
+        position: absolute;
+        right: -28px;
+        z-index: 2;
     }
     
     @keyframes arrow-pulse {
-        0%, 100% { opacity: 0.5; transform: scale(0.8); }
-        50% { opacity: 1; transform: scale(1.2); }
+        0%, 100% { 
+            opacity: 0.7; 
+            transform: scale(0.9); 
+            box-shadow: 0 0 10px currentColor;
+        }
+        50% { 
+            opacity: 1; 
+            transform: scale(1.15); 
+            box-shadow: 0 0 25px currentColor, 0 0 50px currentColor;
+        }
     }
     
     /* Right Panel - Instant Intelligence */
@@ -295,12 +348,11 @@
         <!-- Header -->
         <div class="transform-header">
             <h2 class="transform-title">
-                Turn Raw Climate Chaos into<br>
-                <span class="highlight">Risk Clarity</span>
+                Turn Raw Climate Chaos to<br>
+                <span class="highlight">Decision-Ready Intelligence</span>
             </h2>
             <p class="transform-subtitle">
-                Stop wasting months on data prep. Climatics delivers harmonized, analysis-ready 
-                intelligence via API in milliseconds.
+                Climatics delivers harmonized, analysis-ready climate intelligence, saving months of data preparation time.
             </p>
         </div>
         

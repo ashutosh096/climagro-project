@@ -119,7 +119,15 @@
     }
 </style>
 
-<!-- Section 1: Centennial & Future Horizons -->
+<!-- Section Title Header -->
+<section class="hazard-section" style="padding-bottom: 0;">
+    <div class="hazard-container" style="text-align: center; padding-bottom: 40px;">
+        <span style="display: inline-block; background: rgba(242, 106, 33, 0.15); color: #FF8A65; padding: 8px 20px; border-radius: 20px; font-size: 0.9rem; font-weight: 600; margin-bottom: 20px;">The Data Engine</span>
+        <h2 style="color: white; font-size: 2.5rem; font-weight: 700; margin: 0;">Climate Risk Intelligence</h2>
+    </div>
+</section>
+
+<!-- Section 1: 70+ Years of Climate Data -->
 <section class="hazard-section">
     <div class="hazard-grid-pattern"></div>
     <div class="hazard-container">
@@ -130,7 +138,7 @@
                 </div>
                 <h2 class="hazard-title">Centennial & Future Horizons</h2>
                 <p class="hazard-description">
-                    Access 120+ years of historical climate data seamlessly integrated with projections through 2100. Our comprehensive temporal coverage enables robust trend analysis and future scenario planning.
+                    Access 70+ years of historical climate data (1901–2100) seamlessly integrated with future projections. Our comprehensive temporal coverage enables robust trend analysis and future scenario planning.
                 </p>
             </div>
             <div class="hazard-visual">
@@ -151,9 +159,9 @@
                 <div class="hazard-icon">
                     <i class="fas fa-layer-group"></i>
                 </div>
-                <h2 class="hazard-title">Sub-District Granularity</h2>
+                <h2 class="hazard-title">Multi-Level Spatial Coverage</h2>
                 <p class="hazard-description">
-                    Drill down from national overviews to block-level precision with multi-resolution data architecture. Our spatial intelligence provides localized insights for targeted decision-making.
+                    Drill down from national overviews to sub-district precision. Access data at State, District, and Block levels with at-point estimates coming soon. Localized insights for targeted decision-making.
                 </p>
             </div>
             <div class="hazard-visual">
@@ -174,9 +182,9 @@
                 <div class="hazard-icon">
                     <i class="fas fa-exclamation-triangle"></i>
                 </div>
-                <h2 class="hazard-title">Compound Hazard Metrics</h2>
+                <h2 class="hazard-title">Comprehensive Hazard Indices</h2>
                 <p class="hazard-description">
-                    Monitor intersecting climate risks including extreme heat, flooding, drought, and precipitation anomalies. Understand how multiple hazards interact to impact agricultural outcomes.
+                    Monitor key climate risks including Drought, Flood, Heat, Dry/Wet Spells, and Extreme Temperature Days. Understand how multiple hazards impact agricultural and business outcomes.
                 </p>
             </div>
             <div class="hazard-visual">

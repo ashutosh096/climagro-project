@@ -8,8 +8,8 @@ include("navbar2.php");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AgRI.ai - Agriculture Risk Intelligence | Climagro</title>
-    <meta name="description" content="AgRI.ai is a crop-location-specific risk estimator using AI and machine learning to analyze crop-climate interactions. Get historical, current, and long-term risk assessments.">
+    <title>ClimIntellio — AI-Powered Climate Data Platform | ClimAgro</title>
+    <meta name="description" content="Climatics is an AI-enabled Climate Data SaaS platform offering harmonized, high-resolution climate datasets and hazard indices for 500+ districts in India.">
     <style>
         :root {
             --primary-color: #025b5f;
@@ -111,16 +111,20 @@ include("navbar2.php");
 <?php
 // Hero Section Data
 $hero_data = [
-    'tag' => 'Agriculture Risk Intelligence',
-    'title' => 'Transform Climate Risk into ',
-    'highlight' => 'Agricultural Intelligence',
-    'description' => 'AgRI.ai is a crop-location-specific risk estimator that uses AI and machine learning to analyze crop-climate interactions through historical data. Make smarter decisions with historical, current, short-term, medium-term, and long-term risk assessments.',
+    'tag' => 'Climate Data Intelligence',
+    'title' => 'ClimIntellio — AI-Powered ',
+    'highlight' => 'Climate Data Platform',
+    'description' => 'ClimIntellio Climate Intelligence for Insurance, Banking, Agriculture, ESG & Research. API-ready climate hazard intelligence built from decades of climate data. Scientifically robust. Institution-ready. Hazard, not risk.',
     'cta_primary' => [
-        'text' => 'Request a Demo',
+        'text' => 'Request Form →',
         'url' => '#request-demo'
     ],
+    'cta_newtab' => [
+        'text' => 'Request Form (New Tab)',
+        'url' => site_url('climintellio/request-form')
+    ],
     'cta_secondary' => [
-        'text' => 'Learn More',
+        'text' => 'Explore Platform →',
         'url' => '#features'
     ],
     'image' => base_url('assest/img/about/AgRI.png')
@@ -128,27 +132,31 @@ $hero_data = [
 include('components/hero_section.php');
 ?>
 
-<!-- Data Transformation Section -->
-<?php include(__DIR__ . '/../components/data-transform-section.php'); ?>
+<!-- Data Transformation Section - Hidden for now -->
+<?php // include(__DIR__ . '/../components/data-transform-section.php'); ?>
+
+<!-- Data Engine Section -->
+<?php include(__DIR__ . '/../partials/data-engine.php'); ?>
 
 <!-- Stats Section -->
 <section class="stats-section">
     <div class="stats-container">
         <div class="stat-item">
-            <div class="stat-value">30+</div>
+            <div class="stat-value">170+</div>
             <div class="stat-label">Years of Climate Data</div>
         </div>
         <div class="stat-item">
-            <div class="stat-value">100+</div>
-            <div class="stat-label">Crop Types Analyzed</div>
+            <div class="stat-value">25</div>
+            <div class="stat-label">Hazard Indices</div>
         </div>
         <div class="stat-item">
             <div class="stat-value">500+</div>
             <div class="stat-label">Districts Covered</div>
+            <div style="font-size: 0.8rem; color: #9ca3af; margin-top: 4px;">5000+ subdistricts</div>
         </div>
         <div class="stat-item">
-            <div class="stat-value">95%</div>
-            <div class="stat-label">Forecast Accuracy</div>
+            <div class="stat-value">70–80%</div>
+            <div class="stat-label">Data Prep Time Saved</div>
         </div>
     </div>
 </section>
@@ -159,78 +167,91 @@ include('components/hero_section.php');
 $steps_data = [
     'tag' => 'How It Works',
     'title' => 'From Data to Decisions',
-    'description' => 'Our streamlined process transforms complex climate data into actionable agricultural intelligence.',
+    'description' => 'Our streamlined process transforms complex climate data into actionable intelligence for your research and operations.',
     'steps' => [
         [
             'number' => '01',
-            'title' => 'Data Integration',
-            'description' => 'We aggregate climate data, satellite imagery, soil information, and historical crop records from multiple sources.'
+            'title' => 'Data Harmonization',
+            'description' => 'We aggregate and clean climate data from multiple sources — satellite, ground stations, and models — creating consistent datasets.'
         ],
         [
             'number' => '02',
             'title' => 'AI Processing',
-            'description' => 'Our ML models analyze crop-climate relationships and identify risk patterns specific to your location.'
+            'description' => 'Our algorithms analyze climate patterns and compute various impact-relevant metrics and hazards at various admin boundaries (Such as, sub-district, district, zone, etc.).'
         ],
         [
             'number' => '03',
-            'title' => 'Risk Assessment',
-            'description' => 'Generate comprehensive risk scores across multiple time horizons with confidence intervals.'
+            'title' => 'Decision-ready information',
+            'description' => 'Generate impact-relevant metrics and hazard scores at various admin levels with temporal projections upto 2100.'
         ],
         [
             'number' => '04',
-            'title' => 'Actionable Insights',
-            'description' => 'Receive clear recommendations and alerts to optimize planting, irrigation, and risk mitigation strategies.'
+            'title' => 'Instant Delivery',
+            'description' => 'Access analysis-ready data via Web Portal, CSV downloads, or seamless API integration.'
         ]
     ]
 ];
 include('components/steps_section.php');
 ?>
 
+<!-- Testimonial Section -->
+<section class="testimonial-section">
+    <div class="testimonial-container">
+        <p class="testimonial-quote">
+            "Climatics transforms complex climate data into ready-to-use intelligence — accessible, reliable, and actionable."
+        </p>
+        <p class="testimonial-author">— ClimAgro Team</p>
+        <p class="testimonial-role">Climate Data Intelligence</p>
+    </div>
+</section>
+
+<!-- Data Engine Section moved to after Hero -->
+
 <?php
 // Use Cases Section Data
 $usecases_data = [
     'tag' => 'Who Benefits',
-    'title' => 'Built for the Entire Agricultural Ecosystem',
-    'description' => 'AgRI.ai empowers stakeholders across the agricultural value chain with data-driven risk intelligence.',
+    'title' => 'Built for Climate-Driven Decisions',
+    'description' => 'Climatics empowers diverse sectors with harmonized climate and hazard datasets.',
     'items' => [
         [
-            'icon' => '<i class="fas fa-tractor"></i>',
-            'title' => 'Farmers & Agribusinesses',
-            'description' => 'Make informed decisions about crop selection, planting schedules, and resource allocation.',
+            'icon' => '<i class="fas fa-university"></i>',
+            'title' => 'Research Institutions & Universities',
+            'description' => 'Access harmonized, long-term climate hazard intelligence to support reproducible research without the burden of raw data processing.',
             'benefits' => [
-                'Optimize planting and harvesting timing',
-                'Reduce crop losses from weather events',
-                'Improve yield forecasting accuracy'
+                'Faster research cycles with analysis-ready data',
+                'Transparent, publication-ready methodologies',
+                'Reduced data preparation and duplication of effort'
+            ]
+        ],
+        [
+            'icon' => '<i class="fas fa-shield-alt"></i>',
+            'title' => 'Insurance & Reinsurance',
+            'description' => 'Climate hazard intelligence to support underwriting analysis, portfolio assessment, and parametric product design.',
+            'benefits' => [
+                'Hazard-informed premium differentiation',
+                'Spatial hazard mapping across portfolios',
+                'Consistent long-term hazard baselines'
             ]
         ],
         [
             'icon' => '<i class="fas fa-landmark"></i>',
-            'title' => 'Insurance Companies',
-            'description' => 'Enhance underwriting accuracy and develop innovative parametric insurance products.',
+            'title' => 'Banking & Financial Institutions',
+            'description' => 'Climate hazard screening to support agricultural lending, portfolio exposure analysis, and climate disclosures.',
             'benefits' => [
-                'Data-driven premium pricing',
-                'Faster claims assessment',
-                'Reduced information asymmetry'
+                'Climate-informed credit assessment',
+                'Portfolio-level hazard screening',
+                'Support for climate and ESG disclosures'
             ]
         ],
         [
-            'icon' => '<i class="fas fa-university"></i>',
-            'title' => 'Financial Institutions',
-            'description' => 'Assess agricultural credit risk and support sustainable lending practices.',
+            'icon' => '<i class="fas fa-seedling"></i>',
+            'title' => 'Government & Disaster Management Authorities',
+            'description' => 'Climate hazard intelligence to support disaster preparedness, climate adaptation, and public planning at administrative scales.',
             'benefits' => [
-                'Improved credit risk models',
-                'Portfolio climate risk analysis',
-                'ESG compliance support'
-            ]
-        ],
-        [
-            'icon' => '<i class="fas fa-balance-scale"></i>',
-            'title' => 'Government & Policymakers',
-            'description' => 'Design evidence-based agricultural policies and disaster preparedness programs.',
-            'benefits' => [
-                'Early warning for food security',
-                'Targeted subsidy allocation',
-                'Climate adaptation planning'
+                'District- and state-level hazard mapping',
+                'Long-term climate trend indicators',
+                'Evidence-based support for resilience planning'
             ]
         ]
     ]
@@ -238,35 +259,27 @@ $usecases_data = [
 include('components/usecases_section.php');
 ?>
 
-<!-- Testimonial Section -->
-<section class="testimonial-section">
-    <div class="testimonial-container">
-        <p class="testimonial-quote">
-            "AgRI.ai has transformed how we assess crop insurance risk. The location-specific insights have helped us reduce claim disputes by 40% while offering better coverage to farmers."
-        </p>
-        <p class="testimonial-author">— Agricultural Insurance Executive</p>
-        <p class="testimonial-role">Leading Crop Insurance Provider</p>
-    </div>
-</section>
-
-<!-- Data Engine Section -->
-<?php include(__DIR__ . '/../partials/data-engine.php'); ?>
-
-
 <?php
-// CTA Form Section Data
+// CTA Form Section Data - Hidden for now
+/*
 $cta_data = [
     'tag' => 'Get Started',
-    'title' => 'Ready to Transform Your Agricultural Risk Management?',
-    'description' => 'Schedule a personalized demo to see how AgRI.ai can help you make smarter, data-driven decisions for your agricultural operations.',
+    'title' => 'Ready to Access Climate Intelligence?',
+    'description' => 'Submit your data requirements and our team will provide a customized solution. Institutional subscriptions start at ₹1,00,000/year.',
     'form_action' => site_url('contact/submit'),
-    'product_name' => 'AgRI.ai'
+    'product_name' => 'Climatics'
 ];
 include('components/cta_form_section.php');
+*/
 ?>
+
+
 
 </main>
 </div>
+<!-- Multi-Step Form Modal -->
+<?php include('components/multi-step-form.php'); ?>
+
 <?php include("footer.php"); ?>
 
 <script src="<?php echo base_url('assest/js/vendor/jquary-3.6.0.min.js'); ?>"></script>
