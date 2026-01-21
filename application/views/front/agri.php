@@ -115,12 +115,14 @@ $hero_data = [
     'title' => 'ClimIntellio — AI-Powered ',
     'highlight' => 'Climate Data Platform',
     'description' => 'ClimIntellio Climate Intelligence for Insurance, Banking, Agriculture, ESG & Research. API-ready climate hazard intelligence built from decades of climate data. Scientifically robust. Institution-ready. Hazard, not risk.',
+    /*
     'cta_primary' => [
         'text' => 'Request Form →',
         'url' => '#request-demo'
     ],
+    */
     'cta_newtab' => [
-        'text' => 'Request Form (New Tab)',
+        'text' => 'Get Data Access',
         'url' => site_url('climintellio/request-form')
     ],
     'cta_secondary' => [

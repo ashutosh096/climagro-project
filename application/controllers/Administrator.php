@@ -1506,4 +1506,62 @@ class Administrator extends CI_Controller
 		$this->session->unset_userdata("user_id");
 		return redirect("adminlogin");
 	}
+
+	public function manageclimintellio(): void
+	{
+		if ($this->usertype == 'seo') {
+			redirect('administrator/manageseo');
+		}
+
+		// Fetch all requests
+		$data['requests'] = $this->db->order_by('id', 'DESC')->get('tbl_climintellio_requests')->result();
+		$data['title'] = "Manage Climintellio Requests";
+		$this->load->view("admin-template/manage-climintellio", $data);
+	}
+
+	public function delete_climintellio(string $id): void
+	{
+		if ($this->adminmodel->delete_climintellio_request($id)) {
+			$this->session->set_flashdata("deleteslider", "Request deleted successfully");
+			$this->session->set_flashdata("deleteclass", "alert-success");
+		} else {
+			$this->session->set_flashdata("deleteslider", "Failed to delete request");
+			$this->session->set_flashdata("deleteclass", "alert-danger");
+		}
+		redirect("administrator/manageclimintellio");
+	}
+	public function setup_climintellio_db()
+	{
+		$sql = "CREATE TABLE IF NOT EXISTS tbl_climintellio_requests (
+			id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+			request_type VARCHAR(100) DEFAULT NULL,
+			location_method VARCHAR(100) DEFAULT NULL,
+			hazards TEXT DEFAULT NULL,
+			admin_level VARCHAR(100) DEFAULT NULL,
+			country VARCHAR(100) DEFAULT 'India',
+			states TEXT DEFAULT NULL,
+			districts TEXT DEFAULT NULL,
+			variables TEXT DEFAULT NULL,
+			metrics TEXT DEFAULT NULL,
+			coverage_type VARCHAR(100) DEFAULT NULL,
+			hist_year_start INT(5) DEFAULT NULL,
+			hist_year_end INT(5) DEFAULT NULL,
+			future_year_start INT(5) DEFAULT NULL,
+			future_year_end INT(5) DEFAULT NULL,
+			scenarios TEXT DEFAULT NULL,
+			format VARCHAR(50) DEFAULT NULL,
+			user_name VARCHAR(255) DEFAULT NULL,
+			user_email VARCHAR(255) DEFAULT NULL,
+			user_org_type VARCHAR(100) DEFAULT NULL,
+			submitted_at DATETIME DEFAULT CURRENT_TIMESTAMP
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
+
+		if ($this->db->query($sql)) {
+			echo "<h1>Success</h1><p>Table 'tbl_climintellio_requests' created/verified successfully.</p>";
+			echo "<p><a href='".base_url('administrator/dashboard')."'>Go to Dashboard</a></p>";
+		} else {
+			echo "<h1>Error</h1><p>Could not create table.</p>";
+			echo "<pre>"; print_r($this->db->error()); echo "</pre>";
+		}
+	}
 }

@@ -136,15 +136,16 @@
 
     /* Body/Steps */
     .ms-body {
-        padding: 2rem 2rem;
+        padding: 2.5rem 2.5rem; /* Increased padding */
         overflow-y: auto;
         overflow-x: hidden;
         flex: 1;
-        min-height: 0; /* Important for flex scroll */
+        min-height: 0;
         -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
         /* Custom Scrollbar */
         scrollbar-width: thin;
-        scrollbar-color: #cbd5e1 #f1f5f9;
+        scrollbar-color: #cbd5e1 #f8fafc;
     }
 
     .ms-body::-webkit-scrollbar {
@@ -635,29 +636,62 @@
 
     /* Ensure dropdown stays within flow but floats over next items when open */
     .ms-multi-select-dropdown {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
+        position: fixed; /* Changed to fixed for "stuck" fix */
         background: #fff;
         border: 1px solid var(--ms-border);
-        border-radius: 8px;
+        border-radius: 12px;
         margin-top: 4px;
-        max-height: 0;
-        overflow: hidden;
-        z-index: 1000; /* High z-index to overlap footer if needed, but wrapper margin handles flow */
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        transition: all 0.2s ease-in-out;
+        max-height: 300px;
+        overflow-y: auto;
+        z-index: 100000;
+        box-shadow: 0 10px 40px -10px rgba(2, 91, 95, 0.25);
+        transition: opacity 0.2s ease, transform 0.2s ease;
         opacity: 0;
-        visibility: hidden; /* Hide cleanly */
+        visibility: hidden;
+        transform: translateY(-10px);
+        display: none; /* JS toggles this */
+        /* Custom Scrollbar */
+        scrollbar-width: thin;
+        scrollbar-color: #cbd5e1 #f8fafc;
     }
 
-    .ms-multi-select-wrapper.open .ms-multi-select-dropdown {
-        max-height: 250px;
+    .ms-multi-select-dropdown.active {
         opacity: 1;
         visibility: visible;
-        overflow-y: auto;
-        padding: 0.5rem 0;
+        transform: translateY(0);
+        display: block;
+    }
+
+    .ms-multi-select-trigger {
+        background: var(--ms-bg-input);
+        border: 1px solid transparent;
+        border-radius: 8px;
+        padding: 1rem 1.25rem;
+        cursor: pointer;
+        position: relative;
+        transition: all 0.2s;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .ms-multi-select-trigger:after {
+        content: '\f107'; /* FontAwesome angle-down */
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        color: #9ca3af;
+        transition: transform 0.2s;
+    }
+
+    .ms-multi-select-wrapper.open .ms-multi-select-trigger {
+        background: #fff;
+        border-color: var(--ms-primary);
+        box-shadow: 0 0 0 4px var(--ms-primary-light);
+    }
+    
+    .ms-multi-select-wrapper.open .ms-multi-select-trigger:after {
+        transform: rotate(180deg);
+        color: var(--ms-primary);
     }
 
     /* Selected Tags Area */
@@ -718,7 +752,20 @@
         align-items: center;
     }
 
-    /* Hide native select when custom is active */
+    /* Force Hide Native Multi-Selects (Aggressive) */
+    select.ms-multi-select, 
+    select.ms-select[multiple] {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        position: absolute !important;
+        z-index: -9999 !important;
+        width: 0 !important;
+        height: 0 !important;
+        overflow: hidden !important;
+    }
+
+    /* Hide native select when custom is active (redundant but safe) */
     .ms-select.hidden-force {
         display: none !important;
     }
@@ -1000,61 +1047,80 @@
                     <input type="hidden" name="metrics" id="msMetricsInput" value="">
                 </div>
 
-                <!-- Step 6: Coverage -->
+                <!-- Step 6: Coverage & Scenarios -->
                 <div class="ms-step" data-step="6">
-                    <h2 class="ms-step-title">Temporal Coverage</h2>
-                    <p class="ms-step-subtitle">Select the time horizon for your analysis.</p>
+                    <h2 class="ms-step-title">Coverage & Scenarios</h2>
+                    <p class="ms-step-subtitle">Select time horizons and climate scenarios.</p>
                     
-                    <div class="ms-grid-options">
-                        <label class="ms-option-card">
-                            <input type="radio" name="coverage" value="Historical" class="ms-option-radio" checked>
-                            <div class="ms-option-content">
-                                <span class="ms-option-title">Historical (1901-2024)</span>
-                                <span class="ms-option-desc">Observed data from past records.</span>
+                    <div class="ms-step-content">
+                        <div class="ms-input-group">
+                            <label class="ms-label">Coverage Type *</label>
+                            <div class="ms-grid-options">
+                                <label class="ms-option-card">
+                                    <input type="radio" name="coverage" value="Historical" class="ms-option-radio" onchange="msToggleCoverageFields()">
+                                    <div class="ms-option-content">
+                                        <span class="ms-option-title">Historical</span>
+                                    </div>
+                                </label>
+                                <label class="ms-option-card">
+                                    <input type="radio" name="coverage" value="Future Projections" class="ms-option-radio" onchange="msToggleCoverageFields()">
+                                    <div class="ms-option-content">
+                                        <span class="ms-option-title">Future Projections</span>
+                                    </div>
+                                </label>
+                                <label class="ms-option-card">
+                                    <input type="radio" name="coverage" value="Both" class="ms-option-radio" checked onchange="msToggleCoverageFields()">
+                                    <div class="ms-option-content">
+                                        <span class="ms-option-title">Both</span>
+                                    </div>
+                                </label>
                             </div>
-                        </label>
-                        
-                        <label class="ms-option-card">
-                            <input type="radio" name="coverage" value="Future Projections" class="ms-option-radio">
-                            <div class="ms-option-content">
-                                <span class="ms-option-title">Future Projections (2025-2100)</span>
-                                <span class="ms-option-desc">Modelled projections for future climate scenarios.</span>
+                        </div>
+
+                        <!-- Historical Data Section -->
+                        <div id="msHistoricalSection" style="margin-top: 1.5rem; padding: 1.5rem; background: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0;">
+                            <h4 style="font-size: 1rem; font-weight: 600; color: var(--ms-text-heading); margin-bottom: 1rem;">Historical Data</h4>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                                <div class="ms-input-group" style="margin-bottom: 0;">
+                                    <label class="ms-label">From Year</label>
+                                    <input type="number" name="hist_year_start" value="1901" min="1901" max="2026" class="ms-input">
+                                </div>
+                                <div class="ms-input-group" style="margin-bottom: 0;">
+                                    <label class="ms-label">To Year</label>
+                                    <input type="number" name="hist_year_end" value="2026" min="1901" max="2026" class="ms-input">
+                                </div>
                             </div>
-                        </label>
-                        
-                        <label class="ms-option-card">
-                            <input type="radio" name="coverage" value="Both" class="ms-option-radio">
-                            <div class="ms-option-content">
-                                <span class="ms-option-title">Both</span>
-                                <span class="ms-option-desc">Complete timeline from 1901 to 2100.</span>
+                        </div>
+
+                        <!-- Future Projections Section -->
+                        <div id="msFutureSection" style="margin-top: 1.5rem; padding: 1.5rem; background: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0;">
+                            <h4 style="font-size: 1rem; font-weight: 600; color: var(--ms-text-heading); margin-bottom: 1rem;">Future Projections</h4>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                                <div class="ms-input-group" style="margin-bottom: 0;">
+                                    <label class="ms-label">From Year</label>
+                                    <input type="number" name="future_year_start" value="2027" min="2027" max="2100" class="ms-input">
+                                </div>
+                                <div class="ms-input-group" style="margin-bottom: 0;">
+                                    <label class="ms-label">To Year (up to 2100)</label>
+                                    <input type="number" name="future_year_end" value="2100" min="2027" max="2100" class="ms-input">
+                                </div>
                             </div>
-                        </label>
+                            
+                            <div class="ms-input-group" style="margin-bottom: 0;">
+                                <label class="ms-label">Scenario * <i class="fas fa-question-circle" title="Shared Socioeconomic Pathways" style="color:#94a3b8; cursor:help;"></i></label>
+                                <select id="msScenarioSelect" name="scenarios[]" class="ms-select" multiple>
+                                    <option value="SSP1-2.6">SSP1-2.6 (Sustainability)</option>
+                                    <option value="SSP2-4.5" selected>SSP2-4.5 (Middle of Road)</option>
+                                    <option value="SSP3-7.0">SSP3-7.0 (Regional Rivalry)</option>
+                                    <option value="SSP5-8.5">SSP5-8.5 (Fossil-fueled)</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Step 7: Climate Scenarios (Conditional) -->
+                <!-- Step 7: Format (Renumbered from 8) -->
                 <div class="ms-step" data-step="7">
-                    <h2 class="ms-step-title">Climate Scenarios</h2>
-                    <p class="ms-step-subtitle">Select Shared Socioeconomic Pathways (SSPs).</p>
-                    
-                    <div class="ms-checkbox-group">
-                        <label class="ms-checkbox-label">
-                            <input type="checkbox" name="scenarios[]" value="SSP1-2.6" class="ms-checkbox-input"> SSP1-2.6 (Sustainability)
-                        </label>
-                        <label class="ms-checkbox-label">
-                            <input type="checkbox" name="scenarios[]" value="SSP2-4.5" class="ms-checkbox-input" checked> SSP2-4.5 (Middle of Road)
-                        </label>
-                        <label class="ms-checkbox-label">
-                            <input type="checkbox" name="scenarios[]" value="SSP3-7.0" class="ms-checkbox-input"> SSP3-7.0 (Regional Rivalry)
-                        </label>
-                        <label class="ms-checkbox-label">
-                            <input type="checkbox" name="scenarios[]" value="SSP5-8.5" class="ms-checkbox-input"> SSP5-8.5 (Fossil-fueled)
-                        </label>
-                    </div>
-                </div>
-
-                <!-- Step 8: Format -->
-                <div class="ms-step" data-step="8">
                     <h2 class="ms-step-title">Data Format</h2>
                     <p class="ms-step-subtitle">How would you like to receive the data?</p>
                     
@@ -1078,8 +1144,8 @@
                     </div>
                 </div>
 
-                <!-- Step 9: Contact Details -->
-                <div class="ms-step" data-step="9">
+                <!-- Step 8: Contact Details (Renumbered from 9) -->
+                <div class="ms-step" data-step="8">
                     <h2 class="ms-step-title">Your Details</h2>
                     <p class="ms-step-subtitle">Where should we send the data access link?</p>
                     
@@ -1105,8 +1171,8 @@
                     </div>
                 </div>
 
-                <!-- Step 10: Summary -->
-                <div class="ms-step" data-step="10">
+                <!-- Step 9: Summary (Renumbered from 10) -->
+                <div class="ms-step" data-step="9">
                     <h2 class="ms-step-title">Review Request</h2>
                     <p class="ms-step-subtitle">Please review your configuration before submitting.</p>
                     
@@ -1156,30 +1222,39 @@
 
     // Initialize Form
     document.addEventListener('DOMContentLoaded', () => {
-        initLocations();
+        initDropdowns();
         updateUI();
         setupEventListeners();
     });
 
-    // populate states/districts
-    function initLocations() {
+    // Unified Dropdown Initialization
+    function initDropdowns() {
+        // 1. Initialize Scenarios (Static options)
+        setupMsCustomMultiSelect('msScenarioSelect', 'Select Scenario(s)');
+
+        // 2. Initialize Locations (Dynamic options)
         const stateSelect = document.getElementById('msStateSelect');
         const districtSelect = document.getElementById('msDistrictSelect');
         
-        if(typeof indiaLocations !== 'undefined') {
-            const states = Object.keys(indiaLocations).sort();
-            states.forEach(state => {
-                const option = document.createElement('option');
-                option.value = state;
-                option.textContent = state;
-                stateSelect.appendChild(option);
-            });
-            
-            // Initialize custom select logic (after populating initial states)
+        if(stateSelect && districtSelect) {
+            // Check availability of data
+            if(typeof indiaLocations !== 'undefined') {
+                const states = Object.keys(indiaLocations).sort();
+                states.forEach(state => {
+                    const option = document.createElement('option');
+                    option.value = state;
+                    option.textContent = state;
+                    stateSelect.appendChild(option);
+                });
+            } else {
+                console.warn('India Locations data missing.');
+            }
+
+            // Init UI wrappers
             setupMsCustomMultiSelect('msStateSelect', 'Select State(s)');
             setupMsCustomMultiSelect('msDistrictSelect', 'Select District(s)');
 
-            // Handle multi-state selection -> populate districts
+            // State Change Logic -> Populate Districts
             stateSelect.addEventListener('change', function() {
                 const selectedStates = Array.from(this.selectedOptions).map(opt => opt.value);
                 districtSelect.innerHTML = '';
@@ -1196,32 +1271,47 @@
                 allOption.textContent = '-- All Districts --';
                 districtSelect.appendChild(allOption);
 
-                // Add districts from all selected states
-                selectedStates.forEach(state => {
-                    if (indiaLocations[state]) {
-                        const districts = indiaLocations[state].sort();
-                        districts.forEach(dist => {
-                            const option = document.createElement('option');
-                            option.value = dist;
-                            option.textContent = `${dist} (${state})`;
-                            districtSelect.appendChild(option);
-                        });
-                    }
-                });
+                if(typeof indiaLocations !== 'undefined') {
+                    selectedStates.forEach(state => {
+                        if (indiaLocations[state]) {
+                            const districts = indiaLocations[state].sort();
+                            districts.forEach(dist => {
+                                const option = document.createElement('option');
+                                option.value = dist;
+                                option.textContent = `${dist} (${state})`;
+                                districtSelect.appendChild(option);
+                            });
+                        }
+                    });
+                }
                 
-                // Refresh custom total UI for districts
+                // Refresh custom UI for districts
                 refreshMsCustomMultiSelect('msDistrictSelect');
             });
         }
+        
+        // 3. Safety Check: Force hide native selects periodically in case of conflicts
+        setTimeout(forceHideNativeSelects, 500);
+        setTimeout(forceHideNativeSelects, 1500);
+    }
+
+    function forceHideNativeSelects() {
+        document.querySelectorAll('.ms-select.hidden-force').forEach(el => {
+            el.style.display = 'none';
+            el.style.visibility = 'hidden';
+            el.style.position = 'absolute'; // Fallback to kick it out of flow
+            el.style.zIndex = '-9999';
+        });
     }
 
     // Custom Multi-Select Logic (Modal Version)
     function setupMsCustomMultiSelect(selectId, placeholder) {
         const select = document.getElementById(selectId);
         select.classList.add('hidden-force');
+        select.style.display = 'none'; // Force hide inline
         
         let wrapper = document.getElementById(selectId + '_wrapper');
-        if(wrapper) wrapper.remove(); // Cleanup if re-initializing
+        if(wrapper) wrapper.remove();
         
         // Create Wrapper
         wrapper = document.createElement('div');
@@ -1232,18 +1322,54 @@
         const trigger = document.createElement('div');
         trigger.className = 'ms-multi-select-trigger';
         trigger.innerHTML = `<span>${placeholder}</span>`;
-        trigger.onclick = (e) => {
-            e.stopPropagation();
-            // Close other dropdowns
-            document.querySelectorAll('.ms-multi-select-wrapper').forEach(w => {
-                if(w !== wrapper) w.classList.remove('open');
-            });
-            wrapper.classList.toggle('open');
-        };
         
-        // Dropdown List
+        // Dropdown List (Append to body to escape overflow)
         const dropdown = document.createElement('div');
         dropdown.className = 'ms-multi-select-dropdown';
+        // Ensure strictly closed on init
+        dropdown.style.display = 'none'; 
+        dropdown.style.opacity = '0';
+        dropdown.style.visibility = 'hidden';
+
+        document.body.appendChild(dropdown); // Move to body
+        
+        trigger.onclick = (e) => {
+            e.stopPropagation();
+            
+            // Close others
+            document.querySelectorAll('.ms-multi-select-wrapper.open').forEach(w => {
+                 if(w !== wrapper) {
+                     w.classList.remove('open');
+                     // Hide associated body dropdowns? 
+                     // We need a way to link wrappers to body-dropdowns for closing.
+                     // A simple global close is better.
+                 }
+            });
+            
+            const isOpen = wrapper.classList.contains('open');
+            
+            // Reset all
+            document.querySelectorAll('.ms-multi-select-dropdown').forEach(d => {
+                d.style.display = 'none';
+                d.classList.remove('active');
+            });
+            document.querySelectorAll('.ms-multi-select-wrapper').forEach(w => w.classList.remove('open'));
+
+            if (!isOpen) {
+                wrapper.classList.add('open');
+                dropdown.style.display = 'block';
+                // Calculate Position
+                const rect = wrapper.getBoundingClientRect();
+                dropdown.style.position = 'fixed';
+                dropdown.style.top = (rect.bottom + 5) + 'px';
+                dropdown.style.left = rect.left + 'px';
+                dropdown.style.width = rect.width + 'px';
+                dropdown.style.zIndex = '100000'; // Higher than modal
+                
+                // Add active class for transition
+                requestAnimationFrame(() => dropdown.classList.add('active'));
+            }
+        };
         
         // Selected Tags Area (below trigger)
         let tagsArea = select.nextElementSibling;
@@ -1255,30 +1381,51 @@
         }
         
         wrapper.appendChild(trigger);
-        wrapper.appendChild(dropdown);
+        // wrapper.appendChild(dropdown); // REMOVED: Now attached to body
         
-        // Insert wrapper after select (or replace existing layout if messy)
+        // Save reference to dropdown on wrapper for cleanup if needed
+        wrapper._dropdown = dropdown; 
+
         select.parentNode.insertBefore(wrapper, select.nextSibling); 
-        // Insert tags after wrapper
         if(!tagsArea.parentNode) wrapper.parentNode.insertBefore(tagsArea, wrapper.nextSibling);
 
         // Populate
-        refreshMsCustomMultiSelect(selectId);
+        refreshMsCustomMultiSelect(selectId, dropdown, wrapper);
 
         // Close on click outside
-        document.addEventListener('click', (e) => {
-            if (!wrapper.contains(e.target)) {
+        const closeHandler = (e) => {
+            if (!wrapper.contains(e.target) && !dropdown.contains(e.target)) {
                 wrapper.classList.remove('open');
+                dropdown.classList.remove('active');
+                dropdown.style.display = 'none';
             }
-        });
+        };
+        document.addEventListener('click', closeHandler);
+        
+        // Handle Scroll to update position (optional, but good for "slickness")
+        // Note: Real-time update might be heavy, but "stuck" menu on scroll is okay if it closes or moves.
+        // For simplicity, let's close it on scroll of the body
+        const scrollContainer = document.querySelector('.ms-body');
+        if(scrollContainer) {
+            scrollContainer.addEventListener('scroll', () => {
+                if(wrapper.classList.contains('open')) {
+                    const rect = wrapper.getBoundingClientRect();
+                    dropdown.style.top = (rect.bottom + 5) + 'px';
+                }
+            }, { passive: true });
+        }
     }
+
 
     function refreshMsCustomMultiSelect(selectId) {
         const select = document.getElementById(selectId);
         const wrapper = document.getElementById(selectId + '_wrapper');
         if(!wrapper) return;
         
-        const dropdown = wrapper.querySelector('.ms-multi-select-dropdown');
+        // Dropdown is now attached to body and referenced on wrapper
+        const dropdown = wrapper._dropdown; 
+        if(!dropdown) return;
+
         const triggerSpan = wrapper.querySelector('.ms-multi-select-trigger span');
         const tagsArea = wrapper.nextElementSibling;
 
@@ -1303,6 +1450,7 @@
             optionDiv.appendChild(label);
             
             optionDiv.onclick = (e) => {
+                e.preventDefault(); // Prevent default label behavior clearing selection
                 e.stopPropagation();
                 opt.selected = !opt.selected;
                 checkbox.checked = opt.selected;
@@ -1311,7 +1459,16 @@
                 updateMsSelectedDisplay(select, triggerSpan, tagsArea);
             };
             
-            checkbox.onclick = (e) => { e.stopPropagation(); opt.selected = checkbox.checked; optionDiv.classList.toggle('selected'); select.dispatchEvent(new Event('change')); updateMsSelectedDisplay(select, triggerSpan, tagsArea); };
+            // Prevent double-toggling if clicking directly on checkbox
+            checkbox.onclick = (e) => { 
+                e.stopPropagation(); 
+                // The parent onclick will handle it if we don't prefer this, 
+                // but usually checkbox click needs to sync.
+                opt.selected = checkbox.checked; 
+                optionDiv.classList.toggle('selected', opt.selected); 
+                select.dispatchEvent(new Event('change')); 
+                updateMsSelectedDisplay(select, triggerSpan, tagsArea); 
+            };
 
             dropdown.appendChild(optionDiv);
             if (opt.selected) selectedCount++;
@@ -1324,9 +1481,12 @@
         const selectedOptions = Array.from(select.selectedOptions);
         if (selectedOptions.length === 0) {
             triggerSpan.textContent = select.id.includes('State') ? 'Select State(s)' : 'Select District(s)';
+            triggerSpan.style.color = '#9ca3af';
             if(tagsArea) tagsArea.innerHTML = '';
         } else {
             triggerSpan.textContent = `${selectedOptions.length} Selected`;
+            triggerSpan.style.color = '#025b5f';
+            triggerSpan.style.fontWeight = '600';
             if(tagsArea) tagsArea.innerHTML = selectedOptions.map(opt => `<span class="ms-selected-tag">${opt.textContent}</span>`).join('');
         }
     }
@@ -1352,16 +1512,17 @@
         const selectedVars = Array.from(document.querySelectorAll('input[name="variables[]"]:checked')).map(cb => cb.value);
         
         if (selectedVars.length === 0) {
-            container.innerHTML = '<p style="color: #64748b; text-align: center;">No variables selected. Go back and select at least one variable.</p>';
+            container.innerHTML = '<div style="background:#fff4f4; border:1px solid #fecaca; color:#ef4444; padding:1rem; border-radius:8px; text-align:center;">Please select at least one variable in the previous step.</div>';
             return;
         }
 
         let html = '';
-        selectedVars.forEach(variable => {
+        selectedVars.forEach((variable, index) => {
             const metrics = variableMetrics[variable] || [];
             if (metrics.length > 0) {
+                // Add fade-in animation
                 html += `
-                    <div class="ms-metric-group">
+                    <div class="ms-metric-group" style="animation: fadeIn 0.3s ease forwards; animation-delay: ${index * 0.1}s; opacity: 0; transform: translateY(10px);">
                         <div class="ms-metric-group-header">${variable}</div>
                         <div class="ms-metric-options">
                             ${metrics.map(metric => `
@@ -1382,21 +1543,30 @@
 
     function toggleMetric(variable, metric, element) {
         const input = element.querySelector('input');
-        input.checked = !input.checked;
-        element.classList.toggle('selected', input.checked);
-
-        // Track selected metrics
-        if (!msSelectedMetrics[variable]) msSelectedMetrics[variable] = [];
-        if (input.checked) {
-            if (!msSelectedMetrics[variable].includes(metric)) {
-                msSelectedMetrics[variable].push(metric);
-            }
-        } else {
-            msSelectedMetrics[variable] = msSelectedMetrics[variable].filter(m => m !== metric);
+        // Prevent double toggle if clicking label/input naturally
+        // But since we use onclick on label with input inside, we need care.
+        // Easiest is to manually toggle checkbox state if the event target wasn't the checkbox itself
+        /*
+        if (event.target !== input) {
+            input.checked = !input.checked;
         }
-
-        updateMetricsCounter();
-        document.getElementById('msMetricsInput').value = JSON.stringify(msSelectedMetrics);
+        */
+        // Actually, safer to rely on change event if possible, but for chip styling we do this:
+        
+        setTimeout(() => { // Wait for native click layout update
+            element.classList.toggle('selected', input.checked);
+            
+            if (!msSelectedMetrics[variable]) msSelectedMetrics[variable] = [];
+            if (input.checked) {
+                if (!msSelectedMetrics[variable].includes(metric)) {
+                    msSelectedMetrics[variable].push(metric);
+                }
+            } else {
+                msSelectedMetrics[variable] = msSelectedMetrics[variable].filter(m => m !== metric);
+            }
+            updateMetricsCounter();
+            document.getElementById('msMetricsInput').value = JSON.stringify(msSelectedMetrics);
+        }, 0);
     }
 
     function updateMetricsCounter() {
@@ -1414,19 +1584,31 @@
         const state = stateSelect.value;
         const district = districtSelect.value;
 
+        // Reset Styles
+        const stateWrapper = document.getElementById('msStateSelect_wrapper');
+        const districtWrapper = document.getElementById('msDistrictSelect_wrapper');
+        if(stateWrapper) stateWrapper.style.border = '';
+        if(districtWrapper) districtWrapper.style.border = '';
+
         if (!state) {
-            alert('Please select a state');
+            // Highlight State
+            if(stateWrapper) stateWrapper.style.border = '1px solid #ef4444';
             return;
         }
         if (!district) {
-            alert('Please select a district');
+            // Highlight District
+            if(districtWrapper) districtWrapper.style.border = '1px solid #ef4444';
             return;
         }
 
         // Check for duplicates
         const exists = msSelectedLocations.some(loc => loc.state === state && loc.district === district);
         if (exists) {
-            alert('This location is already added');
+            // Maybe flash the list or just ignore? User said remove popup.
+            // visual flash on container
+            const container = document.getElementById('msSelectedLocations');
+            container.style.backgroundColor = '#fee2e2';
+            setTimeout(() => container.style.backgroundColor = '', 500);
             return;
         }
 
@@ -1436,6 +1618,8 @@
         // Reset selects
         stateSelect.value = '';
         districtSelect.innerHTML = '<option value="">Select District</option>';
+        refreshMsCustomMultiSelect('msStateSelect');
+        refreshMsCustomMultiSelect('msDistrictSelect');
     }
 
     function msRemoveLocation(index) {
@@ -1517,6 +1701,11 @@
         const typeEl = document.querySelector('input[name="request_type"]:checked');
         const type = typeEl ? typeEl.value : '';
         
+        // Handle alphanumeric steps explicitly BEFORE parsing
+        if (step === '2a') return 3;
+        if (step === '2b') return 3;
+        if (step === '5b') return 6;
+        
         if (typeof step === 'string') step = parseFloat(step); // normalize
         
         // Step 1: Type Selection
@@ -1524,10 +1713,8 @@
             return type === 'Ready-to-use Data' ? '2a' : '2b';
         }
         
-        // Step 2a/2b -> Admin Level
-        if (step === '2a' || step === '2b' || step === 2) { 
-            return 3;
-        }
+        // Step 2a/2b -> Admin Level handled above
+        if (step === 2) return 3; // Fallback
         
         // Step 3 -> Location
         if (step === 3) return 4;
@@ -1540,9 +1727,6 @@
             populateMetrics();
             return '5b';
         }
-        
-        // Step 5b (Metrics) -> Coverage
-        if (step === '5b') return 6;
         
         // Step 6 -> Scenarios (if Future selected) or Format
         if (step === 6) {
@@ -1644,14 +1828,18 @@
             }
         });
         
-        // Check dropdowns (selects) - no longer needed for step 4
-        
         // Check checkbox groups (at least one)
         if (step === '2b' || step === 5) {
             const checked = currentEl.querySelectorAll('input[type="checkbox"]:checked');
             if (checked.length === 0) {
                 valid = false;
-                alert('Please select at least one option.');
+               // Highlight the group (no alert)
+               const group = currentEl.querySelector('.ms-checkbox-group') || currentEl.querySelector('.ms-step-content');
+               if(group) {
+                   group.style.border = '1px solid #ef4444';
+                   group.style.borderRadius = '8px';
+                   setTimeout(() => { group.style.border = ''; }, 3000);
+               }
             }
         }
 
@@ -1659,16 +1847,71 @@
         if (step === 4) {
             const selectedStates = document.getElementById('msStateSelect').selectedOptions.length;
             const selectedDistricts = document.getElementById('msDistrictSelect').selectedOptions.length;
+            
+             const stateWrapper = document.getElementById('msStateSelect_wrapper');
+             const districtWrapper = document.getElementById('msDistrictSelect_wrapper');
+            
             if (selectedStates === 0) {
                 valid = false;
-                alert('Please select at least one state.');
-            } else if (selectedDistricts === 0) {
+               if(stateWrapper) stateWrapper.style.border = '1px solid #ef4444';
+            } else {
+                 if(stateWrapper) stateWrapper.style.border = '';
+            }
+            
+            if (selectedDistricts === 0) {
                 valid = false;
-                alert('Please select at least one district.');
+                if(districtWrapper) districtWrapper.style.border = '1px solid #ef4444';
+            } else {
+                 if(districtWrapper) districtWrapper.style.border = '';
             }
         }
-        // Metrics step 5b is optional - no validation needed
-        
+
+        // Validate Coverage Step 6
+        if (step === 6) {
+            const coverage = document.querySelector('input[name="coverage"]:checked')?.value;
+            
+            if (coverage === 'Historical' || coverage === 'Both') {
+                const start = document.querySelector('input[name="hist_year_start"]');
+                const end = document.querySelector('input[name="hist_year_end"]');
+                if (!start.value || !end.value) { 
+                    valid = false; 
+                    if(!start.value) start.style.borderColor = '#ef4444';
+                    if(!end.value) end.style.borderColor = '#ef4444';
+                }
+                else if (parseInt(start.value) > parseInt(end.value)) { 
+                    valid = false; 
+                    start.style.borderColor = '#ef4444';
+                    end.style.borderColor = '#ef4444';
+                }
+            }
+            
+            if (coverage === 'Future Projections' || coverage === 'Both') {
+                const start = document.querySelector('input[name="future_year_start"]');
+                const end = document.querySelector('input[name="future_year_end"]');
+                if (!start.value || !end.value) { 
+                    valid = false; 
+                     if(!start.value) start.style.borderColor = '#ef4444';
+                    if(!end.value) end.style.borderColor = '#ef4444';
+                }
+                else if (parseInt(start.value) > parseInt(end.value)) { 
+                    valid = false; 
+                    start.style.borderColor = '#ef4444';
+                    end.style.borderColor = '#ef4444';
+                }
+                
+                // Validate Scenarios
+                const selectedScenarios = document.getElementById('msScenarioSelect').selectedOptions.length;
+                if (selectedScenarios === 0) {
+                    valid = false;
+                     const scenarioWrapper = document.getElementById('msScenarioSelect_wrapper');
+                     if(scenarioWrapper) scenarioWrapper.style.border = '1px solid #ef4444';
+                } else {
+                     const scenarioWrapper = document.getElementById('msScenarioSelect_wrapper');
+                     if(scenarioWrapper) scenarioWrapper.style.border = '';
+                }
+            }
+        }
+
         return valid;
     }
 

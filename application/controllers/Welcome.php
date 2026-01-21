@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 defined('BASEPATH') or exit('No direct script access allowed');
 class Welcome extends CI_Controller
 {
@@ -22,7 +24,7 @@ class Welcome extends CI_Controller
 	}
 
 
-	public function index()
+	public function index(): void
 
 	{
 		$this->data['sliderlist'] = $this->p->productlist(0, "id", "tbl_slider", 'slide_short');
@@ -39,7 +41,7 @@ class Welcome extends CI_Controller
 		$this->load->view('front/frontpage.php', $this->data);
 	}
 
-	public function team()
+	public function team(): void
 	{
 		$this->data['coursecatlist'] = $this->p->productlist(0, "id", "tbl_course_category", 'services_short');
 		$this->data['teamlist'] = $this->p->getloopdata(1, "teamtype", "tbl_team", 'serialnum');
@@ -55,7 +57,7 @@ class Welcome extends CI_Controller
 	// 	$this->load->view('front/studentwork', $this->data);
 	// }
 
-	public function portfolio()
+	public function portfolio(): void
 	{
 		$this->data['coursecatlist'] = $this->p->productlist(0, "id", "tbl_course_category", 'services_short');
 		$this->data['workcat'] = $this->p->getloopdata(1, "work", "tbl_work_category", 'services_short');
@@ -63,7 +65,7 @@ class Welcome extends CI_Controller
 		$this->load->view('front/portfolio', $this->data);
 	}
 
-	public function tutorial()
+	public function tutorial(): void
 	{
 		$this->data['coursecatlist'] = $this->p->productlist(0, "id", "tbl_course_category", 'services_short');
 		$this->data['workcat'] = $this->p->getloopdata(1, "tutorial", "tbl_work_category", 'services_short');
@@ -71,7 +73,7 @@ class Welcome extends CI_Controller
 		$this->load->view('front/tutorials', $this->data);
 	}
 
-	public function testimonials()
+	public function testimonials(): void
 	{
 		$this->data['coursecatlist'] = $this->p->productlist(0, "id", "tbl_course_category", 'services_short');
 		$this->data['worklist'] = $this->p->productlist(0, "id", "tbl_testimonial", 'services_short');
@@ -80,7 +82,7 @@ class Welcome extends CI_Controller
 
 
 
-	public function about()
+	public function about(): void
 	{
 		$this->data['servicelist'] = $this->p->productlist(0, "id", "tbl_services");
 		$this->data['teamlist'] = $this->p->getloopdata(1, "teamtype", "tbl_team", 'serialnum');
@@ -89,7 +91,7 @@ class Welcome extends CI_Controller
 		$this->load->view('front/aboutpage', $this->data);
 	}
 
-	public function gmacalumini()
+	public function gmacalumini(): void
 	{
 		$this->data['coursecatlist'] = $this->p->productlist(0, "id", "tbl_course_category", 'services_short');
 		$totalalumini = $this->p->getloopdata(0, "teamtype", "tbl_team", 'serialnum');
@@ -118,21 +120,21 @@ class Welcome extends CI_Controller
 		$this->load->view('front/gmacalumini', $this->data);
 	}
 
-	public function contact()
+	public function contact(): void
 	{
 		$this->data['coursecatlist'] = $this->p->productlist(0, "id", "tbl_course_category", 'services_short');
 		$this->data['servicelist'] = $this->p->productlist(0, "id", "tbl_services");
 		$this->load->view('front/contactpage', $this->data);
 	}
 
-	public function blog()
+	public function blog(): void
 	{
 		$this->data['coursecatlist'] = $this->p->productlist(0, "id", "tbl_blog_category", 'services_short');
 		$this->data['blog'] = $this->p->productlist(0, "id", "tbl_blog");
 		$this->load->view('front/blogs', $this->data);
 	}
 	
-	public function news()
+	public function news(): void
 	{
 		// 1. Get lang from query param or default to 'en'
 		$lang = $this->input->get('lang') ?? 'en';
@@ -148,49 +150,49 @@ class Welcome extends CI_Controller
 		$this->load->view('front/news', $this->data);
 	}
 
-	public function article()
+	public function article(): void
 	{
 		$this->data['coursecatlist'] = $this->p->productlist(0, "id", "tbl_course_category", 'services_short');
 		$this->data['servicelist'] = $this->p->productlist(0, "id", "tbl_services");
 		$this->load->view('front/articles', $this->data);
 	}
-	public function franchise()
+	public function franchise(): void
 	{
 		$this->data['coursecatlist'] = $this->p->productlist(0, "id", "tbl_course_category", 'services_short');
 		$this->data['servicelist'] = $this->p->productlist(0, "id", "tbl_services");
 		$this->load->view('front/franchise', $this->data);
 	}
-	public function technologies()
+	public function technologies(): void
 	{
 		$this->data['coursecatlist'] = $this->p->productlist(0, "id", "tbl_course_category", 'services_short');
 		$this->data['servicelist'] = $this->p->productlist(0, "id", "tbl_services");
 		$this->load->view('front/technologies', $this->data);
 	}
-	public function solutions()
+	public function solutions(): void
 	{
 		$this->data['coursecatlist'] = $this->p->productlist(0, "id", "tbl_course_category", 'services_short');
 		$this->data['servicelist'] = $this->p->productlist(0, "id", "tbl_services");
 		$this->load->view('front/solutions', $this->data);
 	}
 	
-	public function agri()
+	public function agri(): void
 	{
 		$this->load->view('front/agri', $this->data);
 	}
 	
-	public function climintellio_form()
+	public function climintellio_form(): void
 	{
 		$this->load->view('front/climintellio_form', $this->data);
 	}
 	
-	public function sercies()
+	public function sercies(): void
 	{
 
 		$this->data['coursecatlist'] = $this->p->productlist(0, "id", "tbl_course_category", 'services_short');
 		$this->data['servicelist'] = $this->p->productlist(0, "id", "tbl_services");
 		$this->load->view('front/servicespage', $this->data);
 	}
-	public function validation()
+	public function validation(): void
 	{
 		$name 	 = $_POST['name'];
 		$email 	 = $_POST['email'];
@@ -228,7 +230,7 @@ class Welcome extends CI_Controller
 		}
 	}
 
-	public function franchisevalidation()
+	public function franchisevalidation(): void
 	{
 		$name 	   	= $_POST['name'];
 		$email 	  	= $_POST['email'];
@@ -258,14 +260,14 @@ class Welcome extends CI_Controller
 		}
 	}
 
-	public function activities()
+	public function activities(): void
 	{
 		$this->data['coursecatlist'] = $this->p->productlist(0, "id", "tbl_course_category", 'services_short');
 		$this->data['activielist'] = $this->p->productlist(0, "id", "tbl_office_work", 'services_short', 'work_category=1');
 		$this->load->view('front/activities', $this->data);
 	}
 
-	public function notfound()
+	public function notfound(): void
 	{
 		$this->data['coursecatlist'] = $this->p->productlist(0, "id", "tbl_course_category", 'services_short');
 		$pageurl = current_url();
@@ -282,7 +284,7 @@ class Welcome extends CI_Controller
 		$this->load->view('front/notfound', $this->data);
 	}
 
-	public function submit()
+	public function submit(): void
 		{
 			$this->load->library('form_validation');
 			$this->output->set_content_type('application/json');
@@ -380,7 +382,7 @@ class Welcome extends CI_Controller
 	}
 
 
-	public function climate($variable = null, $type = null)
+	public function climate($variable = null, $type = null): void
 		{
 			// Load dropdown options
 			$this->data['paramByVar'] = [
@@ -434,7 +436,7 @@ class Welcome extends CI_Controller
 		exit;
 	}
 
-	public function subscribe()
+	public function subscribe(): void
 	{
 		// 1. Check method
 		if ($this->input->server('REQUEST_METHOD') !== 'POST') {
@@ -490,6 +492,106 @@ class Welcome extends CI_Controller
 	}
 
 
+
+	public function submit_climintellio(): void
+	{
+		if ($this->input->server('REQUEST_METHOD') !== 'POST') {
+			$this->output->set_status_header(405)->set_content_type('application/json')->set_output(json_encode(['success' => false, 'message' => 'Method not allowed']));
+			return;
+		}
+
+		// Validation
+		$this->load->library('form_validation');
+		$this->form_validation->set_rules('user_name', 'Name', 'required|trim');
+		$this->form_validation->set_rules('user_email', 'Email', 'required|valid_email|trim');
+		$this->form_validation->set_rules('request_type', 'Request Type', 'required');
+
+		if ($this->form_validation->run() == FALSE) {
+			$this->output->set_status_header(400)->set_content_type('application/json')->set_output(json_encode(['success' => false, 'message' => validation_errors()]));
+			return;
+		}
+
+		// Prepare Data
+		$data = [
+			'request_type' => $this->input->post('request_type'),
+			'location_method' => $this->input->post('location_method'),
+			'hazards' => json_encode($this->input->post('hazards') ?? []),
+			'admin_level' => $this->input->post('admin_level'),
+			'country' => 'India',
+			'states' => json_encode($this->input->post('states') ?? []),
+			'districts' => json_encode($this->input->post('districts') ?? []),
+			'variables' => json_encode($this->input->post('variables') ?? []),
+			'metrics' => $this->input->post('metrics'),
+			'coverage_type' => $this->input->post('coverage'),
+			'hist_year_start' => $this->input->post('hist_year_start'),
+			'hist_year_end' => $this->input->post('hist_year_end'),
+			'future_year_start' => $this->input->post('future_year_start'),
+			'future_year_end' => $this->input->post('future_year_end'),
+			'scenarios' => json_encode($this->input->post('scenarios') ?? []),
+			'format' => $this->input->post('format'),
+			'user_name' => $this->input->post('user_name'),
+			'user_email' => $this->input->post('user_email'),
+			'user_org_type' => $this->input->post('user_org_type'),
+			'submitted_at' => date('Y-m-d H:i:s')
+		];
+
+		// Insert
+		if ($this->db->insert('tbl_climintellio_requests', $data)) {
+			// Email logic
+			$email_sent = $this->send_climintellio_email($data);
+			$msg = $email_sent ? 'Request submitted successfully.' : 'Request submitted successfully (Email notification failed).';
+
+			$this->output->set_status_header(200)->set_content_type('application/json')->set_output(json_encode(['success' => true, 'message' => $msg]));
+		} else {
+			$this->output->set_status_header(500)->set_content_type('application/json')->set_output(json_encode(['success' => false, 'message' => 'Database error.']));
+		}
+	}
+
+	private function send_climintellio_email(array $data): bool
+	{
+		$config = [
+			'protocol'  => 'smtp',
+			'smtp_host' => 'smtp.gmail.com',
+			'smtp_port' => 587,
+			'smtp_user' => 'akshatsan23@gmail.com', // Reusing existing config
+			'smtp_pass' => '',    // Gmail App Password (needs to be set)
+			'smtp_crypto' => 'tls',
+			'mailtype'  => 'html',
+			'charset'   => 'utf-8',
+			'wordwrap'  => TRUE,
+			'newline'   => "\r\n"
+		];
+		
+		$this->load->library('email', $config);
+		$this->email->set_newline("\r\n");
+
+		$this->email->from('no-reply@climagro.com', 'Climagro System'); // From system
+		$this->email->to('akshatsan23@gmail.com'); // Admin email
+		$this->email->reply_to($data['user_email'], $data['user_name']);
+		$this->email->subject('New Climintellio Data Request from ' . $data['user_name']);
+		
+		$message = "<h2>New Climintellio Data Request</h2>";
+		$message .= "<p><strong>User:</strong> " . htmlspecialchars($data['user_name']) . " (" . htmlspecialchars($data['user_email']) . ")</p>";
+		$message .= "<p><strong>Organization Type:</strong> " . htmlspecialchars($data['user_org_type']) . "</p>";
+		$message .= "<hr>";
+		$message .= "<h3>Request Details:</h3>";
+		$message .= "<ul>";
+		$message .= "<li><strong>Request Type:</strong> " . htmlspecialchars($data['request_type']) . "</li>";
+		$message .= "<li><strong>Location Method:</strong> " . htmlspecialchars($data['location_method']) . "</li>";
+		$message .= "<li><strong>Coverage:</strong> " . htmlspecialchars($data['coverage_type']) . "</li>";
+		$message .= "<li><strong>Format:</strong> " . htmlspecialchars($data['format']) . "</li>";
+		$message .= "</ul>";
+		$message .= "<p><em>Log in to the Admin Panel to view full details including hazards, scenarios, and variables.</em></p>";
+		
+		$this->email->message($message);
+
+		if ($this->email->send()) {
+			return true;
+		} else {
+			// log_message('error', 'Climintellio Email Error: ' . $this->email->print_debugger());
+			return false;
+		}
+	}
 }
 
 

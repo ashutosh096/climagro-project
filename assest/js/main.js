@@ -10,7 +10,7 @@
 	= preloader
 	-------------------------------------------*/
 
-	
+
 	function preloader() {
 		$('.preloader').delay().fadeOut();
 	}
@@ -37,20 +37,20 @@
 	-------------------------------------------*/
 	// sticky header
 	if ($('.stricky').length) {
-        $('.stricky').addClass('original').clone(true).insertAfter('.stricky').addClass('stricked-menu').removeClass('original');
-    }
+		$('.stricky').addClass('original').clone(true).insertAfter('.stricky').addClass('stricked-menu').removeClass('original');
+	}
 	$(window).on('scroll', function () {
-        if ($('.stricked-menu').length) {
-            var headerScrollPos = 100;
-            var stricky = $('.stricked-menu');
-            if ($(window).scrollTop() > headerScrollPos) {
-                stricky.addClass('stricky-fixed');
-            } else if ($(this).scrollTop() <= headerScrollPos) {
-                stricky.removeClass('stricky-fixed');
-            }
-        }
+		if ($('.stricked-menu').length) {
+			var headerScrollPos = 100;
+			var stricky = $('.stricked-menu');
+			if ($(window).scrollTop() > headerScrollPos) {
+				stricky.addClass('stricky-fixed');
+			} else if ($(this).scrollTop() <= headerScrollPos) {
+				stricky.removeClass('stricky-fixed');
+			}
+		}
 
-    });
+	});
 
 
 	/*------------------------------------------
@@ -719,7 +719,7 @@
 			},
 		},
 	});
-	
+
 
 	/*------------------------------------------
 	= magnificPopup
@@ -781,12 +781,16 @@
 
 
 document.addEventListener('DOMContentLoaded', function () {
+	const textElement = document.getElementById('typed-text');
+
+	// Only run typing animation if the element exists
+	if (!textElement) return;
+
 	const words = ['Create', 'Care', 'Conserve'];
 	let wordIndex = 0;
 	let charIndex = 0;
 	const typingSpeed = 150;
 	const delayBetweenWords = 1000;
-	const textElement = document.getElementById('typed-text');
 
 	function typeWord() {
 		if (charIndex < words[wordIndex].length) {

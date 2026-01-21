@@ -642,4 +642,10 @@ class Adminmodel extends CI_Model
 		$query = $this->db->get();
 		return $query->result();
 	}
+	public function delete_climintellio_request($id)
+	{
+		$this->db->where('id', $id);
+		$this->db->delete('tbl_climintellio_requests');
+		return $this->db->affected_rows() > 0;
+	}
 }
