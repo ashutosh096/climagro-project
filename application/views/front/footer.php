@@ -193,6 +193,11 @@
     /* Mobile tweaks */
     @media (max-width: 480px) {
         .subscribe-form { flex-direction: column; align-items: stretch; gap: 10px; }
+        #subscribeEmail { 
+            border-radius: 12px !important; 
+            padding-left: 42px !important; 
+            width: 100%;
+        }
         .subscribe-input { border-radius: 12px; padding-left: 42px; }
         .subscribe-btn { border-radius: 12px; width: 100%; }
         .subscribe-icon { left: 12px; }
@@ -298,7 +303,7 @@
                 <div class="subscribe-wrapper" id="subscribeSection">
                     <form class="subscribe-form" id="subscribeForm" novalidate>
                         <i class="fas fa-at subscribe-icon" aria-hidden="true"></i>
-                        <input id="subscribeEmail" type="email" name="email" placeholder="Enter your email" class="subscribe-input" autocomplete="email" style="height: 48px !important; padding: 8px 18px 8px 40px !important; font-size: 0.9rem !important; line-height: 1 !important;" />
+                        <input id="subscribeEmail" type="email" name="email" placeholder="Enter your email" class="subscribe-input" autocomplete="email" />
                         <button id="subscribeBtn" type="submit" class="subscribe-btn" aria-label="Subscribe">
                             <span id="subscribeBtnContent"><i class="fas fa-paper-plane"></i></span>
                         </button>

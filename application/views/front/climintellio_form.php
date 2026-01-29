@@ -185,8 +185,13 @@ include("navbar2.php");
     .fp-step-subtitle {
         font-size: 1.1rem;
         color: var(--ms-text-body);
-        margin-bottom: 2.5rem;
+        margin-bottom: 2rem;
         line-height: 1.5;
+    }
+
+    /* Step Content Spacing */
+    .fp-step-content {
+        margin-bottom: 1.5rem;
     }
 
     /* Options Grid (Radio Cards) */
@@ -198,7 +203,7 @@ include("navbar2.php");
 
     .fp-option-card {
         position: relative;
-        padding: 1.5rem;
+        padding: 1.25rem;
         background: #fff;
         border: 2px solid var(--ms-border);
         border-radius: var(--ms-radius);
@@ -206,7 +211,7 @@ include("navbar2.php");
         transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         display: flex;
         align-items: flex-start;
-        gap: 1rem;
+        gap: 0.875rem;
     }
 
     .fp-option-card:hover {
@@ -248,26 +253,52 @@ include("navbar2.php");
     .fp-option-desc { font-size: 0.95rem; color: #64748b; line-height: 1.5; }
 
     /* Modern Inputs */
-    .fp-input-group { margin-bottom: 1.5rem; }
+    .fp-input-group { margin-bottom: 1.25rem; }
     .fp-label {
         display: block;
-        font-size: 0.95rem;
+        font-size: 0.9rem;
         font-weight: 600;
         color: #334155;
-        margin-bottom: 0.6rem;
+        margin-bottom: 0.5rem;
     }
-    .fp-input, .fp-select {
+    .fp-input, .fp-select, .fp-textarea {
         width: 100%;
-        padding: 1rem 1.25rem;
-        font-size: 1rem;
+        padding: 0.5rem 1rem;
+        font-size: 0.95rem;
         background: #fff;
         border: 2px solid var(--ms-border);
-        border-radius: 12px;
-        color: var(--ms-text-heading);
+        border-radius: 10px;
+        color: var(--ms-text-heading) !important; /* Force dark text */
         transition: all 0.2s;
+        font-family: inherit;
     }
-    .fp-input:focus, .fp-select:focus,
-    .fp-multi-select-wrapper.open .fp-multi-select-trigger {
+    .fp-multi-select-wrapper {
+    position: relative;
+    width: 100%;
+    display: block;
+    }
+
+    .fp-multi-select-dropdown {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    width: 100%;
+    max-height: 280px;
+    overflow-y: auto;
+    z-index: 9999;
+
+    background: #fff;
+    border: 1px solid var(--ms-border);
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(2, 91, 95, 0.25);
+    display: none;
+    }
+
+    .fp-multi-select-wrapper.open .fp-multi-select-dropdown {
+    display: block;
+    }
+
+    .fp-input:focus, .fp-select:focus, .fp-multi-select-trigger {
         outline: none;
         border-color: var(--ms-primary);
         box-shadow: 0 0 0 4px rgba(2, 91, 95, 0.1);
@@ -275,19 +306,19 @@ include("navbar2.php");
 
     /* Checkboxes */
     .fp-checkbox-group {
-        display: flex; flex-wrap: wrap; gap: 0.75rem;
+        display: flex; flex-wrap: wrap; gap: 0.625rem;
     }
     .fp-checkbox-label {
-        padding: 0.75rem 1.25rem;
+        padding: 0.625rem 1rem;
         border: 2px solid var(--ms-border);
         border-radius: 50px;
         background: #fff;
-        font-size: 0.95rem;
+        font-size: 0.9rem;
         font-weight: 500;
         color: var(--ms-text-body);
         cursor: pointer;
         transition: all 0.2s;
-        display: flex; align-items: center; gap: 0.6rem;
+        display: flex; align-items: center; gap: 0.5rem;
     }
     .fp-checkbox-label:hover { border-color: #cbd5e1; background: #f8fafc; }
     .fp-checkbox-label.checked {
@@ -301,19 +332,19 @@ include("navbar2.php");
     /* Footer Buttons */
     .fp-footer {
         margin-top: auto;
-        padding-top: 3rem;
+        padding-top: 2rem;
         display: flex;
         justify-content: flex-end;
         align-items: center;
-        gap: 1rem;
+        gap: 0.875rem;
         border-top: 1px solid var(--ms-border);
     }
     
     .fp-btn {
-        padding: 1rem 2rem;
+        padding: 0.875rem 1.75rem;
         border-radius: 50px;
         font-weight: 600;
-        font-size: 1rem;
+        font-size: 0.95rem;
         cursor: pointer;
         transition: all 0.3s;
         border: none;
@@ -348,23 +379,81 @@ include("navbar2.php");
     /* Responsive */
     @media (max-width: 1100px) {
         .form-page { grid-template-columns: 350px 1fr; }
-        .form-main { padding: 3rem 4rem; }
-        .form-sidebar { padding: 3rem; }
+        .form-main { padding: 2.5rem 3rem; }
+        .form-sidebar { padding: 2.5rem; }
+        .sidebar-title { font-size: 2.5rem; }
     }
     @media (max-width: 900px) {
         .form-page { display: block; }
         .form-sidebar {
             height: auto;
-            padding: 3rem 2rem;
+            position: relative; /* Disable sticky on mobile */
+            padding: 2.5rem 1.5rem;
             text-align: center;
-            position: relative;
         }
-        .sidebar-logo { margin: 0 auto 2rem; }
-        .sidebar-features { display: none; }
-        .form-main { padding: 2rem 1.5rem; max-width: 100%; min-height: auto; }
-        .fp-footer { flex-direction: column-reverse; gap: 1rem; }
-        .fp-btn { width: 100%; justify-content: center; }
-        .fp-grid-options { grid-template-columns: 1fr; }
+        .sidebar-logo { margin: 0 auto 1.5rem; }
+        .sidebar-title { font-size: 2rem; }
+        .sidebar-desc { font-size: 1rem; margin-bottom: 1.5rem; }
+        .sidebar-features { display: none; } /* Consider showing if critical, but keeping hidden for focus */
+        
+        .form-main { 
+            padding: 1.5rem 1.25rem; 
+            max-width: 100%; 
+            min-height: auto; 
+            overflow: visible; /* Let natural scroll happen */
+        }
+
+        .fp-step-title { font-size: 1.75rem; }
+        .fp-step-subtitle { font-size: 1rem; margin-bottom: 1.5rem; }
+        
+        .fp-footer { flex-direction: column-reverse; gap: 0.75rem; padding-top: 1.5rem; }
+        .fp-btn { width: 100%; justify-content: center; text-align: center; }
+        .fp-btn-reset { margin-right: 0; }
+        
+        .fp-grid-options { grid-template-columns: 1fr; gap: 0.75rem; }
+        .fp-option-card { padding: 1rem; }
+        
+        .fp-checkbox-group { gap: 0.5rem; }
+        .fp-checkbox-label { padding: 0.5rem 0.875rem; font-size: 0.85rem; }
+        
+        .fp-input-group { margin-bottom: 1rem; }
+        /* Prevent iOS zoom by ensuring 16px font size */
+        .fp-input, .fp-select, .fp-textarea, .fp-multi-select-trigger { 
+            padding: 0.75rem 0.875rem; 
+            font-size: 1rem; 
+        }
+        
+        .fp-progress-bar { margin-bottom: 2rem; }
+        
+        /* Adjust dropdown max-height for mobile screens */
+        .fp-multi-select-dropdown { max-height: 40vh; }
+    }
+    @media (max-width: 480px) {
+        .form-sidebar { padding: 2rem 1rem; }
+        .sidebar-title { font-size: 1.75rem; }
+        .sidebar-desc { font-size: 0.9rem; }
+        .form-main { padding: 1.25rem 1rem; }
+        .fp-step-title { font-size: 1.5rem; }
+        .fp-step-subtitle { font-size: 0.9rem; }
+        .fp-btn { padding: /*0.75rem 1.25rem*/ 0.875rem 1.25rem; font-size: 0.95rem; } /* Keep button clickable */
+        .fp-option-card { padding: 0.875rem; gap: 0.625rem; }
+        .fp-option-title { font-size: 1rem; }
+        .fp-option-desc { font-size: 0.85rem; }
+        .fp-multi-select-trigger { padding: 0.75rem; font-size: 1rem; } /* Ensure 16px */
+        .fp-multi-option { padding: 0.625rem 0.875rem; font-size: 0.9rem; }
+    }
+
+    /* Selected Tags Styling (Mobile Friendly) */
+    .fp-selected-tags {
+        display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.75rem;
+    }
+    .fp-selected-tag {
+        background: #f1f5f9; 
+        padding: 0.25rem 0.75rem; 
+        border-radius: 4px; 
+        font-size: 0.85rem; 
+        color: var(--ms-text-body); 
+        border: 1px solid var(--ms-border);
     }
 
     /* Helper: Metric Chips & Review Items */
@@ -397,25 +486,30 @@ include("navbar2.php");
         content: '\f107'; font-family: "Font Awesome 5 Free"; font-weight: 900; color: #94a3b8;
     }
 
-    .fp-multi-select-dropdown {
-        position: fixed; /* Fixed positioning to avoid clipping */
+    /* Dropdown anchored to wrapper */
+        .fp-multi-select-dropdown {
+        position: absolute;
+        top: calc(100% + 6px);
+        left: 0;
+        width: 100%;
+        max-height: 300px;
+        overflow-y: auto;
+        z-index: 9999;
+
         background: #fff;
         border: 1px solid var(--ms-border);
         border-radius: 12px;
         padding: 0.5rem;
-        z-index: 100000;
-        box-shadow: 0 10px 40px -10px rgba(2, 91, 95, 0.25);
-        max-height: 300px;
-        overflow-y: auto;
-        display: none; /* Internal toggle */
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(-10px);
-        transition: opacity 0.2s ease, transform 0.2s ease;
-    }
-    .fp-multi-select-dropdown.active {
-        opacity: 1; visibility: visible; transform: translateY(0); display: block;
-    }
+        box-shadow: 0 10px 40px rgba(2, 91, 95, 0.25);
+
+        display: none;
+        }
+
+        /* SINGLE source of truth for visibility */
+        .fp-multi-select-wrapper.open .fp-multi-select-dropdown {
+        display: block;
+        }
+
 
     .fp-multi-option { border-radius: 8px; padding: 0.75rem 1rem; margin-bottom: 2px; cursor: pointer; display: flex; align-items: center; gap: 0.8rem; }
     .fp-multi-option:hover { background: #f1f5f9; }
@@ -509,8 +603,8 @@ include("navbar2.php");
                     <label class="fp-option-card">
                         <input type="radio" name="request_type" value="API Access" class="fp-option-radio">
                         <div class="fp-option-content">
-                            <span class="fp-option-title">API Access</span>
-                            <span class="fp-option-desc">Integrate climate intelligence directly into your workflow.</span>
+                            <span class="fp-option-title">Hazard Maps</span>
+                            <span class="fp-option-desc">Drought, flood, heat & extreme events</span>
                         </div>
                     </label>
                 </div>
@@ -790,15 +884,15 @@ include("navbar2.php");
                 
                 <div class="fp-step-content">
                     <div class="fp-input-group">
-                        <label class="fp-label">File Format</label>
-                        <select name="format" class="fp-select">
+                        <label class="fp-label">File Format(s)</label>
+                        <select id="fpFormatSelect" name="format[]" class="fp-select fp-multi-select" multiple>
                             <option value="CSV">CSV (Spreadsheet)</option>
                             <option value="NetCDF">NetCDF (Scientific)</option>
                             <option value="GeoJSON">GeoJSON / Shapefile</option>
                             <option value="ASCII">ASCII Grid</option>
                         </select>
                     </div>
-                    <div class="fp-checkbox-group" style="margin-top: 1.5rem;">
+                    <div class="fp-checkbox-group" style="margin-top: 1.25rem;">
                         <label class="fp-checkbox-label checked"><input type="checkbox" name="extras[]" value="Metadata" class="fp-checkbox-input" checked> Include Metadata</label>
                         <label class="fp-checkbox-label"><input type="checkbox" name="extras[]" value="Summary Tables" class="fp-checkbox-input"> Include Summary Tables</label>
                     </div>
@@ -806,7 +900,7 @@ include("navbar2.php");
 
                 <div class="fp-footer">
                     <button type="button" class="fp-btn fp-btn-reset" onclick="fpResetForm()">Reset</button>
-                    <div style="display: flex; gap: 1rem; align-items: center;">
+                    <div style="display: flex; gap: 0.875rem; align-items: center;">
                         <button type="button" class="fp-btn fp-btn-prev" onclick="fpPrevStep()">Back</button>
                         <button type="button" class="fp-btn fp-btn-next" onclick="fpNextStep()">Next</button>
                     </div>
@@ -837,13 +931,17 @@ include("navbar2.php");
                             <option value="Other">Other</option>
                         </select>
                     </div>
+                    <div class="fp-input-group">
+                        <label class="fp-label">Message (Optional)</label>
+                        <textarea name="user_message" class="fp-textarea" rows="3" placeholder="Tell us more about your requirements..."></textarea>
+                    </div>
                 </div>
 
                 <div class="fp-footer">
                     <button type="button" class="fp-btn fp-btn-reset" onclick="fpResetForm()">Reset</button>
                     <div style="display: flex; gap: 1rem; align-items: center;">
                         <button type="button" class="fp-btn fp-btn-prev" onclick="fpPrevStep()">Back</button>
-                        <button type="button" class="fp-btn fp-btn-next" onclick="fpNextStep()">Next â†’</button>
+                        <button type="button" class="fp-btn fp-btn-next" onclick="fpNextStep()">Next &rarr;</button>
                     </div>
                 </div>
             </div>
@@ -882,7 +980,7 @@ include("navbar2.php");
                     
                     <div style="margin-top: 2.5rem;">
                         <a href="<?php echo site_url('climintellio'); ?>" class="fp-btn fp-btn-next" style="display: inline-block; text-decoration: none;">
-                            â† Back to ClimIntellio
+                            &larr; Back to ClimIntellio
                         </a>
                     </div>
                 </div>
@@ -905,6 +1003,8 @@ include("navbar2.php");
         initLocations();
         // Initialize scenario multi-select
         setupCustomMultiSelect('fpScenarioSelect', 'Select Scenarios');
+        // Initialize format multi-select
+        setupCustomMultiSelect('fpFormatSelect', 'Select Format(s)');
         updateUI();
         setupEventListeners();
         toggleCoverageFields(); // Initialize visibility
@@ -915,6 +1015,12 @@ include("navbar2.php");
         const districtSelect = document.getElementById('fpDistrictSelect');
         
         if(typeof indiaLocations !== 'undefined') {
+            // Add "All States" option
+            const allStatesOption = document.createElement('option');
+            allStatesOption.value = 'All States';
+            allStatesOption.textContent = 'All States';
+            stateSelect.appendChild(allStatesOption);
+
             Object.keys(indiaLocations).sort().forEach(state => {
                 const option = document.createElement('option');
                 option.value = state;
@@ -962,113 +1068,68 @@ include("navbar2.php");
     }
 
     // Custom Multi-Select Logic (Detached & Fixed)
-    function setupCustomMultiSelect(selectId, placeholder) {
-        const select = document.getElementById(selectId);
-        select.classList.add('hidden-force');
-        select.style.display = 'none'; 
-        
-        let wrapper = document.getElementById(selectId + '_wrapper');
-        if(wrapper) wrapper.remove();
-        
-        // Create Wrapper
-        wrapper = document.createElement('div');
-        wrapper.className = 'fp-multi-select-wrapper';
-        wrapper.id = selectId + '_wrapper';
-        
-        // Trigger
-        const trigger = document.createElement('div');
-        trigger.className = 'fp-multi-select-trigger';
-        trigger.innerHTML = `<span>${placeholder}</span>`;
-        
-        // Dropdown List (Append to body to escape overflow)
-        const dropdown = document.createElement('div');
-        dropdown.className = 'fp-multi-select-dropdown';
-        // Ensure strictly closed on init
-        dropdown.style.display = 'none'; 
-        dropdown.style.opacity = '0';
-        dropdown.style.visibility = 'hidden';
+   function setupCustomMultiSelect(selectId, placeholder) {
+    const select = document.getElementById(selectId);
+    if (!select) return;
 
-        document.body.appendChild(dropdown); // Move to body
-        
-        // Selected Tags Area
-        const tagsArea = document.createElement('div');
-        tagsArea.className = 'fp-selected-tags';
-        
-        wrapper.appendChild(trigger);
-        // Note: dropdown is NOT appended to wrapper
-        
-        select.parentNode.insertBefore(wrapper, select.nextSibling);
-        select.parentNode.insertBefore(tagsArea, wrapper.nextSibling);
+    // Hide native select
+    select.classList.add('hidden-force');
+    select.style.display = 'none';
 
-        // Store references for easy access
-        wrapper._dropdown = dropdown; 
+    // Remove old wrapper if exists
+    const oldWrapper = document.getElementById(selectId + '_wrapper');
+    if (oldWrapper) oldWrapper.remove();
 
-        // Toggle Logic
-        trigger.onclick = (e) => {
-            e.stopPropagation();
-            
-            // Close other dropdowns
-            document.querySelectorAll('.fp-multi-select-wrapper').forEach(w => {
-                if(w !== wrapper && w._dropdown) {
-                    w.classList.remove('open');
-                    w._dropdown.classList.remove('active');
-                }
-            });
+    // Create wrapper
+    const wrapper = document.createElement('div');
+    wrapper.className = 'fp-multi-select-wrapper';
+    wrapper.id = selectId + '_wrapper';
 
-            const isOpen = wrapper.classList.contains('open');
-            
-            if(isOpen) {
-                // Close it
-                wrapper.classList.remove('open');
-                dropdown.classList.remove('active');
-                setTimeout(() => {
-                    if(!wrapper.classList.contains('open')) dropdown.style.display = 'none';
-                }, 200); 
-            } else {
-                // Open it
-                dropdown.style.display = 'block';
-                // Calculate position (Fixed Position = Viewport Relative)
-                const rect = wrapper.getBoundingClientRect();
-                dropdown.style.top = (rect.bottom + 5) + 'px'; 
-                dropdown.style.left = rect.left + 'px';
-                dropdown.style.width = rect.width + 'px';
-                
-                // Force reflow
-                dropdown.offsetHeight;
-                
-                wrapper.classList.add('open');
-                dropdown.classList.add('active');
-            }
-        };
+    // Trigger
+    const trigger = document.createElement('div');
+    trigger.className = 'fp-multi-select-trigger';
+    trigger.innerHTML = `<span>${placeholder}</span>`;
 
-        // Populate Options
-        refreshCustomMultiSelect(selectId);
+    // Dropdown
+    const dropdown = document.createElement('div');
+    dropdown.className = 'fp-multi-select-dropdown';
 
-        // Global Click Listener (Close on click outside)
-        const closeHandler = (e) => {
-            if (!wrapper.contains(e.target) && !dropdown.contains(e.target)) {
-                wrapper.classList.remove('open');
-                dropdown.classList.remove('active');
-                setTimeout(() => {
-                    if(!wrapper.classList.contains('open')) dropdown.style.display = 'none';
-                }, 200);
-            }
-        };
-        document.addEventListener('click', closeHandler);
+    // Tags area
+    const tagsArea = document.createElement('div');
+    tagsArea.className = 'fp-selected-tags';
 
-        // Scroll Listener (Update position)
-        window.addEventListener('scroll', () => {
-             if(wrapper.classList.contains('open')) {
-                const rect = wrapper.getBoundingClientRect();
-                dropdown.style.top = (rect.bottom + 5) + 'px'; // Fixed pos doesn't need scrollY if using fixed
-                // Wait, if mixed fixed/absolute. CSS has position: fixed.
-                // If CSS is fixed, top should be client Y.
-                // correcting logic:
-                dropdown.style.top = (rect.bottom + 5) + 'px';
-                dropdown.style.left = rect.left + 'px';
-             }
-        }, { passive: true });
-    }
+    // Assemble
+    wrapper.appendChild(trigger);
+    wrapper.appendChild(dropdown);
+
+    select.parentNode.insertBefore(wrapper, select.nextSibling);
+    select.parentNode.insertBefore(tagsArea, wrapper.nextSibling);
+
+    // Store refs
+    wrapper._dropdown = dropdown;
+    wrapper._select = select;
+    wrapper._tagsArea = tagsArea;
+
+    // Toggle dropdown
+    trigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+
+        // Close other dropdowns
+        document.querySelectorAll('.fp-multi-select-wrapper').forEach(w => {
+            if (w !== wrapper) w.classList.remove('open');
+        });
+
+        wrapper.classList.toggle('open');
+    });
+
+    // Close on outside click
+    document.addEventListener('click', () => {
+        wrapper.classList.remove('open');
+    });
+
+    // Populate options
+    refreshCustomMultiSelect(selectId);
+}
 
     function refreshCustomMultiSelect(selectId) {
         const select = document.getElementById(selectId);
@@ -1493,7 +1554,8 @@ include("navbar2.php");
             { key: 'coverage', label: 'Coverage' },
             { key: 'format', label: 'Format' },
             { key: 'user_name', label: 'Name' },
-            { key: 'user_email', label: 'Email' }
+            { key: 'user_email', label: 'Email' },
+            { key: 'user_message', label: 'Message' }
         ];
         
         let html = '';

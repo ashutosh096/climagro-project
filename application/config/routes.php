@@ -90,6 +90,10 @@ $route['administrator/exportsubscribers'] = 'Administrator/exportsubscribers';
 $route['administrator/managecontacts'] = 'Administrator/managecontacts';
 $route['administrator/exportcontacts'] = 'Administrator/exportcontacts';
 
+// Admin Climintellio management routes
+$route['administrator/climintellio_requests'] = 'Administrator/manageclimintellio';
+$route['administrator/manageclimintellio'] = 'Administrator/manageclimintellio';
+
 
 $route['climatedata']                  = 'Welcome/climate';
 $route['climatedata/(:any)']          = 'Welcome/climate/$1';

@@ -635,7 +635,58 @@ include("navbar2.php");
                 </div>
                 <p class="subtitle-text">Your Partners in Risk Intelligence</p>
             </div>
-    <!-- First Product Block -->
+    <!-- First Product Block - ClimIntello -->
+    <div id="DATA" class="product-block">
+      <!-- Laptop Frame -->
+      <div class="laptop-container fade-in">
+        <div class="laptop-screen">
+          <div class="window-controls">
+            <div class="control-dot" style="background-color: #ef4444;"></div>
+            <div class="control-dot" style="background-color: #f59e0b;"></div>
+            <div class="control-dot" style="background-color: #10b981;"></div>
+          </div>
+          <div class="content-area">
+            <img src="assest/img/about/mokd.png" alt="ClimIntello Dashboard">
+          </div>
+        </div>
+        <div class="laptop-base"></div>
+      </div>
+
+      <!-- Text Content -->
+      <div class="product-content">
+        <div style="max-width: 36rem;">
+          <div class="fade-in" style="margin-bottom: 1rem; color: var(--accent); font-weight: 600; letter-spacing: 0.05em; font-size: 0.875rem;">
+            CLIMATE INTELLIGENCE PLATFORM
+          </div>
+          <h2 class="fade-in" style="font-size: 2.25rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--primary-color);">
+            ClimIntello Climate Intelligence
+          </h2>
+          <p class="fade-in" style="color: #4b5563; font-size: 1.125rem; margin-bottom: 2rem;">
+            Access high-resolution climate and weather hazard maps for heatwaves, droughts, floods, and more. Explore multi-resolution climate data across block, district, and regional levels with flexible temporal scales. Get tailored climate risk mapping for vulnerable regions and sectors, along with sector-specific indices like dry/wet spell frequency and extreme heat days to support informed decision-making.
+          </p>
+
+          
+          <div class="fade-in buttons-container">
+                  <a href="<?php echo base_url('climintellio/request-form') ?>" class="btn btn-primary">
+                      Request Form
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <line x1="5" y1="12" x2="19" y2="12"></line>
+                          <polyline points="12 5 19 12 12 19"></polyline>
+                      </svg>
+                  </a>
+                  <a href="<?php echo base_url('climintellio') ?>" class="btn btn-secondary">
+                      Learn more
+                  </a>
+                  <a href="<?php echo base_url('climatedata') ?>" class="btn btn-outline">
+                      Example Dataset
+                  </a>
+      
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Second Product Block - AgRI.AI -->
     <div id="AGRI" class="product-block">
       <!-- Laptop Frame -->
       <div class="laptop-container fade-in">
@@ -665,7 +716,7 @@ include("navbar2.php");
             AgRI.ai is a crop-location-specific risk estimator that uses AI and machine learning to analyze crop-climate interactions through historical data. Integrating diverse datasets, AgRI.ai provides historical, current , short-term , medium-term, and long-term risk assessments.
           </p>
           <div class="fade-in">
-            <a href="<?php echo base_url('agri'); ?>" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 0.5rem;">
+            <a href="javascript:void(0);" class="btn btn-primary open-walkthrough-modal" style="display: inline-flex; align-items: center; gap: 0.5rem;">
               Request Demo
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
@@ -677,7 +728,7 @@ include("navbar2.php");
         </div>
       </div>
     </div>
-            <!-- Second Product Block -->
+            <!-- Third Product Block - CityAdapt.AI -->
             <div id="CLIMATE" class="product-block">
                 <div class="laptop-container fade-in">
                     <div class="laptop-screen">
@@ -716,59 +767,7 @@ include("navbar2.php");
                 </div>
             </div>
 
-            <!-- Third Product Block -->
-            <div id="DATA" class="product-block">
-                <div class="laptop-container fade-in">
-                    <div class="laptop-screen">
-                        <div class="window-controls">
-                            <div class="control-dot" style="background-color: #ef4444;"></div>
-                            <div class="control-dot" style="background-color: #f59e0b;"></div>
-                            <div class="control-dot" style="background-color: #10b981;"></div>
-                        </div>
-                        <div class="content-area">
-                            <img src="assest/img/about/mokd.png" alt="Agriculture Risk Analysis Dashboard">
-                        </div>
-                    </div>
-                    <div class="laptop-base"></div>
-                </div>
-                <div class="product-content">
-                    <div style="max-width: 36rem;">
-                        <div class="fade-in" style="margin-bottom: 1rem; color: var(--accent); font-weight: 600; letter-spacing: 0.05em; font-size: 0.875rem;">
-                            CLIMATE DATA PORTAL
-                        </div>
-                        <h2 class="fade-in" style="font-size: 2.25rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--primary-color);">
-                            Climate Data Portal
-                        </h2>
-                        <p class="fade-in" style="color: #4b5563; font-size: 1.125rem; margin-bottom: 2rem;">
-                            Access high-resolution climate and weather hazard maps for heatwaves, droughts, floods, and more. Explore multi-resolution climate data across block, district, and regional levels with flexible temporal scales. Get tailored climate risk mapping for vulnerable regions and sectors, along with sector-specific indices like dry/wet spell frequency and extreme heat days to support informed decision-making.
-                        </p>
-
-                        
-                        <div class="fade-in buttons-container">
-                                <a href="javascript:void(0);" class="btn btn-primary open-walkthrough-modal">
-                                    Book a Walkthrough
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                                        <polyline points="12 5 19 12 12 19"></polyline>
-                                    </svg>
-                                </a>
-                                <a href="<?php echo base_url('climatedata') ?>" class="btn btn-secondary">
-                                    Example Dataset
-                                </a>
-                                <button class="btn btn-outline" id="climateLearnMoreBtn">
-                                    Data Repository
-                                    <!-- <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <circle cx="12" cy="12" r="10"></circle>
-                                        <path d="m9 12 2 2 4-4"></path>
-                                    </svg> -->
-                                </button>
-                    
-                        </div>
-            </div>
-        </div>
-    </div>
-
-            <!-- Fourth Product Block -->
+            <!-- Fourth Product Block - Climate Consulting -->
             <div id= "CONSULTING" class="product-block">
                 <div class="laptop-container fade-in">
                     <div class="laptop-screen">
@@ -1114,14 +1113,20 @@ include("navbar2.php");
             document.body.style.overflow = 'auto';
         }
 
-        // Event listeners
-        climateLearnMoreBtn.addEventListener('click', openClimateModal);
-        climateCloseBtn.addEventListener('click', closeClimateModal);
-        climateModalOverlay.addEventListener('click', (e) => {
-            if (e.target === climateModalOverlay) {
-                closeClimateModal();
-            }
-        });
+        // Event listeners (with null checks)
+        if (typeof climateLearnMoreBtn !== 'undefined' && climateLearnMoreBtn) {
+            climateLearnMoreBtn.addEventListener('click', openClimateModal);
+        }
+        if (typeof climateCloseBtn !== 'undefined' && climateCloseBtn) {
+            climateCloseBtn.addEventListener('click', closeClimateModal);
+        }
+        if (typeof climateModalOverlay !== 'undefined' && climateModalOverlay) {
+            climateModalOverlay.addEventListener('click', (e) => {
+                if (e.target === climateModalOverlay) {
+                    closeClimateModal();
+                }
+            });
+        }
 
         // Escape key to close modal
         document.addEventListener('keydown', (e) => {

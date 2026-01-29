@@ -8,7 +8,7 @@ include("navbar2.php");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ClimIntellio — AI-Powered Climate Data Platform | ClimAgro</title>
+    <title>ClimIntellio Climate Data Platform | ClimAgro</title>
     <meta name="description" content="Climatics is an AI-enabled Climate Data SaaS platform offering harmonized, high-resolution climate datasets and hazard indices for 500+ districts in India.">
     <style>
         :root {
@@ -112,7 +112,7 @@ include("navbar2.php");
 // Hero Section Data
 $hero_data = [
     'tag' => 'Climate Data Intelligence',
-    'title' => 'ClimIntellio — AI-Powered ',
+    'title' => 'ClimIntellio   ',
     'highlight' => 'Climate Data Platform',
     'description' => 'ClimIntellio Climate Intelligence for Insurance, Banking, Agriculture, ESG & Research. API-ready climate hazard intelligence built from decades of climate data. Scientifically robust. Institution-ready. Hazard, not risk.',
     /*
@@ -122,7 +122,7 @@ $hero_data = [
     ],
     */
     'cta_newtab' => [
-        'text' => 'Get Data Access',
+        'text' => 'Request Form',
         'url' => site_url('climintellio/request-form')
     ],
     'cta_secondary' => [

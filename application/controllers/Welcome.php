@@ -532,6 +532,7 @@ class Welcome extends CI_Controller
 			'user_name' => $this->input->post('user_name'),
 			'user_email' => $this->input->post('user_email'),
 			'user_org_type' => $this->input->post('user_org_type'),
+			'user_message' => $this->input->post('user_message'),
 			'submitted_at' => date('Y-m-d H:i:s')
 		];
 
@@ -573,6 +574,7 @@ class Welcome extends CI_Controller
 		$message = "<h2>New Climintellio Data Request</h2>";
 		$message .= "<p><strong>User:</strong> " . htmlspecialchars($data['user_name']) . " (" . htmlspecialchars($data['user_email']) . ")</p>";
 		$message .= "<p><strong>Organization Type:</strong> " . htmlspecialchars($data['user_org_type']) . "</p>";
+		$message .= "<p><strong>Message:</strong><br>" . nl2br(htmlspecialchars($data['user_message'] ?? '')) . "</p>";
 		$message .= "<hr>";
 		$message .= "<h3>Request Details:</h3>";
 		$message .= "<ul>";

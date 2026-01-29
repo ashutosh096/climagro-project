@@ -309,6 +309,17 @@
                 </div>
             </a>
             
+            <a href="<?php echo base_url('administrator/manageclimintellio'); ?>" class="action-card">
+                <div class="card-icon green">
+                    <i class="fas fa-layer-group"></i>
+                </div>
+                <h3 class="card-title">ClimIntello Requests</h3>
+                <p class="card-desc">View and manage ClimIntello data requests from users.</p>
+                <div class="card-arrow">
+                    View Requests <i class="fas fa-arrow-right"></i>
+                </div>
+            </a>
+            
             <a href="<?php echo base_url(); ?>" target="_blank" class="action-card">
                 <div class="card-icon purple">
                     <i class="fas fa-globe"></i>

@@ -1018,7 +1018,57 @@ document.addEventListener('DOMContentLoaded', function() {
     <div class="products-grid">
       <!-- First Row -->
       <div class="products-row">
-        <!-- First Product Card -->
+        <!-- First Product Card - ClimIntello -->
+        <div class="product-card">
+          <div class="laptop-frame">
+            <div class="laptop-container fade-in">
+              <div class="laptop-screen">
+                <div class="window-controls">
+                  <div class="control-dot" style="background-color: #ef4444;"></div>
+                  <div class="control-dot" style="background-color: #f59e0b;"></div>
+                  <div class="control-dot" style="background-color: #10b981;"></div>
+                </div>
+                <div class="content-area" style="padding: 1rem;">
+                  <img src="assest/img/about/mokd.png" alt="ClimIntello Dashboard" style="width: 100%; border-radius: 0.5rem;">
+                </div>
+              </div>
+              <div class="laptop-base"></div>
+            </div>
+          </div>
+
+          <div class="product-content">
+            <div class="content-wrapper">
+              <div class="fade-in" style="margin-bottom: 1rem; color: var(--accent); font-weight: 600; letter-spacing: 0.05em; font-size: 0.875rem;">
+                  CLIMATE INTELLIGENCE PLATFORM
+              </div>
+              <h2 class="fade-in" style="font-size: 1.75rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--primary-color);">
+                  ClimIntello Climate Intelligence
+              </h2>
+              <p class="fade-in" style="color: #4b5563; font-size: 1rem; margin-bottom: 2rem;">
+                  Access multi-resolution climate data tailored for vulnerable regions with hazard maps for heatwaves, floods, droughts, and multi-level risk intelligence.
+              </p>
+              <div class="fade-in">
+                <a href="<?php echo base_url('climintellio/request-form') ?>" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 0.5rem;">
+                  Request Form
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </a>
+                <a href="<?= base_url('climintellio'); ?>" class="btn btn-outline">
+                  Learn more
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ms-2">
+                                      <line x1="7" y1="17" x2="17" y2="7"></line>
+                                      <polyline points="7 7 17 7 17 17"></polyline>
+                    </svg>
+                  </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Second Product Card - AgRI.AI -->
         <div class="product-card">
           <div class="laptop-frame">
             <div class="laptop-container fade-in">
@@ -1068,8 +1118,11 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- Second Product Card -->
+      <!-- Second Row -->
+      <div class="products-row">
+        <!-- Third Product Card - CityAdapt.AI -->
         <div class="product-card">
           <div class="laptop-frame">
             <div class="laptop-container fade-in">
@@ -1080,7 +1133,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   <div class="control-dot" style="background-color: #10b981;"></div>
                 </div>
                 <div class="content-area" style="padding: 1rem;">
-                  <img src="assest/img/about/CityAdapt.png" alt="Second Product Dashboard" style="width: 100%; border-radius: 0.5rem;">
+                  <img src="assest/img/about/CityAdapt.png" alt="CityAdapt Dashboard" style="width: 100%; border-radius: 0.5rem;">
                 </div>
               </div>
               <div class="laptop-base"></div>
@@ -1118,11 +1171,8 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- Second Row -->
-      <div class="products-row">
-        <!-- Third Product Card -->
+        <!-- Fourth Product Card - Climate Consulting -->
         <div class="product-card">
           <div class="laptop-frame">
             <div class="laptop-container fade-in">
@@ -1133,57 +1183,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   <div class="control-dot" style="background-color: #10b981;"></div>
                 </div>
                 <div class="content-area" style="padding: 1rem;">
-                  <img src="assest/img/about/mokd.png" alt="Third Product Dashboard" style="width: 100%; border-radius: 0.5rem;">
-                </div>
-              </div>
-              <div class="laptop-base"></div>
-            </div>
-          </div>
-
-          <div class="product-content">
-            <div class="content-wrapper">
-              <div class="fade-in" style="margin-bottom: 1rem; color: var(--accent); font-weight: 600; letter-spacing: 0.05em; font-size: 0.875rem;">
-                  CLIMATE DATA PORTAL
-              </div>
-              <h2 class="fade-in" style="font-size: 1.75rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--primary-color);">
-                  Climate Data Portal
-              </h2>
-              <p class="fade-in" style="color: #4b5563; font-size: 1rem; margin-bottom: 2rem;">
-                  Access multi-resolution climate data tailored for vulnerable regions with hazard maps for heatwaves, floods, droughts, and multi-level risk intelligence.
-              </p>
-              <div class="fade-in">
-                <a href="<?php echo base_url('solutions').'#DATA' ?>" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 0.5rem;">
-                  Request Demo
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                    <polyline points="12 5 19 12 12 19"></polyline>
-                  </svg>
-                </a>
-                <a href="<?= base_url('solutions').'#DATA'; ?>" class="btn btn-outline">
-                  Learn more
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ms-2">
-                                      <line x1="7" y1="17" x2="17" y2="7"></line>
-                                      <polyline points="7 7 17 7 17 17"></polyline>
-                    </svg>
-                  </a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Fourth Product Card -->
-        <div class="product-card">
-          <div class="laptop-frame">
-            <div class="laptop-container fade-in">
-              <div class="laptop-screen">
-                <div class="window-controls">
-                  <div class="control-dot" style="background-color: #ef4444;"></div>
-                  <div class="control-dot" style="background-color: #f59e0b;"></div>
-                  <div class="control-dot" style="background-color: #10b981;"></div>
-                </div>
-                <div class="content-area" style="padding: 1rem;">
-                  <img src="assest/img/about/Consulting.png" alt="Fourth Product Dashboard" style="width: 100%; border-radius: 0.5rem;">
+                  <img src="assest/img/about/Consulting.png" alt="Consulting Dashboard" style="width: 100%; border-radius: 0.5rem;">
                 </div>
               </div>
               <div class="laptop-base"></div>
