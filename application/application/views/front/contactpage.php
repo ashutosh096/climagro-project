@@ -79,7 +79,7 @@ include("navbar2.php");
                                             background-color: white;     /* Ensure white background */
                                         ">
                                             <option value="" >Interested In (Optional)</option>
-                                            <option value="AgRI.ai">AgRI.ai</option>
+                                            <option value="CropRisk.ai">CropRisk.ai</option>
                                             <option value="CityAdapt.ai">CityAdapt.ai</option>
                                             <option value="Climate Data Services">Climate Data Services</option>
                                             <option value="Climate Consulting">Climate Consulting</option>
@@ -106,7 +106,7 @@ include("navbar2.php");
                                 </div>
                             </div>
                         </form>
-                    </div>
+                    </div>   
                 </div>
                 <div class="col-lg-5 mt-30">
                     <div class="footer-apps">
@@ -165,7 +165,7 @@ include("navbar2.php");
     </div>
 </div>
         <div style="padding:20px; border-radius:20px;">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3570.717953418603!2d80.26476517566593!3d26.497024677830698!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1728493913797!5m2!1sen!2sin" style="border:0;width:100%;height:350px; border-radius:20px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+           <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3569.339!2d80.22489!3d26.52245!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399c36e45f41cc8b%3A0xa51eb602756f4db!2sNankari%2C+Kalyanpur%2C+Kanpur%2C+Uttar+Pradesh+208016!5e0!3m2!1sen!2sin!4v1728493913797!5m2!1sen!2sin" style="border:0;width:100%;height:350px; border-radius:20px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
         <div class="form-results d-none"></div>
 

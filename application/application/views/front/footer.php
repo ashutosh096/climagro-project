@@ -83,9 +83,11 @@
     }
     
     .footer-social a {
-        color: #FFFF;
-        transition: color 0.15s;
-    }
+    color: #FFFF;
+    transition: color 0.15s;
+    font-size: 16px;
+}
+    
     
     .footer-social a:hover {
         color: white;

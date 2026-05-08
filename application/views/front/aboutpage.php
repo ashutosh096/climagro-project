@@ -17,7 +17,7 @@ include("navbar2.php");
 
     .bg-gradient-quartz-white {
         background: linear-gradient(180deg, #ffffff 0%, #f0f9f4 100%);
-        padding: 8px 0; /* reduced top/bottom padding to remove extra top space */
+        padding: 100px 0 50px; /* matched large spacing from original screenshot */
     }
 
     .about-wrap {
@@ -144,7 +144,7 @@ include("navbar2.php");
         font-size: 2.5rem;
         font-weight: 700;
         color: #025b5f;
-        margin: 0 30px;
+        margin: 0 6px; /* Tighter horizontal margin so corners sit close to text */
         display: inline-block;
     }
 
@@ -279,7 +279,7 @@ include("navbar2.php");
             font-size: 2rem;
             color: #f26a21;
             position: relative;
-            top: -10px;
+            top: -6px;
     }
 
 
@@ -362,7 +362,7 @@ include("navbar2.php");
             font-size: 2rem;
             color: #f26a21;
             position: relative;
-            top: -10px;
+            top: -6px;
         }
 
 
@@ -393,6 +393,46 @@ include("navbar2.php");
         }
     }
 
+    /* ============ MOBILE FIXES ============ */
+    @media (max-width: 767px) {
+        /* img 3: Fix corner bracket alignment with title */
+        .title-wrapper {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 0.5rem;
+            margin: 0 auto 15px !important;
+        }
+        .main-title {
+            font-size: clamp(1.6rem, 6vw, 2.2rem) !important;
+            margin: 0 !important;
+            display: inline !important;
+        }
+        .corner-decoration {
+            font-size: 1.5rem !important;
+            position: static !important;
+            top: auto !important;
+            line-height: 1 !important;
+            flex-shrink: 0;
+        }
+        /* Core Values section top spacing on mobile */
+        .values-section {
+            padding-top: 3rem !important;
+            padding-bottom: 3rem !important;
+        }
+        /* value card spacing */
+        .value-card {
+            margin-bottom: 1rem !important;
+        }
+        /* About section */
+        .bg-gradient-quartz-white {
+            padding: 5rem 0 2rem !important;
+        }
+        .xb-item--title {
+            font-size: clamp(1.4rem, 5vw, 2rem) !important;
+        }
+    }
+
     @media (max-width: 480px) {
         .feature-block {
             gap: 1rem;
@@ -400,16 +440,15 @@ include("navbar2.php");
             align-items: center;
             text-align: center;
         }
-
         .feature-content h4 {
             margin-bottom: 0.5rem;
         }
-
         .feature-icon {
             margin-bottom: 0.5rem;
         }
     }
 </style>
+
 
 <!-- About Section -->
 <section class="about-section bg-gradient-quartz-white">
@@ -417,9 +456,9 @@ include("navbar2.php");
         <!-- Our Story -->
         <div class="section-header text-center mb-5" data-aos="fade-up">
             <div class="title-wrapper">
-                <span class="corner-decoration">⌜</span>
+                <span class="corner-decoration" style="position: relative; top: -10px;">⌜</span>
                 <h2 class="main-title">Our Story</h2>
-                <span class="corner-decoration">⌝</span>
+                <span class="corner-decoration" style="position: relative; top: 6px;">⌟</span>
             </div>
             <p class="subtitle-text">WHO WE ARE</p>
         </div>
@@ -427,15 +466,13 @@ include("navbar2.php");
             <div class="col-lg-6">
                 <div class="about-wrap fade-in-left">
                     <h2 class="xb-item--title">ClimAgro Analytics</h2>
-                    <p class="xb-item--content">
-                        ClimAgro Analytics is a research-driven AI startup specializing in climate risk intelligence. Our models analyze vast datasets on climate, agriculture, and socio-demographics to assess climate risks and crop-specific yield projections across past, present, and future periods. While our core expertise lies in agriculture, we also support climate-smart cities and sustainability planning, addressing broader climate challenges. By integrating advanced analytics with scientific research, we provide high-resolution risk assessments to help businesses and policymakers anticipate and mitigate climate risks effectively.
-                    </p>
+                   <p class="xb-item--content" style="text-align: justify; text-justify: inter-word;">ClimAgro Analytics is a research-driven AI startup specializing in climate risk intelligence. Our models analyze vast datasets on climate, agriculture, and socio-demographics to assess climate risks and crop-specific yield projections across past, present, and future periods. While our core expertise lies in agriculture, we also support climate-smart cities and sustainability planning, addressing broader climate challenges. By integrating advanced analytics with scientific research, we provide high-resolution risk assessments to help businesses and policymakers anticipate and mitigate climate risks effectively.</p>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="about-image fade-in-right">
                     <div class="image-decoration decoration-top-left"></div>
-                    <img class="w-100 rounded shadow-lg" src="assest/img/about/about.png" alt="ClimAgro Analytics">
+                    <img class="w-100 rounded shadow-lg" src="<?= base_url() ?>assest/img/about/intelligence.jpg" alt="ClimAgro Analytics">
                     <div class="image-decoration decoration-bottom-right"></div>
                 </div>
             </div>
@@ -478,11 +515,10 @@ include("navbar2.php");
     <div class="container">
         <div class="section-header text-center mb-5" data-aos="fade-up">
             <div class="title-wrapper">
-                <span class="corner-decoration">⌜</span>
+                <span class="corner-decoration" style="position: relative; top: -10px;">⌜</span>
                 <h2 class="main-title">Our Core Values</h2>
-                <span class="corner-decoration">⌝</span>
+                <span class="corner-decoration" style="position: relative; top: 6px;">⌟</span>
             </div>
-            <p class="subtitle-text">WHAT KEEPS US GROUNDED</p>
         </div>
         <div class="row g-4">
             <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
@@ -520,7 +556,11 @@ include("navbar2.php");
 <section class="team pt-140 pb-80">
     <div class="container">
         <div class="section-title pb-35">
-            <h1 class="main-title">Meet Our Team</h1>
+            <div class="title-wrapper">
+                <span class="corner-decoration" style="position: relative; top: -10px;">⌜</span>
+                <h1 class="main-title">Meet Our Team</h1>
+                <span class="corner-decoration" style="position: relative; top: 6px;">⌟</span>
+            </div>
         </div>
         <div class="row">
             <div class="col-lg-12">
@@ -529,7 +569,7 @@ include("navbar2.php");
                         <div class="col-lg-3 col-md-4 col-sm-6 my-3">
                             <div class="xb-team text-center">
                                 <div class="xb-item--img">
-                                    <img src="<?= base_url() ?>assest/uploadfile/webimages/<?php echo $team->image; ?>" alt="">
+                                    <img src="<?= base_url() ?>assest/uploadfile/webimages/<?= $team->image ?>" alt="<?= $team->name ?>" onerror="this.onerror=null;this.src='<?= base_url() ?>assest/uploadfile/webimages/noimage.png';">
                                 </div>
                                 <div class="xb-item--holder">
                                     <div class="linkedin-wrapper">
@@ -552,10 +592,14 @@ include("navbar2.php");
     </div>
 </section>
 <!-- Mentor Section -->
-<section class="team pt-140 pb-80">
+<section class="team pt-0 pb-80">
     <div class="container">
         <div class="section-title pb-35">
-            <h1 class="main-title">Our Mentors</h1>
+            <div class="title-wrapper">
+                <span class="corner-decoration" style="position: relative; top: -10px;">⌜</span>
+                <h1 class="main-title">Our Advisors</h1>
+                <span class="corner-decoration" style="position: relative; top: 6px;">⌟</span>
+            </div>
         </div>
         <div class="row">
             <div class="col-lg-12">
@@ -564,7 +608,7 @@ include("navbar2.php");
                         <div class="col-lg-3 col-md-4 col-sm-6 my-3">
                             <div class="xb-team text-center">
                                 <div class="xb-item--img">
-                                    <img src="<?= base_url() ?>assest/uploadfile/webimages/<?php echo $alumini->image; ?>" alt="<?php echo $alumini->name; ?>">
+                                    <img src="<?= base_url() ?>assest/uploadfile/webimages/<?= $alumini->image ?>" alt="<?= $alumini->name ?>" onerror="this.onerror=null;this.src='<?= base_url() ?>assest/uploadfile/webimages/noimage.png';">
                                 </div>
                                 <div class="xb-item--holder">
                                     <div class="linkedin-wrapper">

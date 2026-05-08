@@ -14,6 +14,7 @@ include("navbar2.php");
     </div>
 </section>
 <!-- breadcrumb end -->
+
  <style>
 
 
@@ -95,7 +96,48 @@ include("navbar2.php");
   color: #02494d;
   border-bottom-color: #025b5f;
 }
+.widget__social {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.widget__social li a {
+  color: #025b5f;
+  background: #d1ff44;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none !important;
+  transition: all 0.3s ease;
+  font-size: 15px;
+}
+.widget__social li a:hover {
+  background: #b8e832;
+  transform: translateY(-2px);
+}
+/* ====== MOBILE ONLY: Prevent blog breadcrumb hidden under fixed navbar ====== */
+@media (max-width: 767px) {
+  section.breadcrumb {
+    padding-top: 130px !important;
+    padding-bottom: 40px !important;
+    min-height: 170px !important;
+  }
+  .blog.pt-130 {
+    padding-top: 40px !important;
+  }
+  .col-lg-8, .col-lg-4 {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+}
 </style>
+
 
 
 
@@ -109,7 +151,12 @@ include("navbar2.php");
                     foreach ($blog as $list) { ?>
                         <article class="blog__item mt-30">
                             <a class="thumb" href="<?php echo base_url('blogs/' . $list->page_url); ?>">
-                                <img src="<?php echo base_url() . '/assest/uploadfile/blogimages/' . $list->page_image; ?>" alt=""></a>
+                                <img 
+                                    src="<?php echo base_url('assest/uploadfile/blogimages/' . $list->page_image); ?>" 
+                                    onerror="this.onerror=null; this.src='https://www.climagroanalytics.com/assest/uploadfile/blogimages/<?php echo rawurlencode($list->page_image); ?>';" 
+                                    alt="<?= htmlspecialchars($list->page_title); ?>"
+                                    style="width:100%; height:100%; object-fit:cover;"
+                                ></a>
                             <div class="blog__inner">
                                 <ul class="blog__meta ul_li mb-30">
                                     <!-- <li><a href="#!"><i class="far fa-user"></i>Colin Scotland</a></li> -->
@@ -140,7 +187,7 @@ include("navbar2.php");
                         <h3 class="widget__title">Search</h3>
                         <form class="widget__search" action="#!">
                             <input type="text" placeholder="Search your keyword" style = "color:black">
-                            <button><i class="far fa-search"></i></button>
+                            <button><i class="fas fa-search"></i></button>
                         </form>
                     </div>
                     <!-- <div class="widget mt-30">
@@ -191,15 +238,13 @@ include("navbar2.php");
                     <div class="widget mt-30">
                         <h3 class="widget__title">Follow Us</h3>
                         <ul class="widget__social ul_li">
-                            <li><a href="<?php echo $getCompany->facebook; ?>"><i class="fab fa-facebook-f"></i></a></li>
-                            <li><a href="<?php echo $getCompany->linkedin; ?>"><i class="fab fa-linkedin-in"></i></a></li>
-                            <li><a href="<?php echo $getCompany->twitter; ?>"><i class="fab fa-twitter"></i></a></li>
-                            <?php
-                            $insta = $getCompany->insta;
-                            if ($insta != "") {
-                                echo '<li><a href="<?php echo $getCompany->insta;?>"><i class="fab fa-instagram"></i></a></li>';
-                            }
-                            ?>
+                            <li><a href="<?php echo $getCompany->linkedin; ?>" target="_blank"><i class="fab fa-linkedin-in"></i></a></li>
+                            <li><a href="<?php echo $getCompany->twitter; ?>" target="_blank"><i class="fa-brands fa-x-twitter"></i></a></li>
+                            <li><a href="https://youtube.com/@climagroanalytics?si=Ou6D2-0N5IyqGpD" target="_blank"><i class="fab fa-youtube"></i></a></li>
+                            <li><a href="<?php echo $getCompany->facebook; ?>" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+                            <?php if (!empty($getCompany->insta)): ?>
+                                <li><a href="<?php echo $getCompany->insta; ?>" target="_blank"><i class="fab fa-instagram"></i></a></li>
+                            <?php endif; ?>
                         </ul>
                     </div>
 

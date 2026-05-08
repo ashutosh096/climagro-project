@@ -45,9 +45,11 @@ class Publicmodel extends CI_Model
 		if($ord!=''){
 			$this->db->order_by($ord, 'ASC');
 		}
-		$loopdata = $this->db->select('*')
-			->where(array($column=>$id, 'status'=>'Active'))
-			->limit($limit, $offset)->get($table);
+		$this->db->select('*')->where(array($column=>$id, 'status'=>'Active'));
+		if($limit > 0){
+			$this->db->limit($limit, $offset);
+		}
+		$loopdata = $this->db->get($table);
 		return $loopdata->result();
 	}
 

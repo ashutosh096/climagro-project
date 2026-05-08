@@ -1036,10 +1036,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 AGRICULTURE RISK INTELLIGENCE
               </div>
               <h2 class="fade-in" style="font-size: 1.75rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--primary-color);">
-                AgRI.AI – Agriculture Risk    <br>Intelligence 
+                CropRisk.ai – Agriculture Risk    <br>Intelligence 
               </h2>
               <p class="fade-in" style="color: #4b5563; font-size: 1rem; margin-bottom: 2rem;">
-                AgRI.ai is a crop-location-specific risk estimator that uses AI and machine learning to analyze crop-climate interactions through historical data.
+                CropRisk.ai is a crop-location-specific risk estimator that uses AI and machine learning to analyze crop-climate interactions through historical data.
               </p>
               <div class="fade-in">
                 <a href="<?php echo base_url('solutions').'#consult-us' ?>" class="login-btn" style="display: inline-flex; align-items: center; gap: 0.5rem;">
@@ -1581,7 +1581,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                             background-color: white;     /* Ensure white background */
                                         ">
                                             <option value="" >Interested In (Optional)</option>
-                                            <option value="AgRI.ai">AgRI.ai</option>
+                                            <option value="CropRisk.ai">CropRisk.ai</option>
                                             <option value="CityAdapt.ai">CityAdapt.ai</option>
                                             <option value="Climate Data Services">Climate Data Services</option>
                                             <option value="Climate Consulting">Climate Consulting</option>

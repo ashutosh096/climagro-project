@@ -313,8 +313,8 @@
                 <div class="card-icon green">
                     <i class="fas fa-layer-group"></i>
                 </div>
-                <h3 class="card-title">ClimIntello Requests</h3>
-                <p class="card-desc">View and manage ClimIntello data requests from users.</p>
+                <h3 class="card-title">ClimIntellio Requests</h3>
+                <p class="card-desc">View and manage ClimIntellio data requests from users.</p>
                 <div class="card-arrow">
                     View Requests <i class="fas fa-arrow-right"></i>
                 </div>

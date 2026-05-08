@@ -65,6 +65,7 @@ $route['solutions'] = 'Welcome/solutions/';
 $route['agri'] = 'Welcome/agri/';
 $route['climintellio'] = 'Welcome/agri/';
 $route['climintellio/request-form'] = 'Welcome/climintellio_form/';
+$route['croprisk'] = 'Welcome/croprisk/';
 $route['resource'] = 'Welcome/resource/';
 $route['our-team'] = 'Welcome/team/';
 $route['our-journey'] = 'Welcome/journey/';

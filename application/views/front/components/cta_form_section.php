@@ -1,6 +1,6 @@
 <?php
 /**
- * CTA / Demo Request Form Component
+ * CTA / Demo Request Demo Component
  * 
  * Usage:
  * $cta_data = [
@@ -272,7 +272,7 @@
                 <form id="ctaDemoForm" action="<?php echo $cta_data['form_action'] ?? site_url('contact/submit'); ?>" method="POST">
                     <input type="hidden" name="url" value="<?php echo current_url(); ?>">
                     <input type="hidden" name="form_type" value="Demo Request">
-                    <input type="hidden" name="interested" value="<?php echo $cta_data['product_name'] ?? 'AgRI.ai'; ?>">
+                    <input type="hidden" name="interested" value="<?php echo $cta_data['product_name'] ?? 'CropRisk.ai'; ?>">
                     
                     <div class="cta-form-row">
                         <div class="cta-form-group">

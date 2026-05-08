@@ -108,31 +108,166 @@ include("navbar2.php");
 </head>
 <body>
     
-<?php
-// Hero Section Data
-$hero_data = [
-    'tag' => 'Climate Data Intelligence',
-    'title' => 'ClimIntellio   ',
-    'highlight' => 'Climate Data Platform',
-    'description' => 'ClimIntellio Climate Intelligence for Insurance, Banking, Agriculture, ESG & Research. API-ready climate hazard intelligence built from decades of climate data. Scientifically robust. Institution-ready. Hazard, not risk.',
-    /*
-    'cta_primary' => [
-        'text' => 'Request Form →',
-        'url' => '#request-demo'
-    ],
-    */
-    'cta_newtab' => [
-        'text' => 'Request Form',
-        'url' => site_url('climintellio/request-form')
-    ],
-    'cta_secondary' => [
-        'text' => 'Explore Platform →',
-        'url' => '#features'
-    ],
-    'image' => base_url('assest/img/about/AgRI.png')
-];
-include('components/hero_section.php');
-?>
+
+<style>
+    .ci-hero {
+        min-height: 88vh;
+        display: flex;
+        align-items: center;
+        background: linear-gradient(135deg, #f8fffe 0%, #e8f5f5 50%, #f0fafa 100%);
+        position: relative;
+        overflow: hidden;
+        padding: 140px 0 3rem 0;
+    }
+    .ci-hero::before {
+        content: '';
+        position: absolute;
+        top: -50%; right: -20%;
+        width: 80%; height: 200%;
+        background: radial-gradient(ellipse, rgba(2,91,95,0.08) 0%, transparent 70%);
+        pointer-events: none;
+    }
+    .ci-hero-container {
+        max-width: 1300px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        display: flex;
+        align-items: center;
+        gap: 4rem;
+        position: relative;
+        z-index: 1;
+    }
+    .ci-hero-content { flex: 1; max-width: 580px; }
+    .ci-hero-visual  { flex: 1; position: relative; }
+    .ci-hero-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: linear-gradient(135deg, rgba(2,91,95,0.1), rgba(2,91,95,0.05));
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: #025b5f;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-bottom: 1.5rem;
+        border: 1px solid rgba(2,91,95,0.15);
+    }
+    .ci-hero-tag::before {
+        content: '';
+        width: 8px; height: 8px;
+        background: #025b5f;
+        border-radius: 50%;
+        animation: ci-pulse 2s infinite;
+    }
+    @keyframes ci-pulse {
+        0%,100%{opacity:1;transform:scale(1);}
+        50%{opacity:0.5;transform:scale(1.2);}
+    }
+    .ci-hero-title {
+        font-size: 3.5rem;
+        font-weight: 800;
+        color: #1a1a2e;
+        line-height: 1.1;
+        margin-bottom: 1.5rem;
+    }
+    .ci-hero-title .ci-highlight {
+        background: linear-gradient(135deg, #025b5f, #04888e);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    .ci-hero-desc {
+        font-size: 1.1rem;
+        color: #4b5563;
+        line-height: 1.8;
+        margin-bottom: 2.5rem;
+    }
+    .ci-hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .ci-btn {
+        padding: 1rem 2rem;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+    }
+    .ci-btn-primary {
+        background: linear-gradient(135deg, #025b5f, #04888e);
+        color: white;
+        box-shadow: 0 10px 40px rgba(2,91,95,0.3);
+    }
+    .ci-btn-primary:hover { transform: translateY(-3px); color: white; box-shadow: 0 15px 50px rgba(2,91,95,0.4); }
+    .ci-btn-secondary {
+        background: white;
+        color: #025b5f;
+        border: 2px solid rgba(2,91,95,0.25);
+    }
+    .ci-btn-secondary:hover { border-color: #025b5f; color: #025b5f; transform: translateY(-2px); }
+    .ci-hero-img-wrap {
+        position: relative;
+        animation: ci-float 6s ease-in-out infinite;
+    }
+    @keyframes ci-float {
+        0%,100%{transform:translateY(0);}
+        50%{transform:translateY(-16px);}
+    }
+    .ci-hero-img-wrap img {
+        width: 100%;
+        max-width: 600px;
+        border-radius: 1.5rem;
+        box-shadow: 0 25px 80px rgba(2,91,95,0.2);
+    }
+    @media(max-width:992px){
+        .ci-hero{ padding-top:110px; min-height:auto; }
+        .ci-hero-container{ flex-direction:column; text-align:center; }
+        .ci-hero-content{ max-width:100%; }
+        .ci-hero-title{ font-size:2.5rem; }
+        .ci-hero-btns{ justify-content:center; }
+        .ci-hero-visual{ order:-1; max-width:480px; }
+    }
+    @media(max-width:576px){
+        .ci-hero-title{ font-size:2rem; }
+        .ci-btn{ width:100%; justify-content:center; }
+    }
+</style>
+
+<section class="ci-hero">
+    <div class="ci-hero-container">
+        <div class="ci-hero-content">
+            <div class="ci-hero-tag">Climate Data Intelligence</div>
+            <h1 class="ci-hero-title">
+                ClimIntellio <span class="ci-highlight">Climate Data Platform</span>
+            </h1>
+            <p class="ci-hero-desc">
+                ClimIntellio Climate Intelligence for Insurance, Banking, Agriculture, ESG &amp; Research. API-ready climate hazard intelligence built from decades of climate data. Scientifically robust. Institution-ready. Hazard, not risk.
+            </p>
+            <div class="ci-hero-btns">
+                <a href="<?php echo site_url('climintellio/request-form'); ?>" class="ci-btn ci-btn-primary" target="_blank">
+                    Request Data Access
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
+                    </svg>
+                </a>
+                <a href="#features" class="ci-btn ci-btn-secondary">Explore Platform →</a>
+            </div>
+        </div>
+        <div class="ci-hero-visual">
+            <div class="ci-hero-img-wrap">
+                <img src="<?php echo base_url('assest/img/about/AgRI.png'); ?>"
+                     alt="ClimIntellio Climate Data Platform"
+                     loading="eager">
+            </div>
+        </div>
+    </div>
+</section>
+
 
 <!-- Data Transformation Section - Hidden for now -->
 <?php // include(__DIR__ . '/../components/data-transform-section.php'); ?>
@@ -144,21 +279,21 @@ include('components/hero_section.php');
 <section class="stats-section">
     <div class="stats-container">
         <div class="stat-item">
-            <div class="stat-value">170+</div>
-            <div class="stat-label">Years of Climate Data</div>
+            <div class="stat-value">70+</div>
+            <div class="stat-label">Years (1901–2100)</div>
         </div>
         <div class="stat-item">
-            <div class="stat-value">25</div>
-            <div class="stat-label">Hazard Indices</div>
+            <div class="stat-value">30+</div>
+            <div class="stat-label">Climate Indicators</div>
         </div>
         <div class="stat-item">
             <div class="stat-value">500+</div>
-            <div class="stat-label">Districts Covered</div>
+            <div class="stat-label">All Districts</div>
             <div style="font-size: 0.8rem; color: #9ca3af; margin-top: 4px;">5000+ subdistricts</div>
         </div>
         <div class="stat-item">
             <div class="stat-value">70–80%</div>
-            <div class="stat-label">Data Prep Time Saved</div>
+            <div class="stat-label">Reduction in Data Preparation Effort</div>
         </div>
     </div>
 </section>
@@ -193,7 +328,7 @@ $steps_data = [
         ]
     ]
 ];
-include('components/steps_section.php');
+include(__DIR__ . '/components/steps_section.php');
 ?>
 
 <!-- Testimonial Section -->
@@ -255,11 +390,24 @@ $usecases_data = [
                 'Long-term climate trend indicators',
                 'Evidence-based support for resilience planning'
             ]
-        ]
-    ]
+        ],
+    ]     
 ];
-include('components/usecases_section.php');
+$usecase_spotlight = [
+    'tag' => 'USE CASE SPOTLIGHT',
+    'title' => 'Hydroclimatic Variability & Water Availability — Jhansi, Uttar Pradesh',
+    'description' => 'ClimIntellio was used to analyse long-term hydroclimatic trends in Jhansi district, generating district-level rainfall variability, drought frequency, and future water availability projections under SSP scenarios. The study supported evidence-based water resource planning for the region.'
+];
 ?>
+<!-- Use Case Spotlight Section -->
+<section style="background:#f0fdfa; padding:4rem 2rem;">
+    <div style="max-width:900px; margin:0 auto;">
+        <span style="color:#025b5f; font-weight:700; font-size:0.85rem; letter-spacing:2px; text-transform:uppercase;">USE CASE SPOTLIGHT</span>
+        <h2 style="font-size:1.8rem; font-weight:800; color:#1e293b; margin:1rem 0;">Hydroclimatic Variability & Water Availability — Jhansi, Uttar Pradesh</h2>
+        <p style="font-size:1.1rem; color:#475569; line-height:1.8;">ClimIntellio was used to analyse long-term hydroclimatic trends in Jhansi district, generating district-level rainfall variability, drought frequency, and future water availability projections under SSP scenarios. The study supported evidence-based water resource planning for the region.</p>
+    </div>
+</section>
+<?php include(__DIR__ . '/components/usecases_section.php'); ?>
 
 <?php
 // CTA Form Section Data - Hidden for now
@@ -280,7 +428,7 @@ include('components/cta_form_section.php');
 </main>
 </div>
 <!-- Multi-Step Form Modal -->
-<?php include('components/multi-step-form.php'); ?>
+<?php include(__DIR__ . '/components/multi-step-form.php'); ?>
 
 <?php include("footer.php"); ?>
 

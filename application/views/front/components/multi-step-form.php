@@ -1,6 +1,6 @@
 <?php
 /**
- * Multi-Step Data Request Form Component
+ * Multi-Step Data Request Demo Component
  * 
  * Implements a complex multi-step wizard for data access and hazard maps
  * Matches the Climagro website design (Teal/White/Outfit)

@@ -1,3 +1,4 @@
+<?php echo "CORRECT FILE LOADED"; ?>
 <?php
 include("header.php");
 include("navbar2.php");
@@ -302,14 +303,8 @@ include("navbar2.php");
             <div class="col-lg-6">
                 <div class="about-wrap fade-in-left">
                     <h2 class="xb-item--title">ClimAgro Analytics</h2>
-                    <p class="xb-item--content">
-                        ClimAgro Analytics is a research-driven AI startup specializing in climate risk intelligence. Our models analyze vast datasets on climate, agriculture, and socio-demographics to assess climate risks and crop-specific yield projections across past, present, and future periods.
-                                                    While our core
-                            expertise lies in agriculture, we also support climate-smart cities, and
-                            sustainability planning, addressing broader climate challenges. By
-                            integrating advanced analytics with scientific research, we provide high
-                            resolution risk assessments to help businesses and policymakers
-                            anticipate and mitigate climate risks effectively
+                    <p class="xb-item--content" style="text-align: justify; text-justify: inter-word;">ClimAgro Analytics is a research-driven AI startup specializing in climate risk intelligence. Our models analyze vast datasets on climate, agriculture, and socio-demographics to assess climate risks and crop-specific yield projections across past, present, and future periods. While our core expertise lies in agriculture, we also support climate-smart cities and sustainability planning, addressing broader climate challenges. By integrating advanced analytics with scientific research, we provide high-resolution risk assessments to help businesses and policymakers anticipate and mitigate climate risks effectively.</p>
+                        
                     </p>
                 </div>
                 

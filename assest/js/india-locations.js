@@ -1,6 +1,6 @@
 /**
  * India States and Districts Data
- * Used for populating location dropdowns in the demo request form
+ * Used for populating location dropdowns in the demo Request Demo
  */
 const indiaLocations = {
     "Andhra Pradesh": [

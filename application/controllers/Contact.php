@@ -66,6 +66,7 @@ class Contact extends CI_Controller {
             $this->email->from('akshat@ehmconsultancy.co.in', $data['name']);
             $this->email->to('akshatsan23@gmail.com'); 
             $this->email->subject('New Contact Form Submission');
+            $created_date = date('Y-m-d H:i:s');
             $this->email->message(
                 "You have received a new message:<br><br>" .
                 "Name: " . $data['name'] . "<br>" .
@@ -74,7 +75,7 @@ class Contact extends CI_Controller {
                 "Title: " . $data['title'] . "<br>" .
                 "Interest: " . $data['interested'] . "<br>" .
                 "Message: " . nl2br($data['message']) . "<br><br>" .
-                "Submitted on: " . $data['created']
+                "Submitted on: " . $created_date
             );
     
             if ($this->email->send()) {
@@ -138,4 +139,5 @@ class Contact extends CI_Controller {
         // Return response in JSON format
         json_encode($response);
     }
+}
 }

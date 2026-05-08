@@ -44,6 +44,7 @@ include("navbar2.php");
             width: 100%;       /* Ensure full width */
             max-width: none;   /* override if any */
             margin: 0;         /* Reset margin */
+            padding-top: 100px; /* Matched large spacing from original screenshot */
         }
         
         /* Removed unnecessary media query for offering-container flex-direction */
@@ -229,7 +230,7 @@ include("navbar2.php");
             font-size: 2rem;
             color: #f26a21;
             position: relative;
-            top: -10px;
+            top: -6px;
         }
 
         .main-title {
@@ -348,11 +349,24 @@ include("navbar2.php");
                 margin-bottom: 60px;
             }
 
+            /* img 3: Fix corner bracket alignment with title */
+            .title-wrapper {
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                gap: 0.5rem;
+                margin: 0 auto 15px !important;
+            }
+            .main-title {
+                font-size: clamp(1.6rem, 6vw, 2.2rem) !important;
+                margin: 0 !important;
+                display: inline !important;
+            }
             .corner-decoration {
-                font-size: 2rem;
-                color: #f26a21;
-                position: relative;
-                top: -10px;
+                font-size: 1.5rem !important;
+                position: relative !important; /* Changed from static to relative */
+                line-height: 1 !important;
+                flex-shrink: 0;
             }
         }
 
@@ -621,6 +635,15 @@ include("navbar2.php");
                 font-size: 0.75rem;
             }
         }
+        
+        /* Adjusting corner bracket spacing to match about page */
+        .main-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #025b5f;
+            margin: 0 6px; /* Tighter horizontal margin so corners sit close to text */
+            display: inline-block;
+        }
     </style>
 </head>
 <body>
@@ -629,13 +652,13 @@ include("navbar2.php");
         <div class="container">
             <div class="section-header text-center mb-5" data-aos="fade-up" style="margin-bottom: 8rem !important;">
                 <div class="title-wrapper">
-                    <span class="corner-decoration">⌜</span>
+                    <span class="corner-decoration" style="position: relative; top: -10px;">⌜</span>
                     <h2 class="main-title">Offerings</h2>
-                    <span class="corner-decoration">⌝</span>
+                    <span class="corner-decoration" style="position: relative; top: 6px;">⌟</span>
                 </div>
                 <p class="subtitle-text">Your Partners in Risk Intelligence</p>
             </div>
-    <!-- First Product Block - ClimIntello -->
+    <!-- First Product Block - ClimIntellio -->
     <div id="DATA" class="product-block">
       <!-- Laptop Frame -->
       <div class="laptop-container fade-in">
@@ -646,7 +669,7 @@ include("navbar2.php");
             <div class="control-dot" style="background-color: #10b981;"></div>
           </div>
           <div class="content-area">
-            <img src="assest/img/about/mokd.png" alt="ClimIntello Dashboard">
+            <img src="assest/img/about/mokd.png" alt="ClimIntellio Dashboard">
           </div>
         </div>
         <div class="laptop-base"></div>
@@ -659,7 +682,7 @@ include("navbar2.php");
             CLIMATE INTELLIGENCE PLATFORM
           </div>
           <h2 class="fade-in" style="font-size: 2.25rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--primary-color);">
-            ClimIntello Climate Intelligence
+            ClimIntellio –Ready to Use Climate Intelligence
           </h2>
           <p class="fade-in" style="color: #4b5563; font-size: 1.125rem; margin-bottom: 2rem;">
             Access high-resolution climate and weather hazard maps for heatwaves, droughts, floods, and more. Explore multi-resolution climate data across block, district, and regional levels with flexible temporal scales. Get tailored climate risk mapping for vulnerable regions and sectors, along with sector-specific indices like dry/wet spell frequency and extreme heat days to support informed decision-making.
@@ -668,7 +691,7 @@ include("navbar2.php");
           
           <div class="fade-in buttons-container">
                   <a href="<?php echo base_url('climintellio/request-form') ?>" class="btn btn-primary">
-                      Request Form
+                      Request Data
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                           <line x1="5" y1="12" x2="19" y2="12"></line>
                           <polyline points="12 5 19 12 12 19"></polyline>
@@ -686,7 +709,7 @@ include("navbar2.php");
       </div>
     </div>
 
-    <!-- Second Product Block - AgRI.AI -->
+    <!-- Second Product Block - CropRisk.ai -->
     <div id="AGRI" class="product-block">
       <!-- Laptop Frame -->
       <div class="laptop-container fade-in">
@@ -710,21 +733,31 @@ include("navbar2.php");
             AGRICULTURE RISK INTELLIGENCE
           </div>
           <h2 class="fade-in" style="font-size: 2.25rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--primary-color);">
-            AgRI.ai – Agriculture Risk Intelligence 
+            CropRisk.ai – Agriculture Risk Intelligence 
           </h2>
           <p class="fade-in" style="color: #4b5563; font-size: 1.125rem; margin-bottom: 2rem;">
-            AgRI.ai is a crop-location-specific risk estimator that uses AI and machine learning to analyze crop-climate interactions through historical data. Integrating diverse datasets, AgRI.ai provides historical, current , short-term , medium-term, and long-term risk assessments.
+            CropRisk.ai is a crop-location-specific risk estimator that uses AI and machine learning to analyze crop-climate interactions through historical data. Integrating diverse datasets, CropRisk.ai provides historical, current , short-term , medium-term, and long-term risk assessments.
           </p>
-          <div class="fade-in">
-            <a href="javascript:void(0);" class="btn btn-primary open-walkthrough-modal" style="display: inline-flex; align-items: center; gap: 0.5rem;">
+          <div class="fade-in buttons-container">
+            <a href="javascript:void(0);" class="btn btn-primary open-walkthrough-modal">
               Request Demo
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
                 <polyline points="12 5 19 12 12 19"></polyline>
               </svg>
+            </a> 
+            <a href="<?php echo base_url('croprisk') ?>" class="btn btn-secondary">
+              Learn more
+            </a>
+            <a href="https://www.youtube.com/watch?v=yXlvvzwNR4k" target="_blank" class="btn btn-outline" style="display: inline-flex; align-items: center; gap: 0.5rem;">
+              Watch Overview
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
             </a>
           </div>
+        
         </div>
       </div>
     </div>
@@ -756,7 +789,7 @@ include("navbar2.php");
                         </p>
                         <div class="fade-in">
                             <a href="javascript:void(0);" class="btn btn-primary open-walkthrough-modal" style="display: inline-flex; align-items: center; gap: 0.5rem;">
-                                Book a Walkthrough
+                                Book a Demo
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <line x1="5" y1="12" x2="19" y2="12"></line>
                                     <polyline points="12 5 19 12 12 19"></polyline>
@@ -795,7 +828,7 @@ include("navbar2.php");
                         </p>
                         <div class="fade-in">
                             <a href="javascript:void(0);" class="btn btn-primary open-walkthrough-modal" style="display: inline-flex; align-items: center; gap: 0.5rem;">
-                                Book a Walkthrough
+                                Book a Demo
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <line x1="5" y1="12" x2="19" y2="12"></line>
                                     <polyline points="12 5 19 12 12 19"></polyline>
@@ -818,7 +851,7 @@ include("navbar2.php");
                     <div class="xb-inner">
                         <h5 class="xb-item--sub-title text-white"><span><img src="assest/img/footer/contact.svg" alt=""></span> Contact Us</h5>
                         <h2 class="xb-item--title text-white">Do you have questions or went more information?</h2>
-                        <form id="contactForm" action="<?= site_url('contact/submit') ?>" method="POST">
+                        <form id="contactForm" action="<?= site_url('contact/submit') ?>" method="POST" onsubmit="return false;">
                             <div class="input-group">
                 				<input type="hidden" id="url" name="url" value="<?php echo base_url();?>">
                 			</div> 
@@ -832,7 +865,7 @@ include("navbar2.php");
                                 <div class="col-lg-6">
                                     <div class="xb-item--field">
                                         <span><img src="assest/img/footer/contact-call.svg" alt=""></span>
-                                        <input type="tel" placeholder="+91 081 0256 023" name="phone" id="phone" inputmode="numeric" pattern="[0-9]*" maxlength="12" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
+                                        <input type="tel" placeholder="+91 98765 43210" name="phone" id="phone" inputmode="numeric" pattern="[0-9]*" maxlength="13" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
@@ -875,8 +908,8 @@ include("navbar2.php");
                                             background-color: white;     /* Ensure white background */
                                         ">
                                             <option value="" >Interested In (Optional)</option>
-                                            <option value="AgRI.ai">Climate data portal</option>
-                                            <option value="AgRI.ai">AgRI.ai</option>
+                                            <option value="CropRisk.ai">ClimIntellio</option>
+                                            <option value="CropRisk.ai">CropRisk.ai</option>
                                             <option value="CityAdapt.ai">CityAdapt.ai</option>
                                             <option value="Climate Data Services">Climate Data Services</option>
                                             <option value="Climate Consulting">Climate Consulting</option>
@@ -1160,32 +1193,38 @@ include("navbar2.php");
         });
 
         $(document).ready(function() {
-            $('#contactForm').on('submit', function(e) {
-                e.preventDefault();
-                
-                $('.form-results').html('').removeClass('d-none');
-                
-                $('.form-results').html('<div class="alert alert-info">Sending your message...</div>');
+            // Keep other jQuery code here if needed
+        });
 
-                $.ajax({
-                    type: 'POST',
-                    url: $(this).attr('action'),
-                    data: $(this).serialize(),
-                    dataType: 'json',
-                    success: function(response) {
-                        if (response.success) {
-                            $('.form-results').html('<div class="alert alert-success">' + response.message + '</div>');
-                            $('#contactForm')[0].reset();
-                        } else {
-                            $('.form-results').html('<div class="alert alert-danger">' + response.message + '</div>');
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        console.error("AJAX Error:", status, error, xhr.responseText);
-                        $('.form-results').html('<div class="alert alert-danger">There was an unexpected error. Please try again later.</div>');
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var form = this;
+            var formData = new FormData(form);
+            fetch(form.getAttribute('action'), { method: 'POST', body: formData })
+            .then(function(res) { return res.json(); })
+            .then(function(data) {
+                if (data.success) {
+                    form.reset();
+                    if (typeof showClimToast === 'function') {
+                        showClimToast('\uD83C\uDF89 Message Sent! Our team will connect with you soon.');
                     }
-                });
+                } else {
+                    var tmp = document.createElement('div');
+                    tmp.innerHTML = data.message || 'Something went wrong.';
+                    var lines = tmp.querySelectorAll('.error, div');
+                    var msgs = [];
+                    lines.forEach(function(el) { if (el.textContent.trim()) msgs.push('\u2022 ' + el.textContent.trim()); });
+                    var cleanMsg = msgs.length ? msgs.join('<br>') : (tmp.textContent || data.message);
+                    var r = document.querySelector('.form-results');
+                    if (r) { r.innerHTML = '<div style="color:#ef4444;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);border-radius:8px;padding:12px 16px;font-size:0.875rem;line-height:1.6;margin-top:12px;">\u26A0\uFE0F Please fix the following:<br>' + cleanMsg + '</div>'; r.classList.remove('d-none'); }
+                }
+            })
+            .catch(function() {
+                var r = document.querySelector('.form-results');
+                if (r) { r.innerHTML = '<div style="color:#ef4444;padding:10px;">\u274C An error occurred. Please try again.</div>'; r.classList.remove('d-none'); }
             });
+            return false;
         });
     </script>
 

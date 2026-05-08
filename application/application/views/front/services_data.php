@@ -4,7 +4,7 @@
 $services = [
     [
         'id' => 'agri-ai',
-        'title' => 'AgRI.ai',
+        'title' => 'CropRisk.ai',
         'description' => 'Precise crop-specific climate risk assessments for smarter agricultural decisions.',
         'features' => [
             'District-level risk analysis',

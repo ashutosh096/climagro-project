@@ -4,16 +4,7 @@ include("navbar1.php");
 include ("services_data.php");
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Your Page</title>
-    <?php include 'application/views/front/frontpagestyle.php'; ?>
-</head>
-<body>
-    <!-- Your content -->
-</body>
-</html>
+<?php include("frontpagestyle.php"); ?>
 
 <style>
 /* Slightly taller on mobile */
@@ -201,8 +192,12 @@ padding: 0 0.5rem;
     max-height: 400px;
     overflow: hidden;
     display: block;
-    left:20px;
-    top:60px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.video-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
 }
 
 .video-container::after {
@@ -613,10 +608,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 <!-- hero section start  -->
-<section class="hero hero-two pos-rel pt-60 mb-0">
+<section class="hero hero-two pos-rel pt-120 mb-0">
     <?php
     foreach ($sliderlist as $slider) { ?>
-        <div class="hero-img" data-background="assest/img/bg/Bg3_croppng.png"></div>
+        <div class="hero-img" data-background="<?= base_url() ?>assest/img/bg/Bg3_croppng.png"></div>
 
 
         <div class="container pos-rel">
@@ -628,17 +623,139 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
                 <p class="xb-item--content wow fadeInUp text-white" data-wow-duration=".7s" data-wow-delay="150ms" style="margin-bottom: 1rem;"><?php echo $slider->content;
                                                                                                                     ?> </p>
-                <div class="hero__btn btns pt-10 wow fadeInUp" data-wow-duration=".7s" data-wow-delay="250ms">
-                    <a class="them-btn open-walkthrough-modal" href="javascript:void(0);">
-                        <span class="btn_label" data-text="Book a Walkthrough">Book a Walkthrough</span>
+                <style>
+                /* Base custom button styling to completely avoid the double-text template glitch */
+                .hero-custom-btn {
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 15px 38px;
+                    border-radius: 35px;
+                    font-size: 17px;
+                    font-weight: 600;
+                    text-decoration: none !important;
+                    transition: all 0.3s ease !important;
+                    position: relative;
+                    overflow: hidden;
+                    margin-right: 15px;
+                }
+                .hero-custom-btn .btn_icon {
+                    margin-left: 10px;
+                    display: flex;
+                    align-items: center;
+                }
+                .hero-custom-btn:hover {
+                    transform: translateY(-3px) !important;
+                    text-decoration: none !important;
+                }
+                
+                /* Mobile Optimizations for Hero Section */
+                @media (max-width: 767px) {
+                    /* Fix massive white space on short mobile screens by removing fixed min-heights */
+                    .hero-two {
+                        min-height: auto !important;
+                        padding-bottom: 50px !important;
+                    }
+                    .hero-style-two {
+                        min-height: auto !important;
+                        padding-bottom: 0 !important;
+                    }
+                    .hero-style-two h2.title {
+                        font-size: 2rem !important;
+                        white-space: normal !important;
+                        word-wrap: break-word !important;
+                        line-height: 1.3 !important;
+                        padding: 0 10px;
+                        min-height: 5.2rem;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                    .hero-style-two h1.title {
+                        font-size: 2rem !important;
+                        white-space: normal !important;
+                        word-wrap: break-word !important;
+                        line-height: 1.3 !important;
+                        padding: 0 10px;
+                    }
+                    .hero-style-two p.xb-item--content {
+                        font-size: 0.95rem !important;
+                        padding: 0 15px;
+                        line-height: 1.6 !important;
+                        margin-bottom: 1.5rem !important;
+                    }
+                    .hero-button-group {
+                        display: flex !important;
+                        flex-direction: row !important;
+                        justify-content: center !important;
+                        gap: 10px !important;
+                        align-items: center !important;
+                        flex-wrap: nowrap !important;
+                        margin-top: -45 !important;
+                        padding-top: 0 !important;
+                    }
+                    .hero-custom-btn {
+                        margin-right: 0 !important;
+                        width: auto !important;
+                        padding: 12px 14px !important;
+                        font-size: 13px !important;
+                        white-space: nowrap !important;
+                    }
+                }
+
+                
+                /* Book a Demo - Default is Yellow */
+                #hero-book-btn {
+                    background-color: #c8ff08 !important;
+                    color: #025b5f !important;
+                    border: 1px solid #c8ff08 !important;
+                }
+                #hero-book-btn svg path { fill: #025b5f !important; transition: fill 0.3s ease; }
+                
+                /* #hero-book-btn:hover {
+                    background-color: #ffffff !important;
+                    border-color: #ffffff !important;
+                    color: #025b5f !important;
+                } */
+                
+                /* Explore More - Default is Transparent */
+                #hero-explore-btn {
+                    background-color: transparent !important;
+                    border: 1px solid #ffffff !important;
+                    color: #ffffff !important;
+                }
+                #hero-explore-btn svg path { transition: fill 0.3s ease; }
+                
+                #hero-explore-btn:hover {
+                    background-color: #c8ff08 !important;
+                    border-color: #c8ff08 !important;
+                    color: #025b5f !important;
+                }
+                #hero-explore-btn:hover svg path { fill: #025b5f !important; }
+
+                /* GROUP HOVER LOGIC: 
+                   When mouse is ON #hero-explore-btn, make #hero-book-btn white with readable dark text! 
+                */
+                .hero-button-group:has(#hero-explore-btn:hover) #hero-book-btn {
+                    background-color: #ffffff !important;
+                    border-color: #ffffff !important;
+                    color: #025b5f !important; /* ensures text is readable */
+                }
+                .hero-button-group:has(#hero-explore-btn:hover) #hero-book-btn svg path {
+                    fill: #025b5f !important;
+                }
+                </style>
+                <div class="hero__btn btns pt-10 wow fadeInUp hero-button-group" data-wow-duration=".7s" data-wow-delay="250ms">
+                    <a id="hero-book-btn" class="hero-custom-btn open-walkthrough-modal" href="javascript:void(0);">
+                        <span class="btn_label">Book a Demo</span>
                         <span class="btn_icon">
                             <svg width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M14.434 0.999999C14.434 0.447714 13.9862 -8.61581e-07 13.434 -1.11446e-06L4.43396 -3.13672e-07C3.88168 -6.50847e-07 3.43396 0.447715 3.43396 0.999999C3.43396 1.55228 3.88168 2 4.43396 2L12.434 2L12.434 10C12.434 10.5523 12.8817 11 13.434 11C13.9862 11 14.434 10.5523 14.434 10L14.434 0.999999ZM2.14107 13.7071L14.1411 1.70711L12.7269 0.292893L0.726853 12.2929L2.14107 13.7071Z" fill="white"></path>
                             </svg>
                         </span>
                     </a>
-                    <a href="<?php echo base_url('solutions');?>" class="them-btn btn-transparent">
-                        <span class="btn_label" data-text="Explore More">Explore More</span>
+                    <a id="hero-explore-btn" href="<?php echo base_url('solutions');?>" class="hero-custom-btn btn-transparent">
+                        <span class="btn_label">Explore More</span>
                         <span class="btn_icon">
                             <svg width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M14.434 0.999999C14.434 0.447714 13.9862 -8.61581e-07 13.434 -1.11446e-06L4.43396 -3.13672e-07C3.88168 -6.50847e-07 3.43396 0.447715 3.43396 0.999999C3.43396 1.55228 3.88168 2 4.43396 2L12.434 2L12.434 10C12.434 10.5523 12.8817 11 13.434 11C13.9862 11 14.434 10.5523 14.434 10L14.434 0.999999ZM2.14107 13.7071L14.1411 1.70711L12.7269 0.292893L0.726853 12.2929L2.14107 13.7071Z" fill="white"></path>
@@ -646,19 +763,217 @@ document.addEventListener('DOMContentLoaded', function() {
                         </span>
                     </a>
                 </div>
-                <div class="climate-section">
+<style>
+/* ====== PARTNER LOGOS - FULLY FLUID RESPONSIVE ====== */
+
+.partners-scroll-container {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.partners-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  white-space: nowrap;
+}
+
+/* Desktop: tile is just a flex wrapper, NO background - avoid double card */
+.partner-tile {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+}
+
+/* Desktop: single clean card with bg and shadow */
+.partner-logo-container {
+  width: 180px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff; /* Must be white to hide non-PNG logo backgrounds */
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.5); /* Bright emerald hero-section shadow */
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.partner-logo {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+  margin: auto;
+}
+
+/* Infinite scroll animation */
+.infinite-scroll {
+  animation: scroll-left 25s linear infinite;
+}
+
+@keyframes scroll-left {
+  0%   { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ====== UNIVERSAL MOBILE - vw units scale with ANY phone screen ====== */
+@media (max-width: 767px) {
+
+  /* Push section clearly below the teal hero background */
+  .partners-section {
+    margin-top: 4rem !important;
+    padding-top: 1rem !important;
+  }
+
+  .scroll-arrow {
+    display: none !important;
+  }
+
+  .partners-section h2.section-title {
+    font-size: 1.4rem !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    margin-bottom: 12px !important;
+  }
+
+  .partners-wrapper {
+    gap: 3vw !important;
+    padding: 0.5rem 2vw !important;
+    align-items: center !important;
+  }
+
+  /* partner-tile: NO background, NO shadow — only a flex wrapper */
+  .partner-tile {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+    background: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* partner-logo-container: the ONE visible card */
+  .partner-logo-container {
+    width: 45vw !important;
+    height: 28vw !important;
+    min-width: 120px !important;
+    min-height: 70px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: #ffffff !important;       /* Must be white to hide non-PNG logo backgrounds */
+    border-radius: 10px !important;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.5) !important; /* Bright emerald hero-section shadow */
+    padding: 6px !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+  }
+
+  .partner-logo {
+    max-width: 85% !important;
+    max-height: 85% !important;
+    object-fit: contain !important;
+    display: block !important;
+    margin: auto !important;
+  }
+
+  /* Fix gap between video/climate section and the partner logos on mobile */
+  .climate-section {
+    margin-bottom: 0 !important;
+    padding-bottom: 1.5rem !important;
+  }
+}
+</style>
+<section class="partners-section" style="background-color: transparent !important; margin-top: 10rem; margin-bottom: 0 !important; padding: 0 !important; position: relative; z-index: 10;">
+    <div class="container">
+
+        <h2 class="section-title text-center" style="color: #025B5F; white-space: nowrap;">Supported By</h2>
+        
+        <div class="partners-container">
+            <button class="scroll-arrow scroll-left" id="scrollLeft" aria-label="Scroll left">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </button>
+            
+            <div class="partners-scroll-container">
+              <div class="partners-wrapper infinite-scroll">
+                <?php foreach ($servicelist as $client): ?>
+                  <a href="#" class="partner-tile">
+                    <div class="partner-logo-container">
+                      <img class="partner-logo" src="<?= base_url("assest/uploadfile/webimages/") . $client->services_image; ?>" alt="<?php echo $client->services_title; ?>" onerror="this.onerror=null;this.src='<?= base_url() ?>assest/uploadfile/webimages/noimage.png';">
+                    </div>
+                  </a>
+                <?php endforeach; ?>
+
+                <!-- Duplicate logos for seamless loop -->
+                <?php foreach ($servicelist as $client): ?>
+                  <a href="#" class="partner-tile">
+                    <div class="partner-logo-container">
+                      <img class="partner-logo" src="<?= base_url("assest/uploadfile/webimages/") . $client->services_image; ?>" alt="<?php echo $client->services_title; ?>" onerror="this.onerror=null;this.src='<?= base_url() ?>assest/uploadfile/webimages/noimage.png';">
+                    </div>
+                  </a>
+                <?php endforeach; ?>
+              </div>
+            </div>
+
+            
+            <button class="scroll-arrow scroll-right" id="scrollRight" aria-label="Scroll right">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </button>
+        </div>
+    </div>
+</section>
+                <style>
+@media (max-width: 767px) {
+  /* FIX img 6: YouTube properly below hero teal background on all phones.
+     50vh was causing a huge gap — changed to a safe 2rem (partners already
+     pushes content past the hero naturally on mobile). */
+  .climate-section {
+    margin-top: 2rem !important;
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+  }
+  /* YouTube iframe fluid on mobile */
+  .video-container iframe {
+    width: 100% !important;
+    height: clamp(180px, 52vw, 280px) !important;
+  }
+  .climate-content {
+    padding: 1.25rem 1rem 0 !important;
+    text-align: center;
+  }
+  .climate-content h3 {
+    font-size: clamp(1.1rem, 4.5vw, 1.5rem) !important;
+  }
+  .climate-content .tile-content {
+    font-size: clamp(0.85rem, 3.5vw, 1rem) !important;
+    margin-bottom: 0.75rem !important;
+  }
+}
+</style>
+                <div class="climate-section" style="margin-top: -2rem !important; padding-top: 0 !important; position: relative; z-index: 11;">
                 <div class="container-video">
                     <div class="row align-items-center">
                         <!-- Video Column (Left Side) -->
                         <div class="col-lg-6">
-                            <div class="video-container wow fadeInUp" data-wow-duration=".7s" data-wow-delay="350ms">
+                            <div class="video-container wow fadeInUp" data-wow-duration=".7s" data-wow-delay="300ms">
                                 <iframe 
-                                  src="https://www.youtube.com/embed/5TyCK_cyFTs?si=8Pbk3hzGRLI6tkh4&autoplay=1&mute=1&start=2&controls=1" 
+                                  src="https://www.youtube.com/embed/y9M8FZi6Tfw?controls=1&rel=0" 
                                   title="YouTube video player" 
                                   allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                                   referrerpolicy="strict-origin-when-cross-origin" 
                                   allowfullscreen
-                                  autoplay
                                   >
                                 </iframe>
                             </div>
@@ -667,14 +982,11 @@ document.addEventListener('DOMContentLoaded', function() {
             <!-- Content Column (Right Side) -->
             <div class="col-lg-6">
                 <div class="climate-content wow fadeInUp" data-wow-duration=".7s" data-wow-delay="450ms" >
-                    <h4 style = "color : #025b5f ; margin-top :7rem ; margin-right :7rem">At ClimAgro,</h4>
-                    <h3 style = "color : #025b5f ; font-weight : bold">Discover Future of Climate Risk Management</h3>
-                    <h5 class ="tile-content" style = "color : #025b5f ; margin-top :3rem">Unlock the power of advanced climate risk intelligence with a personalized demo! See firsthand how our cutting- edge solutions can help you navigate climate uncertainties.</h5>
+                    <h3 style="color: #025b5f; font-weight: bold; margin-top: 0; padding-top: 0; line-height: 1.2;">Discover Future of Climate Risk Management</h3>
+                    <h5 class="tile-content" style="color: #025b5f; margin-top: 1.5rem; margin-bottom: 2rem; line-height: 1.6; font-weight: 400;">Unlock the power of advanced climate risk intelligence with a personalized demo! See firsthand how our cutting- edge solutions can help you navigate climate uncertainties.</h5>
                     <!-- <h2 style = "color : #025b5f"> Delivering Sustainability.</h2> -->
-                    <p></p>
-                    <br>
 
-                    <a class="btn btn-primary open-walkthrough-modal" style="background-color: #c8ff08; color: #000;" href="javascript:void(0);">Book a Walkthrough</a>
+                    <a class="btn btn-primary open-walkthrough-modal d-none d-md-inline-block" style="background-color: #c8ff08; color: #000;" href="javascript:void(0);">Book a Demo</a>
 
                 </div>
             </div>
@@ -689,142 +1001,309 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-<section class="tile-grid-wrapper">
+
+  <section class="tile-grid-wrapper">
   <div class="tile-grid container">
     <div class="text-center mb-5">
-      <h2 class="section-title">You’ll Experience</h2>
+      <h2 class="section-title">You'll Experience</h2>
     </div>
-
+ 
     <!-- First Row -->
     <div class="tile-row">
+ 
       <div class="tile">
+        <div class="tile-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="52" height="52">
+            <circle cx="32" cy="32" r="30" fill="#e6f4f1"/>
+            <path d="M20 44 Q28 20 32 30 Q36 40 44 20" stroke="#025b5f" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <circle cx="32" cy="30" r="4" fill="#025b5f"/>
+            <path d="M18 48 h28" stroke="#025b5f" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
         <div class="tile-content">
           <h3>Climate-Induced Agricultural Risks</h3>
+          <p class="tile-tagline">Identify and quantify climate threats impacting your farmland and yield forecasts.</p>
         </div>
       </div>
+ 
       <div class="tile">
+        <div class="tile-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="52" height="52">
+            <circle cx="32" cy="32" r="30" fill="#e6f4f1"/>
+            <path d="M32 48 V28" stroke="#025b5f" stroke-width="3" stroke-linecap="round"/>
+            <path d="M32 36 Q20 30 22 18 Q34 20 32 36" fill="#025b5f" opacity="0.85"/>
+            <path d="M32 30 Q44 24 42 14 Q30 16 32 30" fill="#3aaa8a" opacity="0.75"/>
+          </svg>
+        </div>
         <div class="tile-content">
           <h3>Crop-Specific Vulnerability</h3>
+          <p class="tile-tagline">Field-level vulnerability scores tailored to each crop type and growing season.</p>
         </div>
       </div>
+ 
       <div class="tile">
+        <div class="tile-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="52" height="52">
+            <circle cx="32" cy="32" r="30" fill="#e6f4f1"/>
+            <rect x="16" y="34" width="8" height="14" rx="2" fill="#025b5f"/>
+            <rect x="28" y="26" width="8" height="22" rx="2" fill="#3aaa8a"/>
+            <rect x="40" y="18" width="8" height="30" rx="2" fill="#025b5f" opacity="0.6"/>
+            <path d="M16 20 Q32 14 48 16" stroke="#c8ff08" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-dasharray="3 2"/>
+          </svg>
+        </div>
         <div class="tile-content">
           <h3>Integration of Climate, Agricultural, and Management Data</h3>
+          <p class="tile-tagline">Seamlessly fuse multi-source datasets into a single actionable intelligence layer.</p>
         </div>
       </div>
+ 
     </div>
-
+ 
     <!-- Second Row -->
     <div class="tile-row">
+ 
       <div class="tile">
+        <div class="tile-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="52" height="52">
+            <circle cx="32" cy="32" r="30" fill="#e6f4f1"/>
+            <path d="M32 16 C24 16 18 22 18 30 C18 40 32 50 32 50 C32 50 46 40 46 30 C46 22 40 16 32 16Z" fill="#025b5f" opacity="0.85"/>
+            <circle cx="32" cy="30" r="6" fill="white"/>
+          </svg>
+        </div>
         <div class="tile-content">
           <h3>Localized Risk Estimation</h3>
+          <p class="tile-tagline">Granular, district-level risk scores powered by high-resolution climate models.</p>
         </div>
       </div>
+ 
       <div class="tile">
+        <div class="tile-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="52" height="52">
+            <circle cx="32" cy="32" r="30" fill="#e6f4f1"/>
+            <path d="M32 14 L46 20 V32 C46 40 38 46 32 50 C26 46 18 40 18 32 V20 Z" fill="#025b5f" opacity="0.85"/>
+            <path d="M25 32 L30 37 L39 26" stroke="white" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
         <div class="tile-content">
           <h3>Adaptation and Mitigation Strategies</h3>
+          <p class="tile-tagline">Evidence-based recommendations to reduce exposure and build long-term resilience.</p>
         </div>
       </div>
+ 
       <div class="tile">
+        <div class="tile-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="52" height="52">
+            <circle cx="32" cy="32" r="30" fill="#e6f4f1"/>
+            <circle cx="32" cy="24" r="8" fill="#025b5f"/>
+            <path d="M16 48 C16 38 48 38 48 48" fill="#025b5f" opacity="0.7"/>
+            <path d="M44 20 L50 14 M44 24 L52 24 M44 28 L50 34" stroke="#3aaa8a" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
         <div class="tile-content">
           <h3>Expert Guidance</h3>
+          <p class="tile-tagline">Direct access to climate scientists and agronomists for your specific challenges.</p>
         </div>
       </div>
+ 
       <div class="tile">
+        <div class="tile-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="52" height="52">
+            <circle cx="32" cy="32" r="30" fill="#e6f4f1"/>
+            <circle cx="32" cy="32" r="8" fill="#025b5f"/>
+            <circle cx="32" cy="32" r="4" fill="white"/>
+            <path d="M32 14 V18 M32 46 V50 M14 32 H18 M46 32 H50 M19.5 19.5 L22.5 22.5 M41.5 41.5 L44.5 44.5 M44.5 19.5 L41.5 22.5 M22.5 41.5 L19.5 44.5" stroke="#025b5f" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+        </div>
         <div class="tile-content">
           <h3>Custom Solutions</h3>
+          <p class="tile-tagline">Bespoke risk models and dashboards built around your organization's exact needs.</p>
         </div>
       </div>
+ 
     </div>
   </div>
 </section>
-
+ 
 <style>
-  /* Full page centering wrapper */
   .tile-grid-wrapper {
     display: flex;
     justify-content: center;
-    padding: 2rem 1rem;
-    overflow-x: hidden; /* Prevent horizontal scrollbar */
+    padding: 1rem 1rem;
+    margin-top: -3rem;
+    overflow-x: hidden;
   }
 
+  /* img 7 & img 8: Mobile spacing fixes for tile-grid and section gaps */
+  @media (max-width: 767px) {
+    .tile-grid-wrapper {
+      /* Remove the large gap before You'll Experience (was 1rem causing 100+px gap) */
+      margin-top: 0 !important;
+      padding: 0.75rem 0.75rem !important;
+    }
+    .tile-grid-wrapper .section-title {
+      font-size: clamp(1.4rem, 6vw, 2rem) !important;
+      padding: 0 1rem;
+      white-space: normal !important;
+    }
+    .tile {
+      flex: 1 1 100% !important;
+      min-height: auto !important;
+      padding: 1.25rem 1rem !important;
+    }
+    .tile-row {
+      gap: 10px !important;
+      margin-bottom: 10px !important;
+    }
+    /* img 2: Industries Covered text - prevent unwanted line breaks */
+    .section-subtitle {
+      font-size: clamp(0.85rem, 3.5vw, 1rem) !important;
+      padding: 0 1rem;
+      word-break: break-word !important;
+      line-height: 1.7 !important;
+      hyphens: auto;
+    }
+    /* img 8: General section spacing consistency */
+    .industries-section {
+      margin-top: 0 !important;
+      padding: 2rem 0 !important;
+    }
+    .partners-section {
+      margin-top: 2rem !important;
+    }
+  }
+ 
   .tile-grid {
     width: 100%;
     max-width: 1200px;
   }
-
+ 
   .tile-row {
     display: flex;
     flex-wrap: wrap;
     gap: 15px;
     margin-bottom: 15px;
   }
-
+ 
   .tile {
     flex: 1 1 calc(33.333% - 10px);
     background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    padding: 24px 20px 20px;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
     text-align: center;
     min-height: 150px;
-    transition: background-color 0.3s ease;
+    cursor: pointer;
+    transition: background-color 0.35s ease, box-shadow 0.35s ease;
+    overflow: hidden;
   }
-
+ 
   .tile-row:last-child .tile {
     flex: 1 1 calc(25% - 11.25px);
   }
-
-  .tile:hover {
-    background-color: #025b5f;
-    color: white;
+ 
+  .tile-icon {
+    margin-bottom: 12px;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
   }
-
-  .tile:hover h3 {
-    color: white;
+ 
+  .tile:hover .tile-icon {
+    transform: scale(1.08);
   }
-
+ 
   .tile-content {
     width: 100%;
   }
-
+ 
   .tile-content h3 {
-    font-size: 18px;
+    font-size: 17px;
     margin: 0;
     color: #025b5f;
     word-break: break-word;
     transition: color 0.3s ease;
+    line-height: 1.4;
   }
-
-  /* Responsive tweaks */
+ 
+  .tile-tagline {
+    font-size: 14px;
+    color: rgba(255,255,255,0.92);
+    margin: 0;
+    line-height: 1.5;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.4s ease, opacity 0.35s ease, margin 0.3s ease;
+  }
+ 
+  .tile:hover {
+    background-color: #025b5f;
+    box-shadow: 0 8px 24px rgba(2, 91, 95, 0.25);
+  }
+ 
+  .tile:hover .tile-content h3 {
+    color: white;
+  }
+ 
+  .tile:hover .tile-tagline {
+    max-height: 80px;
+    opacity: 1;
+    margin-top: 10px;
+  }
+ 
+  /* Fallback for smaller screens if needed, but hover handles interactions well */
+  
   @media (max-width: 992px) {
     .tile {
       flex: 1 1 calc(50% - 10px);
     }
-
     .tile-row:last-child .tile {
       flex: 1 1 calc(50% - 10px);
     }
   }
-
+ 
   @media (max-width: 576px) {
     .tile {
       flex: 1 1 100%;
     }
   }
 </style>
+ 
+<script>
+  function toggleTile(el) {
+    var wasActive = el.classList.contains('active');
+    document.querySelectorAll('.tile').forEach(function(t) {
+      t.classList.remove('active');
+    });
+    if (!wasActive) {
+      el.classList.add('active');
+    }
+  }
+</script>
 
 <style>
+.offering-title-wrapper {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+
+    .offering-corner {
+        font-size: 2rem;
+        color: #f26a21;
+        position: relative;
+        line-height: 1;
+    }
+
 .offering-container {
-        min-height: 100vh;
+        padding: 1rem 2rem 2rem;
+        margin-top: -3rem;
         display: flex;
         flex-direction: column;
         background: linear-gradient(to bottom right, #f7f9fc, #ffffff);
-        padding: 0 2rem;
     }
 
     .products-grid {
@@ -837,7 +1316,7 @@ document.addEventListener('DOMContentLoaded', function() {
     .products-row {
         display: flex;
         flex-direction: column;
-        gap: 4rem;
+        gap: 2rem; /* was 4rem — too large on mobile */
         width: 100%;
     }
 
@@ -853,7 +1332,7 @@ document.addEventListener('DOMContentLoaded', function() {
         display: flex;
         flex-direction: column;
         min-width: 0;
-        margin-bottom: 4rem;
+        margin-bottom: 2rem; /* was 4rem — reduced for mobile */
     }
 
     .laptop-frame {
@@ -986,24 +1465,106 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 
-/* Mobile adjustments */
+/* ============================================================
+   COMPREHENSIVE MOBILE FIX - Fluid, model-agnostic spacing
+   Uses clamp() and vw so it scales on ANY phone from 320-430px
+   ============================================================ */
+
+/* Desktop: laptop frame centered */
+.content-wrapper > .fade-in:last-child {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 15px !important;
+  justify-content: flex-start;
+}
+
 @media (max-width: 768px) {
+  /* Laptop mockup: fluid on all phone widths */
   .laptop-container {
-    width: 100%;
-    max-width: 100%;
-    /* Optional: Reduce size on mobile */
-    max-width: 500px;
-    margin: 0 auto;
+    width: 100% !important;
+    max-width: min(90vw, 420px) !important;
+    margin: 0 auto !important;
   }
-  
   .laptop-screen {
-    padding-top: 6%; /* Slightly more space for controls on mobile */
+    padding-top: 6% !important;
   }
-  
-  .window-controls {
-    top: 0.3rem;
-    left: 0.8rem;
+
+  /* Offering section container: equal padding on all phones */
+  .offering-container {
+    margin-top: 0 !important;
+    padding: clamp(0.5rem, 3vw, 1.5rem) clamp(0.75rem, 4vw, 1.5rem) 1.5rem !important;
   }
+
+  /* Product rows: even gap between all cards */
+  .products-row {
+    gap: clamp(1.5rem, 5vw, 2.5rem) !important;
+  }
+  .product-card {
+    margin-bottom: clamp(1rem, 4vw, 2rem) !important;
+  }
+
+  /* Product content area: centred, consistent padding */
+  .product-content {
+    padding: 0.5rem clamp(0.5rem, 3vw, 1rem) !important;
+  }
+  .content-wrapper {
+    max-width: 100% !important;
+    text-align: center !important;
+    padding: 0 !important;
+  }
+
+  /* Offering buttons: stack neatly, same width on all phones */
+  .content-wrapper > .fade-in:last-child {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 12px !important;
+  }
+  .content-wrapper > .fade-in:last-child a.btn {
+    width: clamp(200px, 75vw, 280px) !important;
+    margin-bottom: 0 !important;
+    text-align: center !important;
+    justify-content: center !important;
+    display: inline-flex !important;
+  }
+
+  /* Section titles: uniform across all phones */
+  .section-title {
+    font-size: clamp(1.4rem, 6vw, 2rem) !important;
+    line-height: 1.25 !important;
+    text-align: center !important;
+    margin-top: 1rem !important;
+    padding: 0 1rem !important;
+  }
+
+  /* Offering text: fluid & readable */
+  .content-wrapper h2.fade-in {
+    font-size: clamp(1.2rem, 5vw, 1.6rem) !important;
+    line-height: 1.3 !important;
+    text-align: center !important;
+    margin-bottom: 0.75rem !important;
+  }
+  .content-wrapper p.fade-in {
+    font-size: clamp(0.85rem, 3.5vw, 1rem) !important;
+    line-height: 1.6 !important;
+    text-align: left !important;
+  }
+  .content-wrapper .fade-in:first-child {
+    text-align: center !important;
+    font-size: clamp(0.7rem, 2.8vw, 0.875rem) !important;
+  }
+
+  /* Climate section: no extra gap at bottom */
+  .climate-section {
+    margin-bottom: 0 !important;
+    padding-bottom: 1rem !important;
+  }
+}
+
+/* Very small phones (< 380px) - tighten everything slightly more */
+@media (max-width: 380px) {
+  .products-row { gap: 1.25rem !important; }
+  .product-card { margin-bottom: 0.75rem !important; }
+  .offering-container { padding: 0.5rem 0.75rem 1rem !important; }
 }
 </style>
 
@@ -1011,14 +1572,18 @@ document.addEventListener('DOMContentLoaded', function() {
 <section class="offering-container">
   <div class="container">
   <div class="text-center mb-5">
-                <h2 class="section-title">Our Offerings</h2>
+                <div class="offering-title-wrapper">
+                    <span class="offering-corner" style="position: relative; top: -10px;">⌜</span>
+                    <h2 class="section-title" style="display:inline-block; margin: 0 6px;">Our Offerings</h2>
+                    <span class="offering-corner" style="position: relative; top: 6px;">⌟</span>
+                </div>
                 <p class="section-subtitle">Explore our core solutions designed to drive climate resilience and intelligence for forward-thinking organizations.</p>
   </div>
 
     <div class="products-grid">
       <!-- First Row -->
       <div class="products-row">
-        <!-- First Product Card - ClimIntello -->
+        <!-- First Product Card - ClimIntellio -->
         <div class="product-card">
           <div class="laptop-frame">
             <div class="laptop-container fade-in">
@@ -1029,7 +1594,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   <div class="control-dot" style="background-color: #10b981;"></div>
                 </div>
                 <div class="content-area" style="padding: 1rem;">
-                  <img src="assest/img/about/mokd.png" alt="ClimIntello Dashboard" style="width: 100%; border-radius: 0.5rem;">
+                  <img src="<?= base_url() ?>assest/img/about/mokd.png" alt="ClimIntellio Dashboard" style="width: 100%; border-radius: 0.5rem;">
                 </div>
               </div>
               <div class="laptop-base"></div>
@@ -1042,14 +1607,14 @@ document.addEventListener('DOMContentLoaded', function() {
                   CLIMATE INTELLIGENCE PLATFORM
               </div>
               <h2 class="fade-in" style="font-size: 1.75rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--primary-color);">
-                  ClimIntello Climate Intelligence
+                  ClimIntellio –Ready to Use Climate Intelligence
               </h2>
               <p class="fade-in" style="color: #4b5563; font-size: 1rem; margin-bottom: 2rem;">
                   Access multi-resolution climate data tailored for vulnerable regions with hazard maps for heatwaves, floods, droughts, and multi-level risk intelligence.
               </p>
               <div class="fade-in">
                 <a href="<?php echo base_url('climintellio/request-form') ?>" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 0.5rem;">
-                  Request Form
+                  Request Data
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
                     <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -1068,7 +1633,7 @@ document.addEventListener('DOMContentLoaded', function() {
           </div>
         </div>
 
-        <!-- Second Product Card - AgRI.AI -->
+        <!-- Second Product Card - CropRisk.ai -->
         <div class="product-card">
           <div class="laptop-frame">
             <div class="laptop-container fade-in">
@@ -1079,7 +1644,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   <div class="control-dot" style="background-color: #10b981;"></div>
                 </div>
                 <div class="content-area" style="padding: 1rem;">
-                  <img src="assest/img/about/AgRi2.png" alt="Agriculture Risk Analysis Dashboard" style="width: 100%; border-radius: 0.5rem;">
+                  <img src="<?= base_url() ?>assest/img/about/AgRi2.png" alt="Agriculture Risk Analysis Dashboard" style="width: 100%; border-radius: 0.5rem;">
                 </div>
               </div>
               <div class="laptop-base"></div>
@@ -1092,10 +1657,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 AGRICULTURE RISK INTELLIGENCE
               </div>
               <h2 class="fade-in" style="font-size: 1.75rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--primary-color);">
-                AgRI.AI – Agriculture Risk    <br>Intelligence 
+                CropRisk.ai – Agriculture Risk    <br>Intelligence 
               </h2>
               <p class="fade-in" style="color: #4b5563; font-size: 1rem; margin-bottom: 2rem;">
-                AgRI.ai is a crop-location-specific risk estimator that uses AI and machine learning to analyze crop-climate interactions through historical data.
+                CropRisk.ai is a crop-location-specific risk estimator that uses AI and machine learning to analyze crop-climate interactions through historical data.
               </p>
               <div class="fade-in">
                 <a href="<?php echo base_url('solutions').'#consult-us' ?>" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 0.5rem;">
@@ -1106,7 +1671,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <polyline points="12 5 19 12 12 19"></polyline>
                   </svg>
                 </a>
-                <a href="<?= base_url('solutions').'#AGRI'; ?>" class="btn btn-outline">
+                <a href="<?php echo base_url('croprisk'); ?>" class="btn btn-outline">
                   Learn more
                   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ms-2">
                                       <line x1="7" y1="17" x2="17" y2="7"></line>
@@ -1133,7 +1698,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   <div class="control-dot" style="background-color: #10b981;"></div>
                 </div>
                 <div class="content-area" style="padding: 1rem;">
-                  <img src="assest/img/about/CityAdapt.png" alt="CityAdapt Dashboard" style="width: 100%; border-radius: 0.5rem;">
+                  <img src="<?= base_url() ?>assest/img/about/CityAdapt.png" alt="CityAdapt Dashboard" style="width: 100%; border-radius: 0.5rem;">
                 </div>
               </div>
               <div class="laptop-base"></div>
@@ -1183,7 +1748,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   <div class="control-dot" style="background-color: #10b981;"></div>
                 </div>
                 <div class="content-area" style="padding: 1rem;">
-                  <img src="assest/img/about/Consulting.png" alt="Consulting Dashboard" style="width: 100%; border-radius: 0.5rem;">
+                  <img src="<?= base_url() ?>assest/img/about/Consulting.png" alt="Consulting Dashboard" style="width: 100%; border-radius: 0.5rem;">
                 </div>
               </div>
               <div class="laptop-base"></div>
@@ -1199,7 +1764,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 Climate Consulting Services
               </h2>
               <p class="fade-in" style="color: #4b5563; font-size: 1rem; margin-bottom: 2rem;">
-                  Strategic consulting services supporting climate risk planning for governments, NGOs, and enterprises with custom assessments and adaptation strategies
+                  Strategic consulting services supporting climate risk planning for governments, NGOs, and enterprises with custom assessments and adaptation strategies We deliver tailored climate risk reports and resilience planning solutions for long-term sustainability.
               </p>
               <div class="fade-in">
                 <a href="<?php echo base_url('solutions').'#consult-us' ?>" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 0.5rem;">
@@ -1363,14 +1928,40 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 <!-- Industries Section (Optimized) -->
-<section class="industries-section">
+<style>
+/* Base style for section subtitle - img 2 fix */
+.section-subtitle {
+  font-size: 1.05rem;
+  color: #4a5568;
+  max-width: 700px;
+  margin: 0 auto 1.5rem;
+  line-height: 1.75;
+  text-align: center;
+  padding: 0 1rem;
+}
+@media (max-width: 767px) {
+  .section-subtitle {
+    font-size: clamp(0.85rem, 3.5vw, 1rem) !important;
+    line-height: 1.7 !important;
+    padding: 0 1.25rem !important;
+    word-break: normal !important;    /* don't force breaks mid-word */
+    overflow-wrap: break-word !important;
+  }
+  /* Fix industries negative margin on mobile - prevents hidden overlap */
+  .industries-section {
+    margin-top: 0 !important;
+    padding-top: 2rem !important;
+  }
+}
+</style>
+<section class="industries-section" style="margin-top: -4rem !important;">
 <div class="text-center mb-5">
 <h2 class="section-title">Industries Covered</h2>
   <p class="section-subtitle">
-    We work with companies across a wide range of industries to build end-to-end climate resilience,
-    <br>from research and development to operations and supply chain.
+    We work with companies across a wide range of industries to build end-to-end climate resilience, from research and development to operations and supply chain.
   </p>
     </div>
+
   <!-- Card Grid -->
   <div class="card-grid">
 <!-- Row 1 -->
@@ -1378,7 +1969,7 @@ document.addEventListener('DOMContentLoaded', function() {
   <!-- Card 1 -->
   <div class="card-container">
     <div class="card-wrapper">
-      <div class="card-front" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('assest/img/feature/18.png')">
+      <div class="card-front" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('<?= base_url() ?>assest/img/feature/18.png')">
         <h2>Banking and Financial Institutions</h2>
       </div>
       <div class="card-back">
@@ -1391,7 +1982,7 @@ document.addEventListener('DOMContentLoaded', function() {
   <!-- Card 2 -->
   <div class="card-container">
     <div class="card-wrapper">
-      <div class="card-front" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('assest/img/feature/19.png')">
+      <div class="card-front" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('<?= base_url() ?>assest/img/feature/19.png')">
         <h2>Agribusiness</h2>
       </div>
       <div class="card-back">
@@ -1472,7 +2063,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <img class="wow fadeInRight w-100" data-wow-duration=".7s" data-wow-delay="200ms" src="assest/uploadfile/img/Blog.png" alt=""></a>
             </div>
             <div class="col-lg-4">
-               <a href="<?php echo base_url().'news' ?>"> <img class="wow fadeInRight w-100" data-wow-duration=".7s" data-wow-delay="200ms" src="assest/uploadfile/img/News.png" alt=""></a>
+               <a href="<?php echo base_url().'news' ?>"> <img class="wow fadeInRight w-100" data-wow-duration=".7s" data-wow-delay="200ms" src="<?= base_url() ?>assest/uploadfile/img/News.png" alt=""></a>
             </div> 
             <div class="col-lg-4">
                 <a href="<?php echo base_url().'articles' ?>"><img class="wow fadeInRight w-100" data-wow-duration=".7s" data-wow-delay="200ms" src="assest/uploadfile/img/Articles.png" alt=""></a>
@@ -1773,7 +2364,7 @@ html {
         }
 
 </style>
-<section class="feature z-1 pos-rel pt-110">
+<section class="feature z-1 pos-rel pt-40">
         <div class="container">
           <div class=" pb-55">
             <h2 class="section-title">Resources</h2>
@@ -1807,14 +2398,14 @@ html {
 
                 <!-- Articles Card -->
                 <article class="card" onclick="window.location.href='<?php echo base_url().'articles' ?>'">
-                    <div class="card-category">ARTICLES</div>
+                    <div class="card-category">REPORTS</div>
                     <div class="card-image">
-                        <img src="assest/img/bg/article.png" alt="Articles content">
+                        <img src="assest/img/bg/article.png" alt="Reports content">
                     </div>
                     <div class="card-content">
-                        <h3 class="card-title">IN-DEPTH ARTICLES AND FEATURES</h3>
-                        <p class="card-description">Comprehensive articles covering industry expertise, case studies, and thought leadership content.</p>
-                        <div class="card-date">Explore more articles</div>
+                        <h3 class="card-title">IN-DEPTH REPORTS AND FEATURES</h3>
+                        <p class="card-description">Comprehensive reports covering industry expertise, case studies, and thought leadership content.</p>
+                        <div class="card-date">Explore more reports</div>
                     </div>
                 </article>
             </div>
@@ -1827,10 +2418,10 @@ html {
 <style>
     .faq-redesign-section {
         background-color: #fff;
-        padding: 60px 0 100px;
+        padding: 40px 0 40px;
         position: relative;
         z-index: 1;
-        margin-top: 100px; /* Adjusted space to prevent overlap with Resources section */
+        margin-top: 40px; /* Reduced from 100px */
     }
     
     .faq-redesign-title {
@@ -1838,7 +2429,7 @@ html {
         color: #025b5f;
         font-size: 2.5rem;
         font-weight: 700;
-        margin-bottom: 50px;
+        margin-bottom: 30px; /* Reduced from 50px */
     }
 
     .faq-list-container {
@@ -1996,8 +2587,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     <!-- <div class="footer-bg bg_img" data-background="assest/img/footer/footer-bg.png"></div> -->
-    <div class="container">
-        <div class="section-title pb-55">
+    <div class="container" style="margin-top: -2rem !important;">
+        <div class="section-title pb-20">
                 <h1 class="section-title">Contact</h1>
                 <p class="section-subtitle" style="text-align: center; color: #025b5f; font-size: 1.1rem; margin-top: 15px; font-weight: 500;">
                     Need guidance or have specific queries? Fill out the form and let’s start a meaningful conversation.
@@ -2017,19 +2608,19 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <div class="col-lg-6">
                                     <div class="xb-item--field">
                                         <span><img src="assest/img/footer/contact-user.svg" alt=""></span>
-                                        <input type="text" placeholder="Steven Kevin" name="name">
+                                        <input type="text" placeholder="Steven Kevin" name="name" required>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="xb-item--field">
                                         <span><img src="assest/img/footer/contact-call.svg" alt=""></span>
-                                        <input type="text" placeholder="+91 081 0256 023" name="phone">
+                                        <input type="tel" placeholder="+91 98765 43210" name="phone" inputmode="numeric" pattern="[0-9]*" maxlength="13" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="xb-item--field">
                                         <span><img src="assest/img/footer/contact-email.svg" alt=""></span>
-                                        <input type="email" placeholder="example@climagroanlytics.com" name="email">
+                                        <input type="email" placeholder="example@climagroanlytics.com" name="email" required>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
@@ -2066,8 +2657,8 @@ document.addEventListener('DOMContentLoaded', function() {
                                             background-color: white;     /* Ensure white background */
                                         ">
                                             <option value="" >Interested In (Optional)</option>
-                                            <option value="AgRI.ai">Climate data portal</option>
-                                            <option value="AgRI.ai">AgRI.ai</option>
+                                            <option value="ClimIntellio">ClimIntellio</option>
+                                            <option value="CropRisk.ai">CropRisk.ai</option>
                                             <option value="CityAdapt.ai">CityAdapt.ai</option>
                                             <option value="Climate Data Services">Climate Data Services</option>
                                             <option value="Climate Consulting">Climate Consulting</option>
@@ -2080,7 +2671,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 
                                 <div class="col-lg-12 xb-item--text-msg">
                                     <span><img src="assest/img/footer/contact-massage.svg" alt=""></span>
-                                    <textarea class="xb-item--massage" name="comment" id="message" cols="30" rows="10" placeholder="Simultaneously we had a problem..."></textarea>
+                                    <textarea class="xb-item--massage" name="comment" id="message" cols="30" rows="10" placeholder="Simultaneously we had a problem..." required></textarea>
                                 </div>
                                 <div class="col-lg-12 xb-item--contact-btn">
                                     <button class="them-btn" type="submit">
@@ -2104,8 +2695,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             <h2 class="xb-item--title text-white">What You’ll Experience:</h2>
                             <ol>
                                 <li>Climate-Induced Agricultural Risks  </li>
-                                <li>
-                                    Crop-Specific Vulnerability </li>
+                                <li>Crop-Specific Vulnerability </li>
                                 <li>Integration of Climate, Agricultural, and Management Data: </li>
                                 <li>Localized Risk Estimation </li>
                                 <li>Adaptation and Mitigation Strategies </li>
@@ -2121,147 +2711,36 @@ document.addEventListener('DOMContentLoaded', function() {
 
 </div>
 <script>
-    $(document).ready(function() {
-        $('#contactForm').on('submit', function(e) {
-            e.preventDefault();
-
-            var formData = $(this).serialize();
-
-            $.ajax({
-                type: 'POST',
-                url: $(this).attr('action'),
-                data: formData,
-                dataType: 'json',
-                success: function(response) {
-                    $('.form-results').removeClass('d-none').html('<div class="alert alert-success">' + response.message + '</div>');
-                },
-                error: function(xhr, status, error) {
-                    $('.form-results').removeClass('d-none').html('<div class="alert alert-danger">There was an error sending your message. Please try again later.</div>');
-                }
-            });
-        });
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    var form = this;
+    var formData = new FormData(form);
+    fetch(form.getAttribute('action'), { method: 'POST', body: formData })
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+        if (data.success) {
+            form.reset();
+            if (typeof showClimToast === 'function') {
+                showClimToast('\uD83C\uDF89 Message Sent! Our team will connect with you soon.');
+            }
+        } else {
+            var tmp = document.createElement('div');
+            tmp.innerHTML = data.message || 'Something went wrong.';
+            var lines = tmp.querySelectorAll('.error, div');
+            var msgs = [];
+            lines.forEach(function(el) { if (el.textContent.trim()) msgs.push('\u2022 ' + el.textContent.trim()); });
+            var cleanMsg = msgs.length ? msgs.join('<br>') : (tmp.textContent || data.message);
+            var r = document.querySelector('.form-results');
+            if (r) { r.innerHTML = '<div style="color:#ef4444;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);border-radius:8px;padding:12px 16px;font-size:0.875rem;line-height:1.6;margin-top:12px;">\u26A0\uFE0F Please fix the following:<br>' + cleanMsg + '</div>'; r.classList.remove('d-none'); }
+        }
+    })
+    .catch(function() {
+        var r = document.querySelector('.form-results');
+        if (r) { r.innerHTML = '<div style="color:#ef4444;padding:10px;">\u274C An error occurred. Please try again.</div>'; r.classList.remove('d-none'); }
     });
+    return false;
+});
 </script>
 
-<style>
-  <style>
-.partners-scroll-container {
-  overflow: hidden;
-  position: relative;
-  width: 100%;
-}
-
-.partners-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-  white-space: nowrap;
-}
-
-.partner-tile {
-  display: inline-block;
-}
-
-.partner-logo-container {
-  width: 140px;
-  height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.partner-logo {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-}
-
-/* Infinite scroll effect */
-.infinite-scroll {
-  animation: scroll-left 25s linear infinite;
-}
-
-@keyframes scroll-left {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-/* Responsive Tweaks */
-@media (max-width: 767px) {
-  .section-title {
-    font-size: 1.5rem;
-  }
-
-  .scroll-arrow {
-    display: none;
-  }
-
-  .partners-wrapper {
-    gap: 1rem;
-    padding: 0.5rem 10px;
-  }
-
-  .partner-logo-container {
-    width: 100px;
-    height: 70px;
-  }
-}
-
-@media (max-width: 480px) {
-  .partner-logo-container {
-    width: 90px;
-    height: 60px;
-  }
-
-  .partners-wrapper {
-    gap: 0.75rem;
-  }
-}
-</style>
-<section class="partners-section">
-    <div class="container">
-
-        <h2 class="section-title">Partners</h2>
-        
-        <div class="partners-container">
-            <button class="scroll-arrow scroll-left" id="scrollLeft" aria-label="Scroll left">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="15 18 9 12 15 6"></polyline>
-                </svg>
-            </button>
-            
-            <div class="partners-scroll-container">
-              <div class="partners-wrapper infinite-scroll">
-                <?php foreach ($servicelist as $client): ?>
-                  <a href="#" class="partner-tile">
-                    <div class="partner-logo-container">
-                      <img class="partner-logo" src="<?= base_url("assest/uploadfile/webimages/") . $client->services_image; ?>" alt="<?php echo $client->services_title; ?>">
-                    </div>
-                  </a>
-                <?php endforeach; ?>
-
-                <!-- Duplicate logos for seamless loop -->
-                <?php foreach ($servicelist as $client): ?>
-                  <a href="#" class="partner-tile">
-                    <div class="partner-logo-container">
-                      <img class="partner-logo" src="<?= base_url("assest/uploadfile/webimages/") . $client->services_image; ?>" alt="<?php echo $client->services_title; ?>">
-                    </div>
-                  </a>
-                <?php endforeach; ?>
-              </div>
-            </div>
-
-            
-            <button class="scroll-arrow scroll-right" id="scrollRight" aria-label="Scroll right">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="9 18 15 12 9 6"></polyline>
-                </svg>
-            </button>
-        </div>
-    </div>
-</section>
 <?php include("footer.php"); ?>

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 include("header.php");
 include("navbar2.php");
 ?>
@@ -394,7 +394,7 @@ include("navbar2.php");
         .sidebar-logo { margin: 0 auto 1.5rem; }
         .sidebar-title { font-size: 2rem; }
         .sidebar-desc { font-size: 1rem; margin-bottom: 1.5rem; }
-        .sidebar-features { display: none; } /* Consider showing if critical, but keeping hidden for focus */
+        .sidebar-features { display: flex; } /* Consider showing if critical, but keeping hidden for focus */
         
         .form-main { 
             padding: 1.5rem 1.25rem; 
@@ -542,27 +542,22 @@ include("navbar2.php");
             
             <h1 class="sidebar-title">
                 Climate Intelligence <br>
-                <span class="highlight">Simplified.</span>
+                <span class="highlight">Ready to Use.</span>
             </h1>
             
             <p class="sidebar-desc">
-                Access harmonized, high-resolution climate hazard data for 500+ districts. 
-                Built for insurance, banking, and ESG analytics.
+                Access harmonized, high-resolution climate hazard data for 500+ districts across 70+ years of climate records. Built for insurance, banking, and ESG analytics.
             </p>
-            
             <div class="sidebar-features">
                 <div class="sidebar-feature">
                     <i class="fas fa-database"></i>
                     <span>Harmonized Multi-Source Data</span>
                 </div>
                 <div class="sidebar-feature">
-                    <i class="fas fa-chart-line"></i>
-                    <span>Projections up to 2100 (SSPs)</span>
-                </div>
-                <div class="sidebar-feature">
                     <i class="fas fa-bolt"></i>
                     <span>Analysis-Ready Hazard Indices</span>
                 </div>
+                <div class="sidebar-feature">
                 <div class="sidebar-feature">
                     <i class="fas fa-download"></i>
                     <span>Instant API & Download Access</span>

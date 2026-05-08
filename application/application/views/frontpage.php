@@ -1003,10 +1003,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 AGRICULTURE RISK INTELLIGENCE
               </div>
               <h2 class="fade-in" style="font-size: 1.75rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--primary-color);">
-                AgRI.AI – Agriculture Risk    <br>Intelligence 
+                CropRisk.ai – Agriculture Risk    <br>Intelligence 
               </h2>
               <p class="fade-in" style="color: #4b5563; font-size: 1rem; margin-bottom: 2rem;">
-                AgRI.ai is a crop-location-specific risk estimator that uses AI and machine learning to analyze crop-climate interactions through historical data.
+                CropRisk.ai is a crop-location-specific risk estimator that uses AI and machine learning to analyze crop-climate interactions through historical data.
               </p>
               <div class="fade-in">
                 <a href="<?php echo base_url('solutions').'#consult-us' ?>" class="login-btn" style="display: inline-flex; align-items: center; gap: 0.5rem;">
@@ -1443,39 +1443,143 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 <!-- faq start -->
-<section class="faq pos-rel mt-130 pb-5">
+<style>
+.faq-hc-section {
+    background: var(--color-background-primary, #fff);
+    padding: 60px 0 80px;
+}
+.faq-hc-box {
+    max-width: 860px;
+    margin: 0 auto;
+    background: var(--color-background-primary, #fff);
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 32px 40px 8px;
+}
+.faq-hc-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #e5e7eb;
+}
+.faq-hc-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #6b7280;
+    margin-bottom: 2px;
+}
+.faq-hc-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #025b5f;
+    margin: 0;
+}
+.faq-hc-badge {
+    background: #f0faf9;
+    color: #025b5f;
+    border: 1px solid #c6e9e8;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 12px;
+    white-space: nowrap;
+}
+.faq-hc-item {
+    border-bottom: 1px solid #f3f4f6;
+}
+.faq-hc-item:last-child { border-bottom: none; }
+.faq-hc-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    padding: 18px 0;
+    gap: 16px;
+}
+.faq-hc-q-text {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #111827;
+    flex: 1;
+    line-height: 1.4;
+}
+.faq-hc-icon {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: #6b7280;
+    transition: transform 0.3s ease;
+    line-height: 1;
+}
+.faq-hc-item.active .faq-hc-icon { transform: rotate(45deg); color: #025b5f; }
+.faq-hc-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease, padding 0.3s ease;
+    font-size: 0.9rem;
+    color: #4b5563;
+    line-height: 1.65;
+    padding-left: 0;
+}
+.faq-hc-item.active .faq-hc-answer { padding-bottom: 16px; }
+</style>
 
-    <div class="container">
-        <div class="section-title pb-55">
-            <h1 class="section-title">Frequently Asked Questions</h1>
+<section class="faq-hc-section">
+  <div class="container">
+    <div class="faq-hc-box">
+      <div class="faq-hc-header">
+        <div>
+          <p class="faq-hc-eyebrow">Help Center</p>
+          <h2 class="faq-hc-title">
+            Frequently Asked Questions
+            <span class="faq-hc-badge" id="faq-hc-count"></span>
+          </h2>
         </div>
-        <div class="faq__blockchain-two">
-            <ul class="accordion_box clearfix">
-                <?php
-                $i = 1; // Initialize $i
-                foreach ($faq as $faq) {
-                ?>
-                    <li class="accordion block">
-                        <div class="accordion-inner">
-                            <div class="acc-btn">
-                                <?php echo $faq->work_title; ?>
-                            </div>
-                            <div class="acc_body">
-                                <div class="content">
-                                    <?php echo $faq->testimonial; ?>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                <?php
-                    $i++; // Increment $i after each iteration
-                }
-                ?>
-            </ul>
+      </div>
+      <?php foreach ($faq as $item): ?>
+        <div class="faq-hc-item">
+          <div class="faq-hc-question">
+            <span class="faq-hc-q-text"><?php echo $item->work_title; ?></span>
+            <span class="faq-hc-icon">+</span>
+          </div>
+          <div class="faq-hc-answer">
+            <?php echo $item->testimonial; ?>
+          </div>
         </div>
+      <?php endforeach; ?>
     </div>
+  </div>
 </section>
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var items = document.querySelectorAll('.faq-hc-item');
+  var badge = document.getElementById('faq-hc-count');
+  if (badge) badge.textContent = items.length + ' questions';
+  items.forEach(function(item) {
+    item.querySelector('.faq-hc-question').addEventListener('click', function() {
+      var isActive = item.classList.contains('active');
+      items.forEach(function(i) {
+        i.classList.remove('active');
+        i.querySelector('.faq-hc-answer').style.maxHeight = null;
+      });
+      if (!isActive) {
+        item.classList.add('active');
+        item.querySelector('.faq-hc-answer').style.maxHeight =
+          item.querySelector('.faq-hc-answer').scrollHeight + 'px';
+      }
+    });
+  });
+});
+</script>
 <!-- faq end -->
 
 

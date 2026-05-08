@@ -19,6 +19,7 @@ include("navbar2.php");
     </div>
 </section>
 <!-- breadcrumb end -->
+
 <style>
   /* ===== Base Styles ===== */
 .blog {
@@ -246,23 +247,29 @@ include("navbar2.php");
 
 .widget__social {
   display: flex;
-  gap: 12px;
+  flex-wrap: nowrap;
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .widget__social a {
-  color: #fff;
-  background: #025b5f;
-  width: 36px;
-  height: 36px;
+  color: #025b5f;
+  background: #d1ff44;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  text-decoration: none !important;
+  font-size: 15px;
   transition: all 0.3s ease;
 }
 
 .widget__social a:hover {
-  background: #013d3f;
+  background: #b8e832;
   transform: translateY(-2px);
 }
 
@@ -272,14 +279,26 @@ include("navbar2.php");
   margin-top: 5px;
 }
 
-/* ===== Utility Fixes ===== */
-html, body {
-  margin: 0;
-  padding: 0;
-}
-
-.blog > *:last-child {
-  margin-bottom: 0;
+/* ====== MOBILE ONLY: Prevent Insights breadcrumb hidden under fixed navbar ====== */
+@media (max-width: 767px) {
+  section.breadcrumb {
+    padding-top: 130px !important;
+    padding-bottom: 40px !important;
+    min-height: 170px !important;
+  }
+  .blog.pt-130 {
+    padding-top: 40px !important;
+  }
+  .news-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .blog__item .thumb img {
+    height: 200px !important;
+  }
+  .col-lg-8, .col-lg-4 {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
 }
 
 </style>
@@ -293,8 +312,12 @@ html, body {
                         <?php foreach ($servicelist as $list): ?>
                             <article class="blog__item">
                                 <a class="thumb" href="<?php echo base_url('news/' . $list->page_url); ?>">
-                                    <img src="<?php echo base_url('assest/uploadfile/newsimages/' . $list->page_image); ?>" alt="<?= htmlspecialchars($list->page_title); ?>">
-
+                                    <img 
+                                        src="<?php echo base_url('assest/uploadfile/newsimages/' . $list->page_image); ?>" 
+                                        onerror="this.onerror=null; this.src='https://www.climagroanalytics.com/assest/uploadfile/newsimages/<?php echo rawurlencode($list->page_image); ?>';"
+                                        alt="<?= htmlspecialchars($list->page_title); ?>"
+                                        style="width:100%; height:250px; object-fit:cover; display:block;"
+                                    >
                                 </a>
                                 <div class="blog__inner">
                                     <ul class="blog__meta ul_li mb-30">
@@ -335,11 +358,12 @@ html, body {
                     <div class="widget mt-30">
                         <h3 class="widget__title">Follow Us</h3>
                         <ul class="widget__social ul_li">
-                            <li><a href="<?php echo $getCompany->facebook; ?>"><i class="fab fa-facebook-f"></i></a></li>
-                            <li><a href="<?php echo $getCompany->linkedin; ?>"><i class="fab fa-linkedin-in"></i></a></li>
-                            <li><a href="<?php echo $getCompany->twitter; ?>"><i class="fab fa-twitter"></i></a></li>
+                            <li><a href="<?php echo $getCompany->linkedin; ?>" target="_blank"><i class="fab fa-linkedin-in"></i></a></li>
+                            <li><a href="<?php echo $getCompany->twitter; ?>" target="_blank"><i class="fa-brands fa-x-twitter"></i></a></li>
+                            <li><a href="https://youtube.com/@climagroanalytics?si=Ou6D2-0N5IyqGpD" target="_blank"><i class="fab fa-youtube"></i></a></li>
+                            <li><a href="<?php echo $getCompany->facebook; ?>" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
                             <?php if (!empty($getCompany->insta)): ?>
-                                <li><a href="<?php echo $getCompany->insta; ?>"><i class="fab fa-instagram"></i></a></li>
+                                <li><a href="<?php echo $getCompany->insta; ?>" target="_blank"><i class="fab fa-instagram"></i></a></li>
                             <?php endif; ?>
                         </ul>
                     </div>

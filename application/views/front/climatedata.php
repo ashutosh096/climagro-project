@@ -1,13 +1,15 @@
 <?php
 include("header.php");
-include("navbar2.php");
+include("navbar1.php");
 ?>
-  <style>
-        /* ========== MODERN DESIGN TOKENS ========== */
+<style>
+* { scrollbar-width: thin; scrollbar-color: #037a80 #f1f5f9; }
+/* ========== MODERN DESIGN TOKENS ========== */
         :root {
-          --nav-height: 90px; /* Increased to account for potential header height differences */
+          --nav-height: 105px;
           --primary: #025b5f;
           --primary-light: #037a80;
+
           --primary-dark: #014549;
           --accent: #14b8a6;
           --accent-light: #5eead4;
@@ -28,16 +30,18 @@ include("navbar2.php");
           --font-sans: 'Inter', 'Segoe UI', system-ui, sans-serif;
         }
 
-        /* ========== RESET & BASE ========== */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body {
-          font-family: var(--font-sans);
-          background: var(--bg-page);
-          min-height: 100vh;
-          line-height: 1.6;
-          color: var(--text-body);
-          -webkit-font-smoothing: antialiased;
+        /* ========== RESET & BASE (scoped ONLY to app layout - never touches navbar) ========== */
+        .app-container, .app-container * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        /* ========== NAVBAR PROTECTION - force Bootstrap/theme styles to survive ========== */
+        #xb-header-area,
+        #xb-header-area *,
+        .xb-header,
+        .xb-header *,
+        .header__wrap,
+        .header__wrap * {
+          box-sizing: border-box;
+          /* Do NOT reset margin/padding — let the theme navbar CSS control spacing */
         }
 
         /* ========== APP LAYOUT ========== */
@@ -45,28 +49,26 @@ include("navbar2.php");
           display: flex;
           min-height: 100vh;
           padding-top: var(--nav-height);
+          font-family: var(--font-sans);
+          background: var(--bg-page);
+          line-height: 1.6;
+          color: var(--text-body);
+          -webkit-font-smoothing: antialiased;
         }
 
         /* ========== SIDEBAR ========== */
         .sidebar {
           width: 320px;
+          flex-shrink: 0;
           background: var(--bg-card);
           border: none;
           border-right: 1px solid var(--border);
           outline: none;
-          position: fixed;
-          top: var(--nav-height);
-          left: 0;
-          height: calc(100vh - var(--nav-height));
-          z-index: 900; /* High enough to be above content, lower than header */
-          overflow-y: auto;
+          z-index: 900;
           display: flex;
           flex-direction: column;
-          transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
           box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
-          /* Hide scrollbar for Firefox */
-          scrollbar-width: none;
-          -ms-overflow-style: none;
         }
         
         .sidebar *,
@@ -77,17 +79,23 @@ include("navbar2.php");
         
         /* Hide scrollbar for Chrome/Safari/Opera */
         .sidebar::-webkit-scrollbar { 
-          display: none; 
-          width: 0;
-          background: transparent;
-        }
-        .sidebar.collapsed { transform: translateX(-320px); }
+  width: 6px;
+  background: transparent;
+}
+.sidebar::-webkit-scrollbar-thumb {
+  background: var(--primary-light);
+  border-radius: 10px;
+}
+.sidebar::-webkit-scrollbar-track {
+  background: var(--border-light);
+}
+        .sidebar.collapsed { margin-left: -320px; }
 
         .sidebar-header {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          padding: 1.25rem 1.5rem;
+          padding: 0.5rem 1rem;
           background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
           color: #fff;
           position: sticky;
@@ -305,14 +313,12 @@ include("navbar2.php");
         /* ========== MAIN CONTENT ========== */
         .main-content {
           flex: 1;
-          margin-left: 320px;
           transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
           background: linear-gradient(180deg, var(--primary) 0%, var(--primary-dark) 50%, #012d2f 100%);
           min-height: calc(100vh - var(--nav-height));
-          padding: 2rem;
+          padding: 10;
+          width: 100%;
         }
-        
-        .main-content.expanded { margin-left: 0; }
 
         .main-content .container {
           max-width: 1100px;
@@ -394,7 +400,7 @@ include("navbar2.php");
         .placeholder-message {
           color: var(--text-muted);
           text-align: center;
-          padding: 2rem;
+          padding: rem;
           font-size: 1rem;
         }
         
@@ -654,16 +660,22 @@ include("navbar2.php");
         /* ========== RESPONSIVE ========== */
         @media (max-width: 900px) {
           .sidebar { width: 280px; }
-          .sidebar.collapsed { transform: translateX(-280px); }
-          .main-content { margin-left: 280px; padding: 1.5rem; }
+          .sidebar.collapsed { margin-left: -280px; }
+          .main-content { padding: 1.5rem; }
         }
         
         @media (max-width: 768px) {
           .sidebar {
             width: 100%;
             max-width: 320px;
+            position: fixed;
+            top: var(--nav-height);
+            left: 0;
+            height: calc(100vh - var(--nav-height));
+            overflow-y: auto;
+            margin-left: 0;
           }
-          .sidebar.collapsed { transform: translateX(-100%); }
+          .sidebar.collapsed { transform: translateX(-100%); margin-left: 0; }
           .main-content { margin-left: 0; padding: 1rem; }
           .visualization-container { min-height: 350px; }
           .chart-container { min-height: 350px; }
@@ -687,6 +699,34 @@ include("navbar2.php");
         
         @media (max-width: 480px) {
           .main-content { padding: 0.75rem; }
+          }
+        /* ===== SIDEBAR FIXED POSITION FIX ===== */
+        .sidebar {
+          position: fixed !important;
+          top: var(--nav-height);
+          left: 0;
+          height: calc(100vh - var(--nav-height));
+          overflow-y: auto;
+          z-index: 1050 !important;
+          margin-left: 0 !important;
+        }
+        .sidebar.collapsed {
+          transform: translateX(-320px) !important;
+          margin-left: 0 !important;
+        }
+        .app-container {
+          padding-left: 320px;
+          transition: padding-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .sidebar.collapsed ~ .main-content,
+        .main-content.expanded {
+          margin-left: 0 !important;
+        }
+        @media (max-width: 768px) {
+          .app-container {
+            padding-left: 0 !important;
+          }
+        }
     </style>
 
  
@@ -1587,5 +1627,4 @@ include("navbar2.php");
 
 
   
-</script>
 </script>

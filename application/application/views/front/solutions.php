@@ -416,14 +416,14 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
             AGRICULTURE RISK INTELLIGENCE
           </div>
           <h2 class="fade-in" style="font-size: 2.25rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--primary-color);">
-            AgRI.ai – Agriculture Risk Intelligence 
+            CropRisk.ai – Agriculture Risk Intelligence 
           </h2>
           <p class="fade-in" style="color: #4b5563; font-size: 1.125rem; margin-bottom: 2rem;">
-            AgRI.ai is a crop-location-specific risk estimator that uses AI and machine learning to analyze crop-climate interactions through historical data. Integrating diverse datasets, AgRI.ai provides historical, current , short-term , medium-term, and long-term risk assessments.
+            CropRisk.ai is a crop-location-specific risk estimator that uses AI and machine learning to analyze crop-climate interactions through historical data. Integrating diverse datasets, CropRisk.ai provides historical, current , short-term , medium-term, and long-term risk assessments.
           </p>
           <div class="fade-in">
             <a href="#consult-us" class="login-btn" style="display: inline-flex; align-items: center; gap: 0.5rem;">
-              Request Demo
+              Request Data
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -466,7 +466,7 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
           </p>
           <div class="fade-in">
             <a href="#consult-us" class="login-btn" style="display: inline-flex; align-items: center; gap: 0.5rem;">
-              Request Demo
+              Request Data
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -548,7 +548,7 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
               Delivering climate risk assessment reports tailored for corporate institutions, enterprises, governments , and NGOs. our services provide sector-specific climate impact analysis to guide effective risk mitigation. We also offer customized climate adaptation and resilience planning to support long-term sustainability and preparedness.          </p>
           <div class="fade-in">
             <a href="#consult-us" class="login-btn" style="display: inline-flex; align-items: center; gap: 0.5rem;">
-              Request Demo
+              Request Data
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -690,7 +690,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                             background-color: white;     /* Ensure white background */
                                         ">
                                             <option value="" >Interested In (Optional)</option>
-                                            <option value="AgRI.ai">AgRI.ai</option>
+                                            <option value="CropRisk.ai">CropRisk.ai</option>
                                             <option value="CityAdapt.ai">CityAdapt.ai</option>
                                             <option value="Climate Data Services">Climate Data Services</option>
                                             <option value="Climate Consulting">Climate Consulting</option>

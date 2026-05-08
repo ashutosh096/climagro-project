@@ -1,8 +1,14 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    RewriteBase /climagro/
+    RewriteBase /Climagro/
     RewriteRule ^index.php$ - [L]
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^(.*)$ index.php/$1 [L]
 </IfModule>
+
+# Block sensitive files from public access
+<FilesMatch "^(subscriptions\.csv|output\.txt)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>

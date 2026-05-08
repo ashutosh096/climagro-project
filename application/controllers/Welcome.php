@@ -180,6 +180,11 @@ class Welcome extends CI_Controller
 		$this->load->view('front/agri', $this->data);
 	}
 	
+	public function croprisk(): void
+    {
+        $this->load->view('front/croprisk', $this->data);
+    }
+	
 	public function climintellio_form(): void
 	{
 		$this->load->view('front/climintellio_form', $this->data);
@@ -303,35 +308,57 @@ class Welcome extends CI_Controller
 				return;
 			}
 
-			$data = [
+			$messageBody = $this->input->post('comment', TRUE);
+			$pageUrl = $this->input->post('url', TRUE);
+			$formType = $this->input->post('form_type', TRUE);
+			if (empty($formType)) $formType = "Contact Request";
+
+			if(!empty($pageUrl)) {
+				$messageBody .= "\n\n--- \nSubmitted from Page URL: " . $pageUrl;
+			}
+
+			$db_data = [
 				'name' => $this->input->post('name', TRUE),
 				'email' => $this->input->post('email', TRUE),
 				'phone' => $this->input->post('phone', TRUE),
 				'title' => $this->input->post('title', TRUE),
 				'subject' => $this->input->post('title', TRUE),
 				'interested' => $this->input->post('interested', TRUE),
-				'message' => $this->input->post('comment', TRUE),
+				'message' => $messageBody
 			];
 
 			// Save to DB
 			$this->load->model('Contact_model');
-			$success = $this->Contact_model->insert_contact($data);
+			$success = $this->Contact_model->insert_contact($db_data);
 
 			if ($success) {
-				// Send email via Gmail SMTP
-				$email_sent = $this->send_gmail($data);
+				$response_json = json_encode([
+					'success' => true,
+					'message' => 'Thank you! Your message has been sent successfully.'
+				]);
 				
-				if ($email_sent) {
-					echo json_encode([
-						'success' => true,
-						'message' => 'Thank you! Your message has been sent successfully.'
-					]);
-				} else {
-					echo json_encode([
-						'success' => true, // Still success because DB saved
-						'message' => 'Message received! (Email delivery failed)'
-					]);
+				// Close connection early to prevent frontend hanging (Instant Response)
+				ignore_user_abort(true);
+				ob_start();
+				echo $response_json;
+				$size = ob_get_length();
+				header("Connection: close");
+				header("Content-Encoding: none");
+				header("Content-Length: {$size}");
+				header("Content-Type: application/json");
+				ob_end_flush();
+				ob_flush();
+				flush();
+				if (function_exists('fastcgi_finish_request')) {
+					fastcgi_finish_request();
 				}
+
+				// Assemble email data separately and send in background
+				$email_data = $db_data;
+				$email_data['form_type'] = $formType;
+				$email_data['linkedin_id'] = $this->input->post('linkedin_id', TRUE);
+				
+				$this->send_gmail($email_data);
 			} else {
 				echo json_encode([
 					'success' => false,
@@ -344,32 +371,36 @@ class Welcome extends CI_Controller
 	{
 		$config = [
 			'protocol'  => 'smtp',
-			'smtp_host' => 'smtp.gmail.com',
-			'smtp_port' => 587,
-			'smtp_user' => 'akshatsan23@gmail.com', // Your Gmail address
-			'smtp_pass' => '',    // Gmail App Password
-			'smtp_crypto' => 'tls',
+			'smtp_host' => 'ssl://smtp.gmail.com',
+			'smtp_port' => 465,
+			'smtp_user' => 'harshit.climagroanalytics@gmail.com',
+			'smtp_pass' => 'aoetbahpyrlqpvob',
 			'mailtype'  => 'html',
 			'charset'   => 'utf-8',
 			'wordwrap'  => TRUE,
-			'newline'   => "\r\n"
+			'newline'   => "\r\n",
+			'crlf'      => "\r\n"
 		];
 		
 		$this->load->library('email', $config);
 		$this->email->set_newline("\r\n");
+		$this->email->set_crlf("\r\n");
 
-		$this->email->from('', $data['name']);
-		$this->email->to(['']); // Where to send notifications
-		$this->email->cc($data['email']); // Optional: CC the submitter
-		$this->email->subject('New Contact Form Submission');
+		$this->email->from('harshit.climagroanalytics@gmail.com', $data['name']);
+		$this->email->reply_to($data['email'], $data['name']);
+		$this->email->to('harshit.climagroanalytics@gmail.com');
+		$this->email->subject('[ClimAgro - Data request] New ' . $data['form_type'] . ': ' . ($data['title'] ? $data['title'] : 'Climagro'));
 		
-		$message = "You have received a new contact form submission:<br><br>";
-		$message .= "<strong>Name:</strong> " . $data['name'] . "<br>";
-		$message .= "<strong>Email:</strong> " . $data['email'] . "<br>";
-		$message .= "<strong>Phone:</strong> " . $data['phone'] . "<br>";
-		$message .= "<strong>Title:</strong> " . $data['title'] . "<br>";
-		$message .= "<strong>Interested In :</strong> " . nl2br($data['interested']);
-		$message .= "<strong>Message:</strong> " . nl2br($data['message']);
+        $message = "You have received a new contact form submission:<br><br>";
+        $message .= "<strong>Name:</strong> " . $data['name'] . "<br>";
+        $message .= "<strong>Email:</strong> " . $data['email'] . "<br>";
+        $message .= "<strong>Phone:</strong> " . $data['phone'] . "<br>";
+        $message .= "<strong>I am a:</strong> " . $data['title'] . "<br>";
+        $message .= "<strong>Interested In:</strong> " . nl2br($data['interested']) . "<br>";
+        if (!empty($data['linkedin_id'])) {
+            $message .= "<strong>LinkedIn:</strong> <a href='" . $data['linkedin_id'] . "'>" . $data['linkedin_id'] . "</a><br>";
+        }
+        $message .= "<strong>Message:</strong> " . nl2br($data['message']);
 		
 		$this->email->message($message);
 
@@ -447,9 +478,15 @@ class Welcome extends CI_Controller
 			return;
 		}
 
-		// 2. Get email from POST (standard form data)
-		$email = $this->input->post('email', TRUE);
-		$email = trim($email);
+		// 2. Get email from JSON POST or standard form data
+		$raw_data = json_decode(file_get_contents('php://input'), true);
+		if (is_array($raw_data) && isset($raw_data['email'])) {
+			$email = $raw_data['email'];
+			$_POST['url'] = isset($raw_data['url']) ? $raw_data['url'] : '';
+		} else {
+			$email = $this->input->post('email', TRUE);
+		}
+		$email = trim((string)$email);
 
 		// 3. Validate email
 		if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -460,17 +497,58 @@ class Welcome extends CI_Controller
 			return;
 		}
 
-		// 4. Load Model & Insert
+        // Determine the URL source
+        $pageUrl = '';
+        if (is_array($raw_data) && isset($raw_data['url'])) {
+            $pageUrl = $raw_data['url'];
+        } else {
+            $pageUrl = $this->input->post('url', TRUE);
+        }
+        $pageUrl = (string)$pageUrl;
+
+        // --- EMAIL NOTIFICATION LOGIC ---
+        // We do this BEFORE duplicate-check returns so we always get an alert when they interact.
+        $config = array(
+            'protocol'  => 'smtp',
+            'smtp_host' => 'ssl://smtp.gmail.com',
+            'smtp_port' => 465,
+            'smtp_user' => 'harshit.climagroanalytics@gmail.com',
+            'smtp_pass' => 'aoetbahpyrlqpvob',
+            'mailtype'  => 'html',
+            'charset'   => 'utf-8',
+            'wordwrap'  => TRUE,
+            'newline'   => "\r\n",
+            'crlf'      => "\r\n"
+        );
+        $this->load->library('email', $config);
+        $this->email->set_newline("\r\n");
+        $this->email->set_crlf("\r\n");
+
+        $this->email->from('harshit.climagroanalytics@gmail.com', 'Climagro Website');
+        $this->email->to('harshit.climagroanalytics@gmail.com'); 
+        
+        $is_download = strpos($pageUrl, 'climatedata') !== false;
+        
+        if ($is_download) {
+            $this->email->subject('[ClimAgro - Dataset] New Data Download Record!');
+            $msg = "A user just provided their email to download a dataset from the Climate Explorer!<br><br><strong>User Email:</strong> " . htmlspecialchars($email) . "<br>";
+        } else {
+            $this->email->subject('[ClimAgro - Subscription] New Newsletter Subscriber!');
+            $msg = "You have a new newsletter subscriber!<br><br><strong>Email:</strong> " . htmlspecialchars($email) . "<br>";
+        }
+
+        if (!empty($pageUrl)) {
+            $msg .= "<strong>Submitted from Page:</strong> <a href='" . htmlspecialchars($pageUrl) . "'>" . htmlspecialchars($pageUrl) . "</a><br>";
+        }
+        $this->email->message($msg);
+        $this->email->send();
+
+
+		// 4. Load Model & Insert Check
 		$this->load->model('Subscribermodel');
-		
-		// Check for duplicate manually if model returns false without distinction, 
-		// but checking the model logic: it returns false if exists.
-		// Let's rely on the model but handle the message nicely.
-		
-		// Actually, let's just check existence first for a better error message
 		if ($this->db->where('email', $email)->count_all_results('subscribers') > 0) {
 			$this->output
-				->set_status_header(200) // Return 200 so frontend treats it as 'handled' but with a message
+				->set_status_header(200)
 				->set_content_type('application/json')
 				->set_output(json_encode(['success' => true, 'message' => 'You are already subscribed!']));
 			return;
@@ -528,7 +606,7 @@ class Welcome extends CI_Controller
 			'future_year_start' => $this->input->post('future_year_start'),
 			'future_year_end' => $this->input->post('future_year_end'),
 			'scenarios' => json_encode($this->input->post('scenarios') ?? []),
-			'format' => $this->input->post('format'),
+			'format' => is_array($this->input->post('format')) ? implode(', ', $this->input->post('format')) : $this->input->post('format'),
 			'user_name' => $this->input->post('user_name'),
 			'user_email' => $this->input->post('user_email'),
 			'user_org_type' => $this->input->post('user_org_type'),
@@ -552,36 +630,37 @@ class Welcome extends CI_Controller
 	{
 		$config = [
 			'protocol'  => 'smtp',
-			'smtp_host' => 'smtp.gmail.com',
-			'smtp_port' => 587,
-			'smtp_user' => 'akshatsan23@gmail.com', // Reusing existing config
-			'smtp_pass' => '',    // Gmail App Password (needs to be set)
-			'smtp_crypto' => 'tls',
+			'smtp_host' => 'ssl://smtp.gmail.com',
+			'smtp_port' => 465,
+			'smtp_user' => 'harshit.climagroanalytics@gmail.com',
+			'smtp_pass' => 'aoetbahpyrlqpvob',
 			'mailtype'  => 'html',
 			'charset'   => 'utf-8',
 			'wordwrap'  => TRUE,
-			'newline'   => "\r\n"
+			'newline'   => "\r\n",
+			'crlf'      => "\r\n"
 		];
 		
 		$this->load->library('email', $config);
 		$this->email->set_newline("\r\n");
+		$this->email->set_crlf("\r\n");
 
-		$this->email->from('no-reply@climagro.com', 'Climagro System'); // From system
-		$this->email->to('akshatsan23@gmail.com'); // Admin email
+		$this->email->from('harshit.climagroanalytics@gmail.com', 'Climagro System');
+		$this->email->to('harshit.climagroanalytics@gmail.com');
 		$this->email->reply_to($data['user_email'], $data['user_name']);
 		$this->email->subject('New Climintellio Data Request from ' . $data['user_name']);
 		
 		$message = "<h2>New Climintellio Data Request</h2>";
-		$message .= "<p><strong>User:</strong> " . htmlspecialchars($data['user_name']) . " (" . htmlspecialchars($data['user_email']) . ")</p>";
-		$message .= "<p><strong>Organization Type:</strong> " . htmlspecialchars($data['user_org_type']) . "</p>";
-		$message .= "<p><strong>Message:</strong><br>" . nl2br(htmlspecialchars($data['user_message'] ?? '')) . "</p>";
+		$message .= "<p><strong>User:</strong> " . htmlspecialchars((string)($data['user_name'] ?? '')) . " (" . htmlspecialchars((string)($data['user_email'] ?? '')) . ")</p>";
+		$message .= "<p><strong>Organization Type:</strong> " . htmlspecialchars((string)($data['user_org_type'] ?? '')) . "</p>";
+		$message .= "<p><strong>Message:</strong><br>" . nl2br(htmlspecialchars((string)($data['user_message'] ?? ''))) . "</p>";
 		$message .= "<hr>";
 		$message .= "<h3>Request Details:</h3>";
 		$message .= "<ul>";
-		$message .= "<li><strong>Request Type:</strong> " . htmlspecialchars($data['request_type']) . "</li>";
-		$message .= "<li><strong>Location Method:</strong> " . htmlspecialchars($data['location_method']) . "</li>";
-		$message .= "<li><strong>Coverage:</strong> " . htmlspecialchars($data['coverage_type']) . "</li>";
-		$message .= "<li><strong>Format:</strong> " . htmlspecialchars($data['format']) . "</li>";
+		$message .= "<li><strong>Request Type:</strong> " . htmlspecialchars((string)($data['request_type'] ?? '')) . "</li>";
+		$message .= "<li><strong>Location Method:</strong> " . htmlspecialchars((string)($data['location_method'] ?? '')) . "</li>";
+		$message .= "<li><strong>Coverage:</strong> " . htmlspecialchars((string)($data['coverage_type'] ?? '')) . "</li>";
+		$message .= "<li><strong>Format:</strong> " . htmlspecialchars((string)($data['format'] ?? '')) . "</li>";
 		$message .= "</ul>";
 		$message .= "<p><em>Log in to the Admin Panel to view full details including hazards, scenarios, and variables.</em></p>";
 		

@@ -41,42 +41,39 @@ class Contact extends CI_Controller {
             $this->Contact_model->insert_contact($data);
     
             $config = array(
-                'protocol'  => 'smtp',
-                'smtp_host' => 'smtp.office365.com',
-                'smtp_port' => 587,
-                'smtp_user' => 'akshat@ehmconsultancy.co.in',
-                'smtp_pass' => 'N%661829788191ut',  // your app password
+                'protocol'    => 'smtp',
+                'smtp_host'   => 'smtp.gmail.com',
+                'smtp_port'   => 587,
+                'smtp_user'   => 'harshit.climagroanalytics@gmail.com',
+                'smtp_pass'   => 'aoetbahpyrlqpvob',
                 'smtp_crypto' => 'tls',
-                'mailtype'  => 'html',
-                'charset'   => 'utf-8',
-                'wordwrap'  => TRUE,
-                'newline'   => "\r\n"
-            );
-            $this->load->library('email', $config);
-    
-            $this->email->from('akshat@ehmconsultancy.co.in', $data['name']);
-            $this->email->to('akshatsan23@gmail.com'); 
-            $this->email->subject('New Contact Form Submission: ' . $data['subject']);
-            $this->email->message(
-                "You have received a new message:<br><br>" .
-                "Name: " . $data['name'] . "<br>" .
-                "Email: " . $data['email'] . "<br>" .
-                "Phone: " . $data['phone'] . "<br>" .
-                "Subject: " . $data['subject'] . "<br>" .
-                "Message: " . nl2br($data['message']) . "<br><br>" .
-                "Submitted on: " . $data['created']
-            );
-    
-            if ($this->email->send()) {
-                $this->session->set_flashdata('success', 'Your message has been sent successfully!');
-            } else {
-                log_message('error', $this->email->print_debugger());
-                $this->session->set_flashdata('error', 'Unable to send email. Please try again later.');
-            }
-    
-            redirect('contactpage');
+                'mailtype'    => 'html',
+                'charset'     => 'utf-8',
+                'wordwrap'    => TRUE,
+                'newline'     => "\r\n" 
+);
+
+$this->load->library('email', $config);
+$this->email->set_newline("\r\n");
+$this->email->set_crlf("\r\n");
+$this->email->from('harshit.climagroanalytics@gmail.com', $data['name']);
+$this->email->to('harshit.climagroanalytics@gmail.com');
+$this->email->subject('[ClimAgro - Data request] New Contact Form Submission: ' . $data['subject']);
+$this->email->message(
+    "You have received a new message:<br><br>" .
+    "Name: "    . $data['name']    . "<br>" .
+    "Email: "   . $data['email']   . "<br>" .
+    "Phone: "   . $data['phone']   . "<br>" .
+    "Subject: " . $data['subject'] . "<br>" .
+    "Message: " . $data['message'] . "<br>" .
+);
+
+$this->email->send();
+            $this->session->set_flashdata('success', 'Message sent successfully!');
         }
+        redirect('contact-us');
     }
+
     
     public function pageConsulting() {
         // Set validation rules

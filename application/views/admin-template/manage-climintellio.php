@@ -6,7 +6,7 @@ include("sidebar.php");
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Manage ClimIntello Requests</h1>
+            <h1 class="page-header">Manage ClimIntellio Requests</h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>
