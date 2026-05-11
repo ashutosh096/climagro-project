@@ -117,6 +117,7 @@ padding: 1.5rem;
 display: flex;
 flex-direction: column;
 align-items: center;
+
 justify-content: center;
 }
 .industries-section .card-grid .card-back h3 {
@@ -1284,20 +1285,6 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <style>
-.offering-title-wrapper {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 10px;
-    }
-
-    .offering-corner {
-        font-size: 2rem;
-        color: #f26a21;
-        position: relative;
-        line-height: 1;
-    }
-
 .offering-container {
         padding: 1rem 2rem 2rem;
         margin-top: -3rem;
@@ -1572,11 +1559,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <section class="offering-container">
   <div class="container">
   <div class="text-center mb-5">
-                <div class="offering-title-wrapper">
-                    <span class="offering-corner" style="position: relative; top: -10px;">⌜</span>
-                    <h2 class="section-title" style="display:inline-block; margin: 0 6px;">Our Offerings</h2>
-                    <span class="offering-corner" style="position: relative; top: 6px;">⌟</span>
-                </div>
+                <h2 class="section-title">Our Offerings</h2>
                 <p class="section-subtitle">Explore our core solutions designed to drive climate resilience and intelligence for forward-thinking organizations.</p>
   </div>
 
@@ -2398,14 +2381,14 @@ html {
 
                 <!-- Articles Card -->
                 <article class="card" onclick="window.location.href='<?php echo base_url().'articles' ?>'">
-                    <div class="card-category">REPORTS</div>
+                    <div class="card-category">ARTICLES</div>
                     <div class="card-image">
-                        <img src="assest/img/bg/article.png" alt="Reports content">
+                        <img src="assest/img/bg/article.png" alt="Articles content">
                     </div>
                     <div class="card-content">
-                        <h3 class="card-title">IN-DEPTH REPORTS AND FEATURES</h3>
-                        <p class="card-description">Comprehensive reports covering industry expertise, case studies, and thought leadership content.</p>
-                        <div class="card-date">Explore more reports</div>
+                        <h3 class="card-title">IN-DEPTH ARTICLES AND FEATURES</h3>
+                        <p class="card-description">Comprehensive articles covering industry expertise, case studies, and thought leadership content.</p>
+                        <div class="card-date">Explore more articles</div>
                     </div>
                 </article>
             </div>
