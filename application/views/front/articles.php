@@ -485,8 +485,17 @@ footer.v5-footer{background:var(--teal-dk);padding:24px 5vw;
 .footer-brand{color:#fff;font-size:16px;font-weight:700;font-family:'Poppins',sans-serif}
 .footer-brand em{color:var(--ca-bright)}
 .footer-copy{color:rgba(255,255,255,0.4);font-size:12px;font-family:'Poppins',sans-serif}
-.footer-links{display:flex;gap:24px}
-.footer-links a{color:rgba(255,255,255,0.5);text-decoration:none;font-size:13px;font-family:'Poppins',sans-serif}
+.footer-links{
+  display:flex;
+  flex-direction:column;
+  gap:0.45rem;
+  list-style:none;
+  padding:0;
+  margin:0;
+}
+.footer-links li{margin-bottom:0;}
+.footer-links li:last-child{margin-bottom:0;}
+.footer-links a{color:rgba(255,255,255,0.5);text-decoration:none;font-size:13px;font-family:'Poppins',sans-serif;line-height:1.5;}
 .footer-links a:hover{color:var(--ca-bright)}
 
 @media(max-width:820px){

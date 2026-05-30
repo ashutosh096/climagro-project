@@ -1232,16 +1232,16 @@ footer .footer-links a {
         <div class="footer-content">
             <div class="footer-column">
                 <div class="footer-title">Quick Links</div>
-                <div class="footer-links" style="display:flex !important; flex-direction:column !important; gap:0.85rem !important; margin:0 !important; padding:0 !important;">
-                    <a href="./" style="display:inline-block !important;">Home</a>
-                    <a href="about-us" style="display:inline-block !important;">About</a>
-                    <a href="solutions" style="display:inline-block !important;">Offerings</a>
-                    <a href="contact-us" style="display:inline-block !important;">Contact</a>
-                </div>
+                <ul class="footer-links">
+                    <li><a href="./">Home</a></li>
+                    <li><a href="about-us">About</a></li>
+                    <li><a href="solutions">Offerings</a></li>
+                    <li><a href="contact-us">Contact</a></li>
+                </ul>
             </div>
             <div class="footer-column">
                 <div class="footer-title">Contact</div>
-                <div class="footer-contact-title"><span><img src="assest/img/footer/contact.svg" alt=""></span> Contact Us</div>
+                <h5 class="xb-item--sub-title text-white"><span><img src="assest/img/footer/contact.svg" alt=""></span> Contact Us</h5>
                 <div class="footer-contact">
                     <i class="fas fa-envelope"></i>
                     <a href="mailto:contact@climagroanalytics.com">contact@climagroanalytics.com</a>
@@ -1252,13 +1252,13 @@ footer .footer-links a {
                 </div>
                 <div class="footer-contact">
                     <i class="fas fa-map-marker-alt"></i>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Nankari+IIT+Kanpur+-+208016" target="_blank" rel="noopener">Nankari IIT Kanpur - 208016</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Nankari+IIT+Kanpur+-+208016" target="_blank" rel="noopener" style="color: #d1d5db; text-decoration: none;">Nankari IIT Kanpur - 208016</a>
                 </div>
             </div>
             <div class="footer-column">
                 <div class="footer-title">Subscribe</div>
                 <div class="subscribe-wrapper" id="subscribeSection">
-                    <form class="subscribe-form" id="subscribeForm" novalidate onsubmit="handleFooterSubscribe(event)">
+                    <form class="subscribe-form" id="subscribeForm" novalidate>
                         <input id="subscribeEmail" type="email" name="email" placeholder="your@email.com" class="subscribe-input" autocomplete="email" />
                         <i class="fas fa-at subscribe-icon" aria-hidden="true"></i>
                         <button id="subscribeBtn" type="submit" class="subscribe-btn" aria-label="Subscribe">
