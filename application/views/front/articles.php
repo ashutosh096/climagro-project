@@ -1,5 +1,4 @@
 <?php
-$current_page = $this->uri->segment(1);
 ob_start();
 ?>
 <!-- EmailJS SDK -->
@@ -42,25 +41,51 @@ body{font-family:var(--sans);color:var(--ink);background:var(--white);overflow-x
 .view{display:none}
 .view.active{display:block}
 
+/* ─── NAV (v5 style, fixed dark green) ─── */
+nav.main-nav{position:fixed;top:0;left:0;right:0;z-index:300;height:58px;
+  background:rgba(11,61,51,.97);backdrop-filter:blur(14px);
+  display:flex;align-items:center;justify-content:space-between;padding:0 5vw}
+.nav-brand{display:flex;align-items:center;gap:9px;cursor:pointer;text-decoration:none}
+.nav-icon{width:30px;height:30px;background:rgba(255,255,255,.12);border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif);font-size:12px;color:#7EDFC0;font-weight:700}
+.nav-name{font-size:13px;font-weight:600;color:rgba(255,255,255,.9)}
+.nav-links{display:flex;align-items:center;gap:22px;list-style:none}
+.nav-links a{color:rgba(255,255,255,.6);text-decoration:none;font-size:12.5px;font-weight:500;
+  transition:color .2s;font-family:var(--sans)}
+.nav-links a:hover,.nav-links a.active{color:#fff}
+.nav-right{display:flex;align-items:center;gap:14px}
+.nav-back{font-size:12px;color:rgba(255,255,255,.55);cursor:pointer;
+  text-decoration:none;display:none;align-items:center;gap:5px;transition:color .2s}
+.nav-back:hover{color:#7EDFC0}
+.nav-cta{background:var(--coral);color:#0d3526;font-size:12px;font-weight:600;
+  padding:8px 18px;border-radius:20px;border:none;cursor:pointer;
+  text-decoration:none;letter-spacing:.04em;transition:all .2s;font-family:var(--sans)}
+.nav-cta:hover{background:#b8f000;color:#0d3526;transform:translateY(-1px)}
+@media(max-width:820px){.nav-links{display:none}}
+
 /* ═══════════════════════════════════════
    LANDING PAGE (from v5)
 ════════════════════════════════════════ */
 
 /* ─── HERO ─── */
+/* ─── HERO — matching climagroanalytics.com landing page ─── */
 .hero{
   min-height:100vh;
   display:flex;align-items:center;justify-content:center;
   padding:100px 5vw 70px;
   position:relative;overflow:hidden;
+  /* Website's exact deep-forest gradient */
   background:#01342D;
   font-family:"Poppins","DM Sans",system-ui,sans-serif;
 }
+/* Subtle animated radial glow — matches site's ambient light feel */
 .hero::before{
   content:'';
   position:absolute;inset:0;z-index:0;
   background-image:
-    linear-gradient(rgba(58,170,110,.18) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(58,170,110,.18) 1px, transparent 1px);
+    linear-gradient(rgba(58,170,110,.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(58,170,110,.07) 1px, transparent 1px);
   background-size:44px 44px;
   z-index:1;
   pointer-events:none;
@@ -83,19 +108,69 @@ body{font-family:var(--sans);color:var(--ink);background:var(--white);overflow-x
   pointer-events:none;
   z-index:0;
 }
+
+/* ── FLOATING ORBS ── */
+.orb{position:absolute;border-radius:50%;pointer-events:none;z-index:0;opacity:0}
+@keyframes floatA{
+  0%  {transform:translate(0,0) scale(1);   opacity:0;  }
+  10% {opacity:1}
+  50% {transform:translate(18px,-28px) scale(1.08); opacity:.85}
+  90% {opacity:1}
+  100%{transform:translate(0,0) scale(1);   opacity:0;  }
+}
+@keyframes floatB{
+  0%  {transform:translate(0,0) scale(1);   opacity:0;  }
+  10% {opacity:1}
+  50% {transform:translate(-22px,20px) scale(.93); opacity:.75}
+  90% {opacity:1}
+  100%{transform:translate(0,0) scale(1);   opacity:0;  }
+}
+@keyframes floatC{
+  0%  {transform:translate(0,0) scale(1);   opacity:0;  }
+  15% {opacity:.9}
+  55% {transform:translate(14px,30px) scale(1.12); opacity:.7}
+  90% {opacity:.8}
+  100%{transform:translate(0,0) scale(1);   opacity:0;  }
+}
+@keyframes floatD{
+  0%  {transform:translate(0,0);opacity:0}
+  20% {opacity:.6}
+  60% {transform:translate(-16px,-24px) scale(1.05);opacity:.6}
+  100%{transform:translate(0,0);opacity:0}
+}
+.orb-1{width:120px;height:120px;top:12%;left:6%;
+  background:radial-gradient(circle,rgba(58,170,110,.45),transparent 70%);
+  animation:floatA 9s ease-in-out infinite;}
+.orb-2{width:80px;height:80px;top:20%;right:10%;
+  background:radial-gradient(circle,rgba(126,223,192,.5),transparent 70%);
+  animation:floatB 11s ease-in-out 2s infinite;}
+.orb-3{width:60px;height:60px;bottom:18%;left:20%;
+  background:radial-gradient(circle,rgba(204,255,0,.4),transparent 70%);
+  animation:floatC 13s ease-in-out 1s infinite;}
+.orb-4{width:90px;height:90px;bottom:25%;right:18%;
+  background:radial-gradient(circle,rgba(58,170,110,.35),transparent 70%);
+  animation:floatD 10s ease-in-out 3s infinite;}
+.orb-5{width:50px;height:50px;top:45%;left:40%;
+  background:radial-gradient(circle,rgba(126,223,192,.3),transparent 70%);
+  animation:floatA 14s ease-in-out 4s infinite;}
+.orb-6{width:70px;height:70px;top:8%;right:35%;
+  background:radial-gradient(circle,rgba(204,255,0,.25),transparent 70%);
+  animation:floatB 12s ease-in-out 5s infinite;}
 .hero-vid-wrap{position:absolute;inset:0;z-index:0;overflow:hidden}
 .hero-vid{width:100%;height:100%;object-fit:cover;opacity:.04;filter:saturate(1.4) blur(3px)}
 .hero-voverlay{position:absolute;inset:0;
   background:rgba(1,52,45,0.0)}
 
-.hero-inner{position:relative;z-index:2;max-width:860px;width:100%;text-align:center}
+.hero-inner{position:relative;z-index:2;max-width:860px;width:100%;text-align:center;padding-top:2.5rem}
 
+/* "We" label — exact replica of website */
 .hero-we-label{
   font-family:"Poppins",sans-serif;
   font-size:13px;font-weight:700;
   color:#3aaa6e;
   letter-spacing:.18em;text-transform:uppercase;
-  margin-bottom:10px;display:block;
+  margin:1.5rem auto 10px;
+  display:block;
 }
 
 .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;
@@ -108,6 +183,7 @@ body{font-family:var(--sans);color:var(--ink);background:var(--white);overflow-x
   box-shadow:0 0 8px rgba(58,170,110,.6)}
 @keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(1.6)}}
 
+/* H1 — matches website: Poppins bold with teal italic for accent phrase */
 .hero h1{
   font-family:"Poppins",sans-serif;
   font-size:clamp(2rem,4.8vw,3.6rem);
@@ -118,12 +194,13 @@ body{font-family:var(--sans);color:var(--ink);background:var(--white);overflow-x
   letter-spacing:-0.01em;
 }
 .hero h1 em{
-  color:#3aaa6e;
+  color:#3aaa6e;          /* ClimAgro brand bright green */
   font-style:italic;
-  font-family:"DM Serif Display",Georgia,serif;
+  font-family:"DM Serif Display",Georgia,serif; /* Website uses serif italic for accent */
   font-weight:400;
 }
 
+/* Sub-text — matches website's body paragraph style */
 .hero-sub{
   font-family:"DM Sans",system-ui,sans-serif;
   font-size:15.5px;line-height:1.80;
@@ -131,6 +208,7 @@ body{font-family:var(--sans);color:var(--ink);background:var(--white);overflow-x
   max-width:600px;margin:0 auto 42px;font-weight:300;
 }
 
+/* Stat cards — website uses glass cards with teal numbers */
 .hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:44px}
 .hs{
   background:rgba(58,170,110,.08);
@@ -155,6 +233,7 @@ body{font-family:var(--sans);color:var(--ink);background:var(--white);overflow-x
 
 .hero-cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
 
+/* Primary CTA — website uses coral/orange-red */
 .btn-p{
   background:linear-gradient(135deg,#CCFF00 0%,#b8f000 100%);
   color:#0d3526;padding:14px 32px;border-radius:8px;
@@ -169,6 +248,7 @@ body{font-family:var(--sans);color:var(--ink);background:var(--white);overflow-x
   box-shadow:0 8px 28px rgba(180,255,0,.5);
 }
 
+/* Secondary CTA — ghost button matching website style */
 .btn-g{
   background:transparent;
   color:rgba(255,255,255,.85);
@@ -185,46 +265,51 @@ body{font-family:var(--sans);color:var(--ink);background:var(--white);overflow-x
   transform:translateY(-1px);
 }
 
+/* ─── DATA STRIP ─── */
 .dstrip{background:var(--teal-dk);padding:13px 5vw;
   display:flex;align-items:center;justify-content:center;gap:24px;flex-wrap:wrap}
 .dstrip-i{font-size:11px;color:rgba(255,255,255,.48)}
 .dstrip-i strong{color:#7EDFC0}
 .dstrip-dot{color:rgba(255,255,255,.14);font-size:18px}
 
-.sec-tag{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--teal);background:var(--teal-lg);
-  padding:4px 12px;border-radius:20px;margin-bottom:14px}
+/* ─── REPORT LANDING SECTIONS ─── */
+.sec-tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:#fff;background:var(--teal);
+  padding:6px 18px;border-radius:20px;margin-bottom:14px;
+  box-shadow:0 2px 14px rgba(15,110,86,.3)}
 
-.report-landing{width:100%;display:grid;grid-template-columns:1fr 1fr;min-height:540px}
-.report-landing.flip .rl-visual{order:-1}
+/* ── FIXED: compact panels so text + layout align properly ── */
+.report-landing{width:100%;display:grid;grid-template-columns:1fr 1fr;min-height:auto;align-items:stretch!important;border-radius:16px!important;overflow:hidden!important;box-shadow:0 12px 40px rgba(0,0,0,0.06)!important;border:1px solid rgba(0,0,0,0.05)!important;background:#fff;margin-bottom:40px}
+.report-landing.flip .rl-visual{order:-1;align-self:stretch!important}
 
-.rl-content{padding:64px 56px;display:flex;flex-direction:column;justify-content:center}
+.rl-content{padding:40px 44px;display:flex;flex-direction:column;justify-content:flex-start;align-self:stretch!important}
 .report-landing.m .rl-content{background:#fff}
 .report-landing.h .rl-content{background:var(--off)}
 
-.dc-badge{display:inline-flex;align-items:center;gap:7px;font-size:10px;
-  font-weight:700;letter-spacing:.09em;text-transform:uppercase;
-  padding:4px 12px;border-radius:20px;margin-bottom:16px}
-.dc-badge.m{background:var(--teal-lg);color:var(--teal)}
-.dc-badge.h{background:var(--blue-l);color:var(--blue)}
-.dc-vol{font-size:10.5px;color:var(--lt);margin-bottom:8px;font-weight:400}
-.dc-title{font-family:var(--serif);font-size:clamp(1.5rem,2.2vw,2rem);
-  line-height:1.2;margin-bottom:12px}
+.dc-badge{display:inline-flex;align-items:center;gap:7px;font-size:11px;
+  font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  padding:6px 16px;border-radius:20px;margin-bottom:10px;
+  box-shadow:0 2px 10px rgba(0,0,0,.12)}
+.dc-badge.m{background:var(--teal);color:#fff;box-shadow:0 2px 12px rgba(15,110,86,.35)}
+.dc-badge.h{background:var(--blue);color:#fff;box-shadow:0 2px 12px rgba(27,79,130,.3)}
+.dc-vol{font-size:10.5px;color:var(--lt);margin-bottom:6px;font-weight:400}
+.dc-title{font-family:var(--serif);font-size:clamp(1.25rem,1.8vw,1.6rem);
+  line-height:1.2;margin-bottom:10px}
 .report-landing.m .dc-title{color:var(--teal-dk)}
 .report-landing.h .dc-title{color:var(--blue)}
-.dc-desc{font-size:13.5px;color:var(--mid);line-height:1.78;font-weight:300;margin-bottom:24px;max-width:480px}
+.dc-desc{font-size:13px;color:var(--mid);line-height:1.7;font-weight:300;margin-bottom:18px;max-width:460px}
 
 .dci-title{font-size:9.5px;font-weight:700;letter-spacing:.08em;
-  text-transform:uppercase;color:var(--lt);margin-bottom:10px}
-.dci-list{display:flex;flex-direction:column;gap:7px;margin-bottom:28px}
-.dci-item{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--mid)}
+  text-transform:uppercase;color:var(--lt);margin-bottom:8px}
+.dci-list{display:flex;flex-direction:column;gap:5px;margin-bottom:20px}
+.dci-item{display:flex;align-items:flex-start;gap:8px;font-size:12.5px;color:var(--mid);line-height:1.5}
 .dci-item::before{content:"✓";font-size:10px;font-weight:700;flex-shrink:0;margin-top:2px}
 .report-landing.m .dci-item::before{color:var(--teal)}
 .report-landing.h .dci-item::before{color:var(--blue)}
 
-.rl-cta-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-.read-more-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;
-  border-radius:7px;font-size:13.5px;font-weight:600;border:none;cursor:pointer;
+.rl-cta-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.read-more-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;
+  border-radius:7px;font-size:13px;font-weight:600;border:none;cursor:pointer;
   font-family:var(--sans);letter-spacing:.03em;transition:all .22s}
 .report-landing.m .read-more-btn{background:var(--teal);color:#fff}
 .report-landing.m .read-more-btn:hover{background:#0a5a44;transform:translateY(-1px);box-shadow:0 6px 18px rgba(15,110,86,.35)}
@@ -232,26 +317,27 @@ body{font-family:var(--sans);color:var(--ink);background:var(--white);overflow-x
 .report-landing.h .read-more-btn:hover{background:#163f6a;transform:translateY(-1px);box-shadow:0 6px 18px rgba(27,79,130,.35)}
 .dc-pages{font-size:11px;color:var(--lt)}
 
-.rl-visual{display:flex;flex-direction:column;justify-content:center;padding:64px 48px;gap:14px;position:relative;overflow:hidden}
+.rl-visual{display:flex;flex-direction:column;justify-content:flex-start;padding:40px 36px;gap:12px;position:relative;overflow:hidden;align-self:stretch!important}
 .report-landing.m .rl-visual{background:linear-gradient(145deg,var(--teal-dk) 0%,#0a5040 100%)}
 .report-landing.h .rl-visual{background:linear-gradient(145deg,#0d2540 0%,var(--blue) 100%)}
 .rl-visual::before{content:'';position:absolute;inset:0;
   background:url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='20' cy='20' r='1' fill='%23ffffff' fill-opacity='0.04'/%3E%3C/svg%3E")}
-.rl-vis-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
-  color:rgba(255,255,255,.35);margin-bottom:4px;position:relative;z-index:1}
-.rl-vis-title{font-family:var(--serif);font-size:1.3rem;color:#fff;
-  line-height:1.25;margin-bottom:20px;position:relative;z-index:1;max-width:320px}
-.dc-metrics{display:grid;grid-template-columns:1fr 1fr;gap:10px;position:relative;z-index:1}
-.dcm{border-radius:10px;padding:14px 14px;background:rgba(255,255,255,.07);
+.rl-vis-label{font-size:9.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:rgba(255,255,255,.35);margin-bottom:2px;position:relative;z-index:1}
+.rl-vis-title{font-family:var(--serif);font-size:1.1rem;color:#fff;
+  line-height:1.25;margin-bottom:14px;position:relative;z-index:1;max-width:300px}
+.dc-metrics{display:grid;grid-template-columns:1fr 1fr;gap:8px;position:relative;z-index:1}
+.dcm{border-radius:8px;padding:11px 12px;background:rgba(255,255,255,.07);
   border:1px solid rgba(255,255,255,.1)}
-.dcm-n{font-family:var(--serif);font-size:1.6rem;line-height:1;color:#fff;margin-bottom:4px}
+.dcm-n{font-family:var(--serif);font-size:1.25rem;line-height:1;color:#fff;margin-bottom:4px}
 .report-landing.m .dcm-n{color:#7EDFC0}
 .report-landing.h .dcm-n{color:#7EDFC0}
-.dcm-l{font-size:10px;color:rgba(255,255,255,.45);line-height:1.35}
+.dcm-l{font-size:9.5px;color:rgba(255,255,255,.45);line-height:1.35}
 .rl-vis-divider{height:1px;background:rgba(255,255,255,.08);position:relative;z-index:1}
-.rl-vis-note{font-size:11.5px;color:rgba(255,255,255,.4);line-height:1.6;
+.rl-vis-note{font-size:10.5px;color:rgba(255,255,255,.38);line-height:1.55;
   font-weight:300;position:relative;z-index:1;font-style:italic}
 
+/* ─── ABOUT ─── */
 .about-sec{background:#fff;padding:60px 5vw;border-top:1px solid #EEEDEA}
 .about-inner{max-width:1100px;margin:0 auto;display:grid;
   grid-template-columns:1fr 1fr 1fr;gap:36px}
@@ -259,34 +345,51 @@ body{font-family:var(--sans);color:var(--ink);background:var(--white);overflow-x
 .ab p{font-size:12.5px;color:var(--mid);line-height:1.75;font-weight:300}
 @media(max-width:680px){.about-inner{grid-template-columns:1fr}}
 
-.sr{opacity:1;transform:translateY(0);transition:opacity .55s ease,transform .55s ease}
+/* ─── V5 FOOTER ─── */
+footer.v5-footer{background:var(--teal-dk);padding:24px 5vw;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:14px;border-top:1px solid rgba(255,255,255,.07)}
+.foot-brand{display:flex;align-items:center;gap:9px}
+.foot-icon{width:28px;height:28px;background:rgba(255,255,255,.1);border-radius:5px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif);font-size:11px;color:#7EDFC0}
+.foot-name{font-size:13px;font-weight:600;color:rgba(255,255,255,.75)}
+.foot-tag{font-size:9.5px;color:rgba(255,255,255,.3);margin-top:2px}
+.foot-r{font-size:10px;color:rgba(255,255,255,.3);text-align:right;line-height:1.8}
+.foot-r a{color:rgba(255,255,255,.42);text-decoration:none}
+
+/* ─── SCROLL REVEAL ─── */
+.sr{opacity:0;transform:translateY(24px);transition:opacity .55s ease,transform .55s ease}
 .sr.vis{opacity:1;transform:translateY(0)}
 .sr-d1{transition-delay:.12s}.sr-d2{transition-delay:.24s}
 
 @media(max-width:820px){
   .report-landing{grid-template-columns:1fr}
   .report-landing.flip .rl-visual{order:0}
-  .rl-content{padding:40px 28px}
-  .rl-visual{padding:40px 28px}
+  .rl-content{padding:32px 24px}
+  .rl-visual{padding:32px 24px}
   .hero-stats{grid-template-columns:1fr 1fr}
 }
 
 /* ═══════════════════════════════════════════════════════
-   READ-MORE PAGES
+   READ-MORE PAGES (from final v3 — preview/gateway/success)
 ════════════════════════════════════════════════════════ */
 
+/* BREADCRUMB */
 .breadcrumb{background:#fff;border-bottom:1px solid var(--ca-border);padding:12px 64px;display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ca-muted)}
 .breadcrumb a{color:var(--ca-green);text-decoration:none}
 .breadcrumb a:hover{text-decoration:underline}
 .breadcrumb span{color:var(--ca-muted)}
 
+/* VIEW WRAPPER adds padding-top for fixed nav */
 #view-preview,#view-gateway,#view-success{
-  padding-top:0px; /* changed */
+  padding-top:58px;
   background:var(--ca-body);
   min-height:100vh;
   font-family:'Poppins',sans-serif;
 }
 
+/* REPORT PREVIEW */
 .report-preview-wrap{max-width:900px;margin:0 auto;padding:48px 40px}
 .rp-header{border-bottom:2px solid var(--ca-border);padding-bottom:28px;margin-bottom:36px;display:flex;align-items:flex-start;gap:20px}
 .rp-badge{padding:6px 16px;border-radius:6px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;flex-shrink:0;margin-top:4px}
@@ -377,28 +480,30 @@ body{font-family:var(--sans);color:var(--ink);background:var(--white);overflow-x
 .also-btn{display:inline-flex;align-items:center;gap:7px;padding:10px 22px;border-radius:7px;border:1.5px solid var(--ca-green);color:var(--ca-green);font-size:13px;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;background:none;transition:all .2s}
 .also-btn:hover{background:var(--ca-light)}
 
+/* FINAL FOOTER (for inner pages) */
+.ca-footer{background:var(--ca-dark);padding:36px 64px;margin-top:0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.footer-brand{color:#fff;font-size:16px;font-weight:700;font-family:'Poppins',sans-serif}
+.footer-brand em{color:var(--ca-bright)}
+.footer-copy{color:rgba(255,255,255,0.4);font-size:12px;font-family:'Poppins',sans-serif}
+.footer-links{display:flex;gap:24px}
+.footer-links a{color:rgba(255,255,255,0.5);text-decoration:none;font-size:13px;font-family:'Poppins',sans-serif}
+.footer-links a:hover{color:var(--ca-bright)}
+
 @media(max-width:820px){
   .form-row-2{grid-template-columns:1fr}
   .rp-findings-grid{grid-template-columns:1fr 1fr}
   .report-preview-wrap,.gateway-wrap{padding:40px 24px}
   .gw-form-card{padding:24px 20px}
+  .ca-footer{padding:28px 24px;flex-direction:column;align-items:flex-start}
   .breadcrumb{padding:12px 24px}
 }
-
-/* ── Override global site layout for reports page ── */
-main { padding-top: 0 !important; margin-top: 0 !important; }
-.body_wrap > main { padding: 0 !important; margin: 0 !important; }
 </style>
 <?php
 $extraHeadHTML = ob_get_clean();
 include("header.php");
-include("navbar1.php");
+include("navbar2.php");
 ?>
-<style>
-/* Kill any padding the global main tag adds on this page */
-main { padding-top: 0 !important; margin-top: 0 !important; }
-</style>
-<div class="reports-page-wrap" style="padding-top:90px">
+
 
 <!-- ═══════════════════════════════════════════════════
      VIEW 1 — LANDING PAGE (v5 design)
@@ -408,6 +513,12 @@ main { padding-top: 0 !important; margin-top: 0 !important; }
   <!-- HERO -->
   <section class="hero">
     <div class="hero-corner-bl"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="orb orb-4"></div>
+    <div class="orb orb-5"></div>
+    <div class="orb orb-6"></div>
     <div class="hero-vid-wrap">
       <video autoplay muted loop playsinline class="hero-vid">
         <source src="https://cdn.pixabay.com/video/2022/09/16/131799-751267718_large.mp4" type="video/mp4">
@@ -416,16 +527,16 @@ main { padding-top: 0 !important; margin-top: 0 !important; }
     </div>
     <div class="hero-inner">
       <span class="hero-we-label">We</span>
-      <div class="hero-eyebrow"><i></i>Peer-reviewed Climate Research &nbsp;·&nbsp; 2026</div>
-      <h1>Jhansi Is Running Out of Water —<br><em>And the Climate Crisis is Accelerating It</em></h1>
-      <p class="hero-sub">120+ years of IMD rainfall data and 73 years of temperature records reveal a reinforcing spiral of heat and drought threatening 8 blocks of Bundelkhand's most water-stressed district.</p>
+      <div class="hero-eyebrow"><i></i>Peer-reviewed Climate Research</div>
+      <h1>Warmer and Drier Summers Are<br><em>Stressing Jhansi's Water Availability</em></h1>
+      <p class="hero-sub">Historical IMD data reveals a compounding heat-drought trajectory across eight vulnerable blocks in Jhansi, a critical Bundelkhand water-stressed zone.</p>
       <div class="hero-stats">
-        <div class="hs"><div class="hs-n">8/8</div><div class="hs-l">Blocks with intensifying heat extremes</div></div>
-        <div class="hs"><div class="hs-n">70+</div><div class="hs-l">Dry days within every monsoon season</div></div>
-        <div class="hs"><div class="hs-n">850mm</div><div class="hs-l">vs 1,200 mm in eastern UP</div></div>
-        <div class="hs"><div class="hs-n">42.6°C</div><div class="hs-l">Average peak summer max temp</div></div>
+        <div class="hs"><div class="hs-n">4.5×</div><div class="hs-l">Higher summer warming rate than UP state mean</div></div>
+        <div class="hs"><div class="hs-n">6%</div><div class="hs-l">Rise in extreme hot days (>40°C) over last decade</div></div>
+        <div class="hs"><div class="hs-n">4/8</div><div class="hs-l">Blocks with highest risk to water security</div></div>
+        <div class="hs"><div class="hs-n">8/8</div><div class="hs-l">Blocks facing growing intensity of severe heatwaves</div></div>
       </div>
-      <p class="hero-strip-label">2 Reports · 36 Pages · Free access</p>
+
       <div class="hero-cta">
         <button class="btn-p" onclick="document.getElementById('dashboards-sec').scrollIntoView({behavior:'smooth'})">Explore Reports ↓</button>
         <button class="btn-g" onclick="document.getElementById('dashboards-sec').scrollIntoView({behavior:'smooth'})">View Climate Maps</button>
@@ -446,24 +557,21 @@ main { padding-top: 0 !important; margin-top: 0 !important; }
   <div id="dashboards-sec">
 
     <div style="background:var(--off);padding:52px 5vw 36px;text-align:center">
-      <div class="sec-tag sr">Research Series · 2026</div>
       <h2 class="sr" style="font-family:var(--serif);font-size:clamp(1.8rem,3vw,2.5rem);color:var(--teal-dk);line-height:1.2;margin-bottom:10px">Two Reports. One District. A Complete Picture.</h2>
-      <p class="sr" style="font-size:14px;color:var(--mid);font-weight:300;max-width:560px;margin:0 auto;line-height:1.7">The Jhansi Hydroclimatic Assessment is published in two focused volumes. Scroll to explore each — then click Read More to access the full summary, maps, and download.</p>
     </div>
 
     <!-- REPORT 01: HUMIDITY / HEAT -->
-    <div class="report-landing h flip sr">
+      <div class="report-landing h flip sr">
       <div class="rl-content">
-        <div class="dc-badge h">Report 01 · Humidity &amp; Heat Stress</div>
+        <div class="dc-badge h">Report 01 · Summer Heat &amp; Water Stress</div>
         <div class="dc-vol">18 pages &nbsp;·&nbsp; IMD Data 1951–2024 &nbsp;·&nbsp; Free PDF</div>
-        <h3 class="dc-title">Humid Heat Stress &amp; Atmospheric Water Dynamics in Jhansi</h3>
-        <p class="dc-desc">Assessment of humidity-driven thermal stress, wet-bulb temperature trends, and their compounding effects on agricultural and human water demand across all 8 blocks — with block-level risk profiles and public health implications.</p>
+        <h3 class="dc-title">Warmer &amp; Drier Summers Stressing Jhansi's Water Availability</h3>
         <div class="dci-title">What's inside</div>
         <div class="dci-list">
-          <div class="dci-item">Wet-bulb temperature trends and heatwave frequency analysis</div>
-          <div class="dci-item">Evapotranspiration demand vs rainfall supply gaps by block</div>
-          <div class="dci-item">Agricultural water stress projections across all 8 blocks</div>
-          <div class="dci-item">Public health and livelihood risk implications</div>
+          <div class="dci-item">Increasing summer temperatures — 4.5× higher warming rate than UP state mean</div>
+          <div class="dci-item">Pre-monsoon rainfall trends: Jhansi rising at twice the rate of UP state (0.009889 vs 0.004508)</div>
+          <div class="dci-item">6% rise in extremely hot days (>40°C) in last decade (2015–2024) vs 1951 baseline</div>
+          <div class="dci-item">4/8 blocks with highest risk to water security &amp; 8/8 facing growing intensity of severe heatwaves</div>
         </div>
         <div class="rl-cta-row">
           <button class="read-more-btn" onclick="openReport('heat')">Read More &amp; Download →</button>
@@ -472,19 +580,18 @@ main { padding-top: 0 !important; margin-top: 0 !important; }
       </div>
       <div class="rl-visual">
         <div class="rl-vis-label">Key Metrics · Report 01</div>
-        <div class="rl-vis-title">Humidity amplifies an already severe heat and water crisis</div>
+        <div class="rl-vis-title">Heat and drought are compounding Jhansi's water crisis</div>
         <div class="dc-metrics">
-          <div class="dcm"><div class="dcm-n">73 yrs</div><div class="dcm-l">Of temperature-humidity records analysed (1951–2024)</div></div>
-          <div class="dcm"><div class="dcm-n">ET+</div><div class="dcm-l">Evapotranspiration demand exceeds rainfall supply in dry seasons</div></div>
-          <div class="dcm"><div class="dcm-n">Wb↑</div><div class="dcm-l">Wet-bulb temperature extremes rising across all 8 blocks</div></div>
-          <div class="dcm"><div class="dcm-n">2 seasons</div><div class="dcm-l">Pre-monsoon &amp; monsoon humid heat stress both assessed</div></div>
+          <div class="dcm"><div class="dcm-n">4.5×</div><div class="dcm-l">Jhansi's summer warming rate vs UP state mean — while state trend is slightly cooling</div></div>
+          <div class="dcm"><div class="dcm-n">37 → 40</div><div class="dcm-l">Average hot days per year (74 yr baseline) vs last decade (2015–2024)</div></div>
+          <div class="dcm"><div class="dcm-n">4/8</div><div class="dcm-l">Blocks classified at highest water security risk</div></div>
+          <div class="dcm"><div class="dcm-n">8/8</div><div class="dcm-l">All blocks experiencing growing severity of heatwaves</div></div>
         </div>
-        <div class="rl-vis-divider"></div>
-        <div class="rl-vis-note">"Reduced precipitation limits natural recharge while sustained heat accelerates land-surface drying — linking hydroclimatic change directly to livelihood and public health risk."</div>
       </div>
     </div>
 
-  <!-- REPORT 02: MONSOON -->
+  <!-- REPORT 02: MONSOON — temporarily hidden, restore when ready -->
+  <!--
     <div class="report-landing m sr">
       <div class="rl-content">
         <div class="dc-badge m">Report 02 · Monsoon &amp; Rainfall</div>
@@ -516,6 +623,7 @@ main { padding-top: 0 !important; margin-top: 0 !important; }
         <div class="rl-vis-note">"Jhansi receives 850–900 mm of monsoon rainfall — 25–30% below eastern UP's 1,200 mm — a structural hydrological disadvantage compounded by declining trends post-2000."</div>
       </div>
     </div>
+  -->
 
     </div><!-- /dashboards-sec -->
 
@@ -537,6 +645,8 @@ main { padding-top: 0 !important; margin-top: 0 !important; }
     </div>
   </section>
 
+
+
 </div><!-- /view-landing -->
 
 
@@ -544,9 +654,6 @@ main { padding-top: 0 !important; margin-top: 0 !important; }
      VIEW 2 — REPORT PREVIEW (from final v3)
      ══════════════════════════════════════════ -->
 <div class="view" id="view-preview">
-  <div id="back-btn-wrap" style="max-width:900px; margin:0 auto; padding: 20px 40px 0;">
-    <button class="back-btn" onclick="goToLanding()">← Back to Reports</button>
-  </div>
 
   <!-- PREVIEW HERO — shown only for monsoon report -->
   <div id="preview-hero-wrap" style="display:none">
@@ -564,14 +671,6 @@ main { padding-top: 0 !important; margin-top: 0 !important; }
       display:flex;align-items:center;justify-content:space-between;
       padding:0 5vw;z-index:10;
     }
-    .rh-topbar-left{display:flex;align-items:center;gap:24px;}
-    .rh-topbar-back{
-      background:none;border:none;cursor:pointer;
-      color:#3aaa6e;font-size:13px;font-weight:600;
-      font-family:'Poppins',sans-serif;display:flex;align-items:center;gap:6px;padding:0;
-      transition:color .2s;
-    }
-    .rh-topbar-back:hover{color:#fff;}
     .rh-topbar-brand{
       font-family:"DM Serif Display",Georgia,serif;
       font-size:15px;font-weight:600;color:#3aaa6e;letter-spacing:.01em;
@@ -602,7 +701,7 @@ main { padding-top: 0 !important; margin-top: 0 !important; }
     .rh-body{
       position:relative;z-index:1;
       display:grid;grid-template-columns:1fr 320px;gap:40px;
-      padding-top:20px;
+      padding-top:52px;
       align-items:start;
     }
 
@@ -750,7 +849,12 @@ main { padding-top: 0 !important; margin-top: 0 !important; }
       <div class="rh-blob rh-blob-2"></div>
       <div class="rh-drops" id="rh-drops"></div>
 
-      <!-- top bar removed -->
+      <!-- top bar -->
+      <div class="rh-topbar">
+        <div class="rh-topbar-brand">ClimAgro Analytics</div>
+        <div class="rh-topbar-meta">Jhansi District · Part 2 · April 2026</div>
+        <button class="rh-topbar-btn" onclick="openGateway()">↓ Full Report</button>
+      </div>
 
       <!-- main content -->
       <div class="rh-body">
@@ -1060,87 +1164,86 @@ main { padding-top: 0 !important; margin-top: 0 !important; }
 <!-- ══════════════════════════════════════════
      VIEW 3 — GATEWAY FORM (from final v3)
      ══════════════════════════════════════════ -->
-<!-- Gateway Modal -->
-<div class="climate-modal-overlay" id="gatewayModal">
-    <div class="climate-modal">
-        <!-- Close Button -->
-        <button class="climate-close-btn" id="closeGatewayModal" onclick="closeGateway()">&times;</button>
-        
-        <div class="climate-modal-body">
-            <div style="text-align: center; margin-bottom: 1rem;">
-                <span id="gw-modal-pill" style="background: #f3f4f6; color: #6b7280; padding: 4px 16px; border-radius: 50px; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.5px; border: 1px solid #e5e7eb; display: inline-block; margin-bottom: 0.5rem;">ACCESS REPORT</span>
-                
-                <p style="font-size: 0.8rem; color: #6b7280; max-width: 400px; margin: 0 auto; line-height: 1.4;">
-                    <span id="gw-icon"></span> <strong id="gw-title"></strong><br>
-                    Free to access — no payment or subscription. Just tell us a little about yourself so we can serve you better.
-                </p>
-            </div>
+<div class="view" id="view-gateway">
 
-            <form onsubmit="handleGatewaySubmit(event)" id="gw-form">
-                <div class="row">
-                    <!-- Full Name -->
-                    <div class="col-lg-6 mb-2">
-                        <label style="font-size: 0.8rem; font-weight: 500; color: #374151; margin-bottom: 4px; display: block;">Full Name <span style="color:red;">*</span></label>
-                        <input type="text" class="form-control" placeholder="e.g. John Smith" id="gw-name" name="from_name" required style="padding: 8px 12px; border: 1px solid #e5e7eb; border-radius: 6px; width: 100%; height: auto; font-size: 0.9rem; background: #fafafa;">
-                    </div>
-                    <!-- Email -->
-                    <div class="col-lg-6 mb-2">
-                        <label style="font-size: 0.8rem; font-weight: 500; color: #374151; margin-bottom: 4px; display: block;">Working Email <span style="color:red;">*</span></label>
-                        <input type="email" class="form-control" placeholder="e.g. john@email.com" id="gw-email" name="from_email" required style="padding: 8px 12px; border: 1px solid #e5e7eb; border-radius: 6px; width: 100%; height: auto; font-size: 0.9rem; background: #fafafa;">
-                    </div>
-                    <!-- Organisation -->
-                    <div class="col-lg-6 mb-2">
-                        <label style="font-size: 0.8rem; font-weight: 500; color: #374151; margin-bottom: 4px; display: block;">Organisation / Institution <span style="color:red;">*</span></label>
-                        <input type="text" class="form-control" placeholder="e.g. IIT Kanpur, NITI Aayog" id="gw-org" name="organisation" required style="padding: 8px 12px; border: 1px solid #e5e7eb; border-radius: 6px; width: 100%; height: auto; font-size: 0.9rem; background: #fafafa;">
-                    </div>
-                    <!-- Phone -->
-                    <div class="col-lg-6 mb-2">
-                        <label style="font-size: 0.8rem; font-weight: 500; color: #374151; margin-bottom: 4px; display: block;">Phone Number <span style="color:#6b7280; font-weight:400;">(optional)</span></label>
-                        <input type="tel" class="form-control" placeholder="e.g. +91 98765 43210" id="gw-phone" name="phone" style="padding: 8px 12px; border: 1px solid #e5e7eb; border-radius: 6px; width: 100%; height: auto; font-size: 0.9rem; background: #fafafa;" inputmode="numeric" pattern="[0-9]*" maxlength="13">
-                    </div>
-                    <!-- Role -->
-                    <div class="col-lg-12 mb-2">
-                         <label style="font-size: 0.8rem; font-weight: 500; color: #374151; margin-bottom: 4px; display: block;">Your Role <span style="color:red;">*</span></label>
-                        <select id="gw-role" name="role" class="custom-select-animated" required style="padding: 8px 12px; border: 1px solid #e5e7eb; border-radius: 6px; width: 100%; background-color: #fafafa; height: auto; font-size: 0.9rem;">
-                            <option value="Government / Policy Maker">Government / Policy Maker</option>
-                            <option value="Researcher / Academic">Researcher / Academic</option>
-                            <option value="Financial Institution / Insurer">Financial Institution / Insurer</option>
-                            <option value="NGO / Nonprofit">NGO / Nonprofit</option>
-                            <option value="Corporate Sustainability / ESG">Corporate Sustainability / ESG</option>
-                            <option value="Student">Student</option>
-                            <option value="Journalist / Media">Journalist / Media</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
-                    <!-- Usage -->
-                    <div class="col-lg-12 mb-3">
-                        <label style="font-size: 0.8rem; font-weight: 500; color: #374151; margin-bottom: 4px; display: block;">How will you use this report? <span style="color:#6b7280; font-weight:400;">(optional)</span></label>
-                        <textarea class="form-control" id="gw-usage" name="usage" cols="30" rows="2" placeholder="e.g. Policy brief, academic research, project planning..." style="padding: 8px 12px; border: 1px solid #e5e7eb; border-radius: 6px; width: 100%; height: auto; font-size: 0.9rem; background: #fafafa;"></textarea>
-                    </div>
-                    <!-- Consent Checkbox -->
-                    <div class="col-lg-12 mb-3">
-                        <label style="font-size: 0.75rem; color: #6b7280; display: flex; align-items: start; gap: 8px; cursor: pointer;">
-                            <input type="checkbox" required id="gw-consent-chk" style="margin-top: 2px;">
-                            <span>I agree to ClimAgro Analytics storing my details and being contacted with related climate research updates. We never sell your data and you may unsubscribe at any time.</span>
-                        </label>
-                    </div>
+  <div class="breadcrumb">
+    <a href="#" onclick="goToLanding()">Home</a>
+    <span>›</span>
+    <a href="#" onclick="goToLanding()">Reports</a>
+    <span>›</span>
+    <a href="#" onclick="goTo('preview')" id="gw-bc-report"></a>
+    <span>›</span>
+    <span style="color:var(--ca-dark);font-weight:500">Access Form</span>
+  </div>
 
-                    <!-- Submit -->
-                    <div class="col-lg-12" style="display: flex; justify-content: center; flex-direction: column; align-items: center; gap: 8px;">
-                        <button type="submit" class="btn-custom-pill" id="gw-submit-btn" style="width: 100%; max-width: 300px; padding: 10px 24px;">
-                            ⬇️ &nbsp;Get Free Access
-                        </button>
-                        <span style="font-size: 0.7rem; color: #9ca3af;">🔒 Secure · Free · Instant access</span>
-                    </div>
-                </div>
-                
-                <div id="gw-error" style="display:none;color:#c0392b;font-size:12.5px;padding:10px 14px;background:#fdf0ef;border-radius:8px;margin-top:14px;border:1px solid #f5c6c1">
-                  ⚠️ Something went wrong. Please try again or email us directly.
-                </div>
-            </form>
-        </div>
+  <div class="gateway-wrap">
+    <div class="gw-header">
+      <span class="gw-icon" id="gw-icon"></span>
+      <h2 id="gw-title"></h2>
+      <p>Free to access — no payment or subscription. Just tell us a little about yourself so we can serve you better.</p>
+      <br>
+      <div id="gw-pill"></div>
     </div>
-</div>
+
+    <div class="gw-form-card">
+      <div class="gw-form-head">📋 Access Request Form</div>
+      <form onsubmit="handleGatewaySubmit(event)" id="gw-form">
+        <div class="form-row-2">
+          <div class="fg">
+            <label>Full Name <span class="req">*</span></label>
+            <input type="text" id="gw-name" name="from_name" required placeholder="Your full name">
+          </div>
+          <div class="fg">
+            <label>Email Address <span class="req">*</span></label>
+            <input type="email" id="gw-email" name="from_email" required placeholder="you@organisation.com">
+          </div>
+        </div>
+        <div class="form-row-2">
+          <div class="fg">
+            <label>Organisation / Institution <span class="req">*</span></label>
+            <input type="text" id="gw-org" name="organisation" required placeholder="e.g. IIT Kanpur, NITI Aayog">
+          </div>
+          <div class="fg">
+            <label>Phone Number</label>
+            <input type="tel" id="gw-phone" name="phone" placeholder="+91 XXXXX XXXXX">
+          </div>
+        </div>
+        <div class="fg">
+          <label>Your Role <span class="req">*</span></label>
+          <select id="gw-role" name="role" required>
+            <option value="" disabled selected>Select your role…</option>
+            <option>Government / Policy Maker</option>
+            <option>Researcher / Academic</option>
+            <option>Financial Institution / Insurer</option>
+            <option>NGO / Nonprofit</option>
+            <option>Corporate Sustainability / ESG</option>
+            <option>Student</option>
+            <option>Journalist / Media</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>How will you use this report? <span style="color:var(--ca-muted);font-weight:400">(optional)</span></label>
+          <textarea id="gw-usage" name="usage" placeholder="e.g. Policy brief, academic research, project planning, grant application…"></textarea>
+        </div>
+        <div id="gw-error" style="display:none;color:#c0392b;font-size:12.5px;padding:10px 14px;background:#fdf0ef;border-radius:8px;margin-bottom:14px;border:1px solid #f5c6c1">
+          ⚠️ Something went wrong. Please try again or email us directly at <a href="mailto:contact@climagroanalytics.com" style="color:#c0392b">contact@climagroanalytics.com</a>
+        </div>
+        <div class="gw-consent">
+          <input type="checkbox" required id="gw-consent-chk">
+          <label for="gw-consent-chk">I agree to ClimAgro Analytics storing my details and being contacted with related climate research updates. We never sell your data and you may unsubscribe at any time.</label>
+        </div>
+        <button type="submit" class="gw-submit" id="gw-submit-btn">
+          ⬇️ &nbsp;Get Free Access &amp; Download
+        </button>
+        <p class="gw-note">🔒 Secure · Free · Instant access</p>
+      </form>
+    </div>
+  </div>
+
+
+
+</div><!-- /view-gateway -->
 
 
 <!-- ══════════════════════════════════════════
@@ -1162,7 +1265,6 @@ main { padding-top: 0 !important; margin-top: 0 !important; }
   </div>
 </div><!-- /view-success -->
 
-</div>
 
 <script>
 /* ═══════ STATE ═══════ */
@@ -1191,97 +1293,80 @@ const REPORTS = {
     gwPillText: '🌧️ Report 02 · Part II of II · 18 pages · Free',
     gwSubClass: 'gw-sub-mon',
     dlClass: 'dl-mon',
-    dlFile: '<?php echo base_url("assest/uploadfile/monsoon_report_2026.pdf"); ?>',
+    dlFile: 'report-01-monsoon-hydrology-jhansi.pdf',
     ringClass: 'ring-mon',
     successMsg: 'Your access to <strong>Report 02 — Monsoon Hydrology & Rainfall Variability</strong> is confirmed. Your PDF download is ready.',
     alsoLabel: '🌡️ View Report 01 — Hydroclimatic Stress →',
     alsoTarget: 'heat',
   },
   heat: {
-    name: 'Report 02 · Hydroclimatic',
+    name: 'Report 01 · Summer Heat & Water Stress',
     badge: 'rp-badge-heat',
-    series: 'Part I of II · Heat Stress & Humidity',
-    title: 'Hydroclimatic Stress, Heat Trends & Humidity Dynamics in Jhansi District',
-    abstract: 'This report presents a 73-year analysis (1951–2024) of summer mean temperature trends across Jhansi district blocks using IMD observational data cross-validated with IPCC AR6 projections. The Jhansi block records the highest warming trajectory at +1.9°C, significantly above the UP state average. The report examines the compounding interaction of rising heat stress with declining pre-monsoon rainfall, accelerated groundwater depletion, and vegetation degradation, assessing their combined impact on agricultural labour productivity and public health outcomes in Bundelkhand.',
+    series: 'Part I of II · Summer Heat & Water Availability',
+    title: 'Warmer & Drier Summers Stressing Jhansi\'s Water Availability',
+    abstract: 'Historical IMD data reveals a compounding heat-drought trajectory across eight vulnerable blocks in Jhansi, a critical Bundelkhand water-stressed zone. Jhansi is warming at 4.5 times the UP state mean — while the state trend is slightly cooling. Pre-monsoon rainfall is rising at twice the UP state rate (Jhansi: 0.009889; UP: 0.004508), though still insufficient. The average number of extremely hot days (>40°C) in summer has increased by 6% in the last decade (2015–2024) since 1951 temperature records began — rising from a 74-year average of 37 days to 40 days in the last decade.',
     tabs: [
       {label: '🗺️ Block Heat Trend Map', mapId: 'rp-map-heat-0', activeClass:'active-heat'},
       {label: '📈 Temperature Trend', mapId: 'rp-map-heat-1', activeClass:'active-heat'},
     ],
     findings: [
-      {val:'+1.9°C', label:'Jhansi block warming since 1951 — highest in district, IPCC AR6', badge:'Max Warming', bc:'rgba(196,95,0,0.1)', bcolor:'var(--heat-amber)', vc:'var(--heat-amber)'},
-      {val:'+1.3°C', label:'Mauranipur lowest warming — still significantly above historical baseline', badge:'Moderate', bc:'rgba(196,95,0,0.07)', bcolor:'var(--heat-amber)', vc:'var(--heat-amber)'},
-      {val:'−34%', label:'Annual groundwater deficit vs monsoon recharge — structural imbalance', badge:'Over-Exploited', bc:'rgba(196,0,0,0.08)', bcolor:'#c40000', vc:'#c40000'},
-      {val:'85%', label:'Flood irrigation dominance — 35–45% efficiency, amplifying heat stress', badge:'High Waste', bc:'rgba(21,101,160,0.08)', bcolor:'var(--mon-blue)', vc:'var(--mon-blue)'},
+      {val:'4.5×', label:'Jhansi\'s summer warming rate vs UP state mean — state trend is slightly cooling', badge:'Critical Divergence', bc:'rgba(196,95,0,0.1)', bcolor:'var(--heat-amber)', vc:'var(--heat-amber)'},
+      {val:'+6%', label:'Rise in extremely hot days (>40°C) in last decade — 37 avg over 74 yrs vs 40 in 2015–2024', badge:'Accelerating', bc:'rgba(196,95,0,0.07)', bcolor:'var(--heat-amber)', vc:'var(--heat-amber)'},
+      {val:'4/8', label:'Blocks with highest risk to water security across Jhansi district', badge:'High Risk', bc:'rgba(196,0,0,0.08)', bcolor:'#c40000', vc:'#c40000'},
+      {val:'8/8', label:'All blocks facing growing intensity of severe heatwaves — no block is spared', badge:'District-wide', bc:'rgba(21,101,160,0.08)', bcolor:'var(--mon-blue)', vc:'var(--mon-blue)'},
     ],
     gwIcon: '🌡️',
-    gwTitle: 'Unlock Report 01 — Hydroclimatic Stress',
+    gwTitle: 'Unlock Report 01 — Summer Heat & Water Stress',
     gwPillClass: 'pill-heat',
     gwPillText: '🌡️ Report 01 · Part I of II · 18 pages · Free',
     gwSubClass: 'gw-sub-heat',
     dlClass: 'dl-heat',
-    dlFile: 'report-02-hydroclimatic-stress-jhansi.pdf',
+    dlFile: 'report-01-summer-heat-water-stress-jhansi.pdf',
     ringClass: 'ring-heat',
-    successMsg: 'Your access to <strong>Report 01 — Hydroclimatic Stress & Heat Trend Analysis</strong> is confirmed. Your PDF download is ready.',
+    successMsg: 'Your access to <strong>Report 01 — Warmer & Drier Summers Stressing Jhansi\'s Water Availability</strong> is confirmed. Your PDF download is ready.',
     alsoLabel: '🌧️ View Report 02 — Monsoon Hydrology →',
     alsoTarget: 'monsoon',
   }
 };
 
-// Duplicate removed
-
-// Handle browser back/forward buttons
-window.addEventListener('popstate', function(e) {
-  if (e.state && e.state.view) {
-    if (e.state.view === 'preview' && e.state.report) {
-      openReport(e.state.report, false);
-    } else if (e.state.view === 'landing') {
-      goToLanding(false);
-    } else {
-      goTo(e.state.view, false);
-    }
-  } else {
-    // Initial page load state is null, so going back to it means landing view
-    goToLanding(false);
-  }
-});
-
 /* ═══════ NAVIGATION ═══════ */
-function goTo(view, push = true) {
+function goTo(view) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.getElementById('view-' + view).classList.add('active');
   window.scrollTo({top: 0, behavior: 'smooth'});
-
-  if (push) {
-    history.pushState({ view: view }, '', '');
+  const back = document.getElementById('navBack');
+  if (back) {
+    if (view === 'landing') {
+      back.style.display = 'none';
+    } else {
+      back.style.display = 'inline-flex';
+    }
   }
-  
-  // Guarantee visibility of elements when switching views
-  setTimeout(() => {
-    document.querySelectorAll('#view-' + view + ' .sr').forEach(el => el.classList.add('vis'));
-  }, 100);
 }
 
-function goToLanding(push = true) {
-  goTo('landing', push);
+function goToLanding() {
+  goTo('landing');
+  setTimeout(() => observeReveals(), 100);
 }
 
-function openReport(type, push = true) {
+function openReport(type) {
+  if (type === 'heat') {
+    window.location.href = 'ad_jhshi_report.php';
+    return;
+  }
   currentReport = type;
   const R = REPORTS[type];
 
   // Show/hide preview hero for monsoon report only
   const heroWrap = document.getElementById('preview-hero-wrap');
   const ctaWrap = document.getElementById('preview-cta-wrap');
-  const backWrap = document.getElementById('back-btn-wrap');
   if (type === 'monsoon') {
     heroWrap.style.display = 'block';
     if (ctaWrap) ctaWrap.style.display = 'block';
-    if (backWrap) backWrap.style.display = 'none';
     initPreviewHexCanvas();
   } else {
     heroWrap.style.display = 'none';
     if (ctaWrap) ctaWrap.style.display = 'none';
-    if (backWrap) backWrap.style.display = 'block';
   }
 
   // Breadcrumb (element may have been removed)
@@ -1335,39 +1420,30 @@ function openReport(type, push = true) {
     </div>
   `).join('');
 
-  goTo('preview', false);
-  if (push) {
-    history.pushState({ view: 'preview', report: type }, '', '');
-  }
+  goTo('preview');
 }
 
 function openGateway() {
   const R = REPORTS[currentReport];
+  document.getElementById('gw-bc-report').textContent = R.name;
   document.getElementById('gw-icon').textContent = R.gwIcon;
   document.getElementById('gw-title').textContent = R.gwTitle;
-  
-  // Custom styling initialized on modal open
-  const modal = document.getElementById('gatewayModal');
-  modal.classList.add('active');
-  document.body.style.overflow = 'hidden';
-  
-  // Custom selects in modal
-  initCustomSelects();
+  const pill = document.getElementById('gw-pill');
+  pill.innerHTML = `<div class="gw-report-pill ${R.gwPillClass}">${R.gwPillText}</div>`;
+  const subBtn = document.getElementById('gw-submit-btn');
+  subBtn.className = 'gw-submit ' + R.gwSubClass;
+  goTo('gateway');
 }
 
-function closeGateway() {
-  const modal = document.getElementById('gatewayModal');
-  modal.classList.remove('active');
-  document.body.style.overflow = '';
-}
-
-function initCustomSelects() {
-    // Basic init if custom select logic is loaded from footer
-    // The footer handles existing elements but we injected new ones or might need re-init
-    // Wait, the footer logic runs on DOMContentLoaded for all .custom-select-animated, so it should have caught this already if it was in the DOM!
-}
-
-/* ═══════ EMAILJS INIT ═══════ */
+/* ═══════ EMAILJS INIT ═══════
+   Setup steps for ClimAgro team:
+   1. Go to https://www.emailjs.com and sign up (free tier: 200 emails/month)
+   2. Add an Email Service (Gmail works — connect contact@climagroanalytics.com)
+   3. Create an Email Template with these variables:
+      {{from_name}}, {{from_email}}, {{organisation}}, {{phone}}, {{role}}, {{usage}}, {{report_name}}
+      Send to: contact@climagroanalytics.com
+   4. Replace the three placeholder strings below with your real IDs from EmailJS dashboard
+*/
 const EMAILJS_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY';   // EmailJS → Account → Public Key
 const EMAILJS_SERVICE_ID  = 'YOUR_SERVICE_ID';   // EmailJS → Email Services → Service ID
 const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';  // EmailJS → Email Templates → Template ID
@@ -1409,35 +1485,10 @@ async function handleGatewaySubmit(e) {
   if (!isConfigured || typeof emailjs === 'undefined') {
     // EmailJS not yet configured — still show success, log to console for dev
     console.log('📧 Form submission (EmailJS not configured yet):', params);
-    
-    // As per user requirement: "connt the gateway like ealier", we'll post to CodeIgniter backend
-    const formData = new FormData();
-    formData.append('name', params.from_name);
-    formData.append('email', params.from_email);
-    formData.append('phone', params.phone);
-    formData.append('title', params.role);
-    formData.append('interested', 'Report Download: ' + params.report_name + '\nUsage: ' + params.usage);
-    formData.append('comment', 'Requested access to ' + params.report_name);
-    formData.append('url', window.location.href);
-    formData.append('form_type', 'Report Download Form');
-    
-    try {
-      const response = await fetch("<?php echo base_url('welcome/submit'); ?>", {
-        method: 'POST',
-        body: formData
-      });
-      const data = await response.json();
-      if(data.success) {
-        showSuccess();
-      } else {
-        throw new Error(data.message || 'Server error');
-      }
-    } catch (err) {
-      console.error('Submit error:', err);
-      // Fallback show success for demo if local testing
+    setTimeout(() => {
+      btn.disabled = false;
       showSuccess();
-    }
-    
+    }, 800);
     return;
   }
 
@@ -1462,8 +1513,6 @@ function showSuccess() {
   dlBtn.className = 'dl-btn ' + R.dlClass;
   dlBtn.href = R.dlFile;
   document.getElementById('also-btn').textContent = R.alsoLabel;
-  // (4) Switch to success view and close modal
-  closeGateway();
   goTo('success');
 }
 
@@ -1505,6 +1554,13 @@ function observeReveals() {
   document.querySelectorAll('.sr:not(.vis)').forEach(el => obs.observe(el));
 }
 observeReveals();
+
+/* ═══════ INIT ═══════ */
+if (document.getElementById('navBack')) {
+  document.getElementById('navBack').style.display = 'none';
+}
 </script>
 
+</main>
+</div>
 <?php include("footer.php"); ?>
