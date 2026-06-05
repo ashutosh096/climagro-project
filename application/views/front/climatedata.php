@@ -1386,7 +1386,8 @@ include("navbar1.php");
       filesDropdown.disabled = true;
       
       try {
-        const url = `index.php/welcome/list_files?variable=${this.currentState.variable}&type=${this.currentState.type}&location=${this.currentState.location}`;
+        const pathPrefix = window.location.pathname.startsWith('/Climagro/') ? '/Climagro' : '';
+        const url = window.location.origin + pathPrefix + `/Welcome/list_files?variable=${this.currentState.variable}&type=${this.currentState.type}&location=${this.currentState.location}`;
         const response = await fetch(url);
         
         if (!response.ok) {
@@ -1524,10 +1525,14 @@ include("navbar1.php");
         event.preventDefault();
         const email = this.modalForm.email.value.trim();
 
-        if (!email) return;
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!email || !emailRegex.test(email)) {
+            alert('Please enter a valid email address.');
+            return;
+        }
 
-        // Use your dynamically generated URL
-        const subscribeUrl = '<?= base_url("Welcome/subscribe") ?>';
+        const pathPrefix = window.location.pathname.startsWith('/Climagro/') ? '/Climagro' : '';
+        const subscribeUrl = window.location.origin + pathPrefix + '/Welcome/subscribe';
 
         const originalText = this.modalSubmitBtn.textContent;
         this.modalSubmitBtn.textContent = 'Saving...';

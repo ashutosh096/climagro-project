@@ -8,8 +8,31 @@ class Contact_model extends CI_Model {
     }
 
     public function insert_contact($data) {
-        // Insert contact data into your database
-        // $this->db->insert('tbl_enquiry', $data);
+        // Dynamically add missing columns if they do not exist in the database table
+        if (!$this->db->field_exists('linkedin_id', 'contact_form')) {
+            $this->load->dbforge();
+            $this->dbforge->add_column('contact_form', [
+                'linkedin_id' => [
+                    'type' => 'VARCHAR',
+                    'constraint' => '255',
+                    'null' => TRUE,
+                    'default' => NULL
+                ]
+            ]);
+        }
+
+        if (!$this->db->field_exists('interested', 'contact_form')) {
+            $this->load->dbforge();
+            $this->dbforge->add_column('contact_form', [
+                'interested' => [
+                    'type' => 'VARCHAR',
+                    'constraint' => '255',
+                    'null' => TRUE,
+                    'default' => NULL
+                ]
+            ]);
+        }
+
         $this->db->insert('contact_form', $data);
         return $this->db->affected_rows() > 0;
     }

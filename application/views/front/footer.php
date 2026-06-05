@@ -1318,7 +1318,7 @@ function hideClimToast() {
         <ul class="bottom-resources-menu" id="bottomResourcesMenu">
             <li><a href="<?php echo base_url('blogs'); ?>">Blogs</a></li>
             <li><a href="<?php echo base_url('news'); ?>">Insights</a></li>
-            <li><a href="<?php echo base_url('articles'); ?>">Reports</a></li>
+            <li><a href="<?php echo base_url('report'); ?>">Reports</a></li>
         </ul>
     </div>
 

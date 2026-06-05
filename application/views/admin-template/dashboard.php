@@ -309,6 +309,17 @@
                 </div>
             </a>
             
+            <a href="<?php echo base_url('administrator/managereportdownloads'); ?>" class="action-card">
+                <div class="card-icon blue">
+                    <i class="fas fa-download"></i>
+                </div>
+                <h3 class="card-title">Report Downloads</h3>
+                <p class="card-desc">View and manage report download gateway submissions. Export data to Excel.</p>
+                <div class="card-arrow">
+                    View Downloads <i class="fas fa-arrow-right"></i>
+                </div>
+            </a>
+            
             <a href="<?php echo base_url('administrator/manageclimintellio'); ?>" class="action-card">
                 <div class="card-icon green">
                     <i class="fas fa-layer-group"></i>

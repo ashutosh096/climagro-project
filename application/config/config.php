@@ -26,9 +26,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 
 $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://";
-$config['base_url'] = 'http://localhost/Climagro/';
-// $config['base_url'] = 'https://www.climagroanalytics.com/';
-// $config['base_url'] = 'http://localhost/climagroanalytics/';
+if (isset($_SERVER['HTTP_HOST'])) {
+    $config['base_url'] = $protocol . $_SERVER['HTTP_HOST'] . str_replace(basename($_SERVER['SCRIPT_NAME']), "", $_SERVER['SCRIPT_NAME']);
+} else {
+    $config['base_url'] = 'https://www.climagroanalytics.com/';
+}
 
 /*
 |--------------------------------------------------------------------------

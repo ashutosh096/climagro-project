@@ -73,6 +73,7 @@
         <a href="<?php echo base_url('administrator/dashboard'); ?>" class="logo"><i class="fas fa-leaf"></i> Climagro</a>
         <div class="nav-links">
             <a href="<?php echo base_url('administrator/dashboard'); ?>"><i class="fas fa-home"></i> Dashboard</a>
+            <a href="<?php echo base_url('administrator/managereportdownloads'); ?>"><i class="fas fa-download"></i> Report Downloads</a>
             <a href="<?php echo base_url('administrator/managesubscribers'); ?>"><i class="fas fa-users"></i> Subscribers</a>
             <a href="<?php echo base_url('administrator/adminlogout'); ?>"><i class="fas fa-sign-out-alt"></i> Logout</a>
         </div>

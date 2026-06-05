@@ -2380,7 +2380,7 @@ html {
                 </article>
 
                 <!-- Articles Card -->
-                <article class="card" onclick="window.location.href='<?php echo base_url().'articles' ?>'">
+                <article class="card" onclick="window.location.href='<?php echo base_url().'report' ?>'">
                     <div class="card-category">ARTICLES</div>
                     <div class="card-image">
                         <img src="assest/img/bg/article.png" alt="Articles content">

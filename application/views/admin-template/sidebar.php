@@ -12,6 +12,9 @@
                 <?php echo anchor("administrator/managecontacts", "<i class='fa fa-envelope fa-fw'></i> Contact Submissions"); ?>
             </li>
             <li>
+                <?php echo anchor("administrator/managereportdownloads", "<i class='fa fa-download fa-fw'></i> Report Downloads"); ?>
+            </li>
+            <li>
                 <?php echo anchor("administrator/climintellio_requests", "<i class='fa fa-tasks fa-fw'></i> Climintellio Requests"); ?>
             </li>
             <?php /* TEMPORARILY COMMENTED OUT - OTHER MENU ITEMS

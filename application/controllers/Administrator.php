@@ -1446,8 +1446,7 @@ class Administrator extends CI_Controller
 			redirect('administrator/manageseo');
 		}
 		
-		$this->load->model('Contact_model');
-		$data['contacts'] = $this->Contact_model->get_all_contacts();
+		$data['contacts'] = $this->db->where('subject !=', 'Report Gateway Download')->order_by('created_at', 'DESC')->get('contact_form')->result();
 		$data['total_count'] = count($data['contacts']);
 		$data['title'] = "Manage Contact Form Submissions";
 		$this->load->view("admin-template/manage-contacts", $data);
@@ -1455,8 +1454,7 @@ class Administrator extends CI_Controller
 
 	public function exportcontacts()
 	{
-		$this->load->model('Contact_model');
-		$contacts = $this->db->order_by('created_at', 'DESC')->get('contact_form')->result_array();
+		$contacts = $this->db->where('subject !=', 'Report Gateway Download')->order_by('created_at', 'DESC')->get('contact_form')->result_array();
 		
 		header('Content-Type: application/vnd.ms-excel');
 		header('Content-Disposition: attachment; filename="contact_submissions_' . date('Y-m-d_H-i-s') . '.xls"');
@@ -1494,6 +1492,65 @@ class Administrator extends CI_Controller
 			}
 		} else {
 			echo '<tr><td colspan="8" style="text-align: center; padding: 20px;">No contact submissions found</td></tr>';
+		}
+		
+		echo '</tbody>';
+		echo '</table>';
+		exit;
+	}
+
+	public function managereportdownloads()
+	{
+		if ($this->usertype == 'seo') {
+			redirect('administrator/manageseo');
+		}
+		
+		$data['contacts'] = $this->db->where('subject', 'Report Gateway Download')->order_by('created_at', 'DESC')->get('contact_form')->result();
+		$data['total_count'] = count($data['contacts']);
+		$data['title'] = "Manage Report Downloads";
+		$this->load->view("admin-template/manage-reportdownloads", $data);
+	}
+
+	public function exportreportdownloads()
+	{
+		$contacts = $this->db->where('subject', 'Report Gateway Download')->order_by('created_at', 'DESC')->get('contact_form')->result_array();
+		
+		header('Content-Type: application/vnd.ms-excel');
+		header('Content-Disposition: attachment; filename="report_downloads_' . date('Y-m-d_H-i-s') . '.xls"');
+		header('Pragma: no-cache');
+		header('Expires: 0');
+		
+		echo '<table border="1">';
+		echo '<thead>';
+		echo '<tr>';
+		echo '<th style="background-color: #025B5F; color: white; font-weight: bold; padding: 10px;">Sr. No.</th>';
+		echo '<th style="background-color: #025B5F; color: white; font-weight: bold; padding: 10px;">Name</th>';
+		echo '<th style="background-color: #025B5F; color: white; font-weight: bold; padding: 10px;">Email</th>';
+		echo '<th style="background-color: #025B5F; color: white; font-weight: bold; padding: 10px;">Phone</th>';
+		echo '<th style="background-color: #025B5F; color: white; font-weight: bold; padding: 10px;">Title</th>';
+		echo '<th style="background-color: #025B5F; color: white; font-weight: bold; padding: 10px;">Interest</th>';
+		echo '<th style="background-color: #025B5F; color: white; font-weight: bold; padding: 10px;">Message</th>';
+		echo '<th style="background-color: #025B5F; color: white; font-weight: bold; padding: 10px;">Submitted On</th>';
+		echo '</tr>';
+		echo '</thead>';
+		echo '<tbody>';
+		
+		if (!empty($contacts)) {
+			$sr = 1;
+			foreach ($contacts as $contact) {
+				echo '<tr>';
+				echo '<td style="padding: 8px;">' . $sr++ . '</td>';
+				echo '<td style="padding: 8px;">' . htmlspecialchars($contact['name'] ?? '') . '</td>';
+				echo '<td style="padding: 8px;">' . htmlspecialchars($contact['email'] ?? '') . '</td>';
+				echo '<td style="padding: 8px;">' . htmlspecialchars($contact['phone'] ?? '') . '</td>';
+				echo '<td style="padding: 8px;">' . htmlspecialchars($contact['title'] ?? '') . '</td>';
+				echo '<td style="padding: 8px;">' . htmlspecialchars($contact['interested'] ?? '') . '</td>';
+				echo '<td style="padding: 8px;">' . htmlspecialchars($contact['message'] ?? '') . '</td>';
+				echo '<td style="padding: 8px;">' . htmlspecialchars($contact['created'] ?? '') . '</td>';
+				echo '</tr>';
+			}
+		} else {
+			echo '<tr><td colspan="8" style="text-align: center; padding: 20px;">No report downloads found</td></tr>';
 		}
 		
 		echo '</tbody>';

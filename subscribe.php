@@ -14,10 +14,28 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     exit;
 }
 
-// Database credentials (same as in application/config/database.php)
-$conn = new mysqli('localhost', 'root', '', 'u404385609_climagro');
+// Database credentials (dynamically loaded from CodeIgniter config)
+$db_host = 'localhost';
+$db_user = 'root';
+$db_pass = '';
+$db_name = 'u404385609_climagro';
 
-if ($conn->connect_error) {
+$db_config_file = 'application/config/database.php';
+if (file_exists($db_config_file)) {
+    define('BASEPATH', true);
+    define('ENVIRONMENT', 'production');
+    include($db_config_file);
+    if (isset($db['default'])) {
+        $db_host = $db['default']['hostname'];
+        $db_user = $db['default']['username'];
+        $db_pass = $db['default']['password'];
+        $db_name = $db['default']['database'];
+    }
+}
+
+$conn = @new mysqli($db_host, $db_user, $db_pass, $db_name);
+
+if (!$conn || $conn->connect_error) {
     http_response_code(500);
     echo json_encode(['success' => false, 'message' => 'Database connection failed']);
     exit;

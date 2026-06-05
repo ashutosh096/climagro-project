@@ -13,8 +13,6 @@ include("navbar2.php");
         /* Global Styles */
         html, body {
             overflow-x: hidden;
-            scrollbar-width: none; /* Firefox */
-            -ms-overflow-style: none;  /* IE 10+ */
         }
         
         /* Disable hover effect for primary buttons */
@@ -28,10 +26,6 @@ include("navbar2.php");
             border-color: #025b5f !important;
             color: #fff !important;
             opacity: 1 !important;
-        }
-
-        html::-webkit-scrollbar, body::-webkit-scrollbar {
-            display: none;
         }
 
         /* Offering Section Styles */

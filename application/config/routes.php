@@ -74,6 +74,7 @@ $route['technologies'] = 'Welcome/technologies/';
 $route['portfolio'] = 'Welcome/portfolio/';
 $route['news'] = 'Welcome/news/';
 $route['articles'] = 'Welcome/article/';
+$route['report'] = 'Welcome/article/';
 $route['mail'] = 'contact/submit';
 
 $route['news/(:any)'] = 'news/pages/$1';             // News detail
@@ -90,6 +91,10 @@ $route['administrator/exportsubscribers'] = 'Administrator/exportsubscribers';
 // Admin contact form management routes
 $route['administrator/managecontacts'] = 'Administrator/managecontacts';
 $route['administrator/exportcontacts'] = 'Administrator/exportcontacts';
+
+// Admin report downloads management routes
+$route['administrator/managereportdownloads'] = 'Administrator/managereportdownloads';
+$route['administrator/exportreportdownloads'] = 'Administrator/exportreportdownloads';
 
 // Admin Climintellio management routes
 $route['administrator/climintellio_requests'] = 'Administrator/manageclimintellio';

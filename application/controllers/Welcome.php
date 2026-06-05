@@ -154,7 +154,7 @@ class Welcome extends CI_Controller
 	{
 		$this->data['coursecatlist'] = $this->p->productlist(0, "id", "tbl_course_category", 'services_short');
 		$this->data['servicelist'] = $this->p->productlist(0, "id", "tbl_services");
-		$this->load->view('front/articles', $this->data);
+		$this->load->view('front/report', $this->data);
 	}
 	public function franchise(): void
 	{
@@ -308,22 +308,101 @@ class Welcome extends CI_Controller
 				return;
 			}
 
-			$messageBody = $this->input->post('comment', TRUE);
-			$pageUrl = $this->input->post('url', TRUE);
-			$formType = $this->input->post('form_type', TRUE);
-			if (empty($formType)) $formType = "Contact Request";
+			try {
+				$messageBody = $this->input->post('comment', TRUE);
+				$pageUrl = $this->input->post('url', TRUE);
+				$formType = $this->input->post('form_type', TRUE);
+				if (empty($formType)) $formType = "Contact Request";
 
+				if(!empty($pageUrl)) {
+					$messageBody .= "\n\n--- \nSubmitted from Page URL: " . $pageUrl;
+				}
+
+				$db_data = [
+					'name' => $this->input->post('name', TRUE),
+					'email' => $this->input->post('email', TRUE),
+					'phone' => $this->input->post('phone', TRUE),
+					'title' => $this->input->post('title', TRUE),
+					'subject' => $this->input->post('title', TRUE),
+					'interested' => $this->input->post('interested', TRUE),
+					'linkedin_id' => $this->input->post('linkedin_id', TRUE),
+					'message' => $messageBody
+				];
+
+				// Save to DB
+				$this->load->model('Contact_model');
+				$success = $this->Contact_model->insert_contact($db_data);
+
+				if ($success) {
+					// Assemble email data separately and send
+					$email_data = $db_data;
+					$email_data['form_type'] = $formType;
+					$email_data['linkedin_id'] = $this->input->post('linkedin_id', TRUE);
+					
+					try {
+						$this->send_gmail($email_data);
+					} catch (\Throwable $e) {
+						log_message('error', 'Gmail send error in submit(): ' . $e->getMessage());
+					}
+
+					echo json_encode([
+						'success' => true,
+						'message' => 'Thank you! Your message has been sent successfully.'
+					]);
+				} else {
+					echo json_encode([
+						'success' => false,
+						'message' => 'Failed to save your message. Please try again.'
+					]);
+				}
+			} catch (\Throwable $e) {
+				echo json_encode([
+					'success' => false,
+					'message' => 'PHP Exception: ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine()
+				]);
+			}
+		}
+
+	public function submit_report_gateway(): void
+	{
+		$this->load->library('form_validation');
+		$this->output->set_content_type('application/json');
+
+		// Validation rules
+		$this->form_validation->set_rules('name', 'Name', 'required|trim');
+		$this->form_validation->set_rules('email', 'Email', 'required|valid_email|trim');
+		$this->form_validation->set_rules('title', 'I am a', 'required|trim');
+
+		if ($this->form_validation->run() == FALSE) {
+			echo json_encode([
+				'success' => false,
+				'message' => strip_tags(validation_errors())
+			]);
+			return;
+		}
+
+		try {
+			$name = $this->input->post('name', TRUE);
+			$email = $this->input->post('email', TRUE);
+			$phone = $this->input->post('phone', TRUE) ?? '';
+			$title = $this->input->post('title', TRUE);
+			$linkedin_id = $this->input->post('linkedin_id', TRUE) ?? '';
+			$message = $this->input->post('comment', TRUE) ?? '';
+			$pageUrl = $this->input->post('url', TRUE) ?? '';
+
+			$messageBody = $message;
 			if(!empty($pageUrl)) {
 				$messageBody .= "\n\n--- \nSubmitted from Page URL: " . $pageUrl;
 			}
 
 			$db_data = [
-				'name' => $this->input->post('name', TRUE),
-				'email' => $this->input->post('email', TRUE),
-				'phone' => $this->input->post('phone', TRUE),
-				'title' => $this->input->post('title', TRUE),
-				'subject' => $this->input->post('title', TRUE),
-				'interested' => $this->input->post('interested', TRUE),
+				'name' => $name,
+				'email' => $email,
+				'phone' => $phone,
+				'title' => $title,
+				'subject' => 'Report Gateway Download',
+				'interested' => 'Jhansi Monsoon Report 2026',
+				'linkedin_id' => $linkedin_id,
 				'message' => $messageBody
 			];
 
@@ -332,40 +411,33 @@ class Welcome extends CI_Controller
 			$success = $this->Contact_model->insert_contact($db_data);
 
 			if ($success) {
-				$response_json = json_encode([
-					'success' => true,
-					'message' => 'Thank you! Your message has been sent successfully.'
-				]);
+				// Assemble email data separately and send
+				$email_data = $db_data;
+				$email_data['form_type'] = 'Report Access Request';
 				
-				// Close connection early to prevent frontend hanging (Instant Response)
-				ignore_user_abort(true);
-				ob_start();
-				echo $response_json;
-				$size = ob_get_length();
-				header("Connection: close");
-				header("Content-Encoding: none");
-				header("Content-Length: {$size}");
-				header("Content-Type: application/json");
-				ob_end_flush();
-				ob_flush();
-				flush();
-				if (function_exists('fastcgi_finish_request')) {
-					fastcgi_finish_request();
+				try {
+					$this->send_gmail($email_data);
+				} catch (\Throwable $e) {
+					log_message('error', 'Gmail send error in submit_report_gateway(): ' . $e->getMessage());
 				}
 
-				// Assemble email data separately and send in background
-				$email_data = $db_data;
-				$email_data['form_type'] = $formType;
-				$email_data['linkedin_id'] = $this->input->post('linkedin_id', TRUE);
-				
-				$this->send_gmail($email_data);
+				echo json_encode([
+					'success' => true,
+					'message' => 'Thank you! Your details have been submitted.'
+				]);
 			} else {
 				echo json_encode([
 					'success' => false,
 					'message' => 'Failed to save your message. Please try again.'
 				]);
 			}
+		} catch (\Throwable $e) {
+			echo json_encode([
+				'success' => false,
+				'message' => 'PHP Exception: ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine()
+			]);
 		}
+	}
 
 	private function send_gmail($data)
 	{
@@ -379,7 +451,8 @@ class Welcome extends CI_Controller
 			'charset'   => 'utf-8',
 			'wordwrap'  => TRUE,
 			'newline'   => "\r\n",
-			'crlf'      => "\r\n"
+			'crlf'      => "\r\n",
+			'smtp_timeout' => 5
 		];
 		
 		$this->load->library('email', $config);

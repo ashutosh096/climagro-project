@@ -56,3 +56,9 @@ asset/cache/
 
 # Optional: ignore any custom debug scripts
 debug.php
+
+# Scratch files and other temporary artifacts
+scratch/
+*.lnk
+test_img.jpg
+

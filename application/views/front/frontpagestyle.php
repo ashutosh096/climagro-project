@@ -30,8 +30,6 @@
         width: 100%;
         margin: 0;
         padding: 0;
-        scrollbar-width: none; /* Firefox */
-        -ms-overflow-style: none;  /* IE 10+ */
     }
 
     .container {

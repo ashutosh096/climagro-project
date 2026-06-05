@@ -1,16 +1,59 @@
 <?php foreach ($companydata as $getCompany); ?>
+<?php
+$segment = $this->uri->segment(1);
+if ($segment == 'about-us') {
+    $page_title = "About ClimAgro Analytics";
+} elseif ($segment == 'solutions') {
+    $page_title = "Offerings | ClimAgro Analytics";
+} elseif ($segment == 'contact-us') {
+    $page_title = "Contact Us | ClimAgro Analytics";
+} elseif ($segment == 'blogs') {
+    $page_title = "Blogs | ClimAgro Analytics";
+} elseif ($segment == 'news') {
+    $page_title = "Insights | ClimAgro Analytics";
+} elseif ($segment == '' || $segment == 'home') {
+    $page_title = "ClimAgro Analytics | Climate Risk Solutions";
+} else {
+    $decoded_title = base64_decode(@$allmeta->title);
+    $clean_title = str_replace(['GMAC- No#1', 'Gmac Animation', 'GMAC'], 'ClimAgro', $decoded_title);
+    $clean_title = preg_replace('/Digital Marketing.*/i', '', $clean_title);
+    $final_title = trim(rtrim($clean_title, ' ,-|'));
+    $page_title = $final_title ?: "ClimAgro Analytics";
+}
+
+$raw_desc = base64_decode(@$allmeta->description);
+if (empty($raw_desc) || strpos($raw_desc, 'Global Power') !== false || strpos($raw_desc, 'Corporate Training') !== false) {
+    $page_desc = "ClimAgro Analytics provides spatial climate risk data analysis, block-level trend tables, and policy-ready recommendations.";
+} else {
+    $page_desc = $raw_desc;
+}
+?>
 <!doctype html>
 <html class="no-js" lang="en">
 
 <head>
-    <title><?php echo base64_decode($allmeta->title); ?></title>
+    <title><?php echo $page_title; ?></title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="author" content="Global Power Data">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
-    <meta name="title" content="<?php echo @$courseDetail->page_title . @$courseDetail->services_title; ?>" />
-    <meta name="description" content="<?php echo base64_decode($allmeta->description); ?>" />
-    <meta name="keywords" content="<?php echo base64_decode($allmeta->content); ?>" />
+    <meta name="author" content="ClimAgro Analytics">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, viewport-fit=cover" />
+    <meta name="title" content="<?php echo !empty($courseDetail->page_title) ? $courseDetail->page_title : $page_title; ?>" />
+    <meta name="description" content="<?php echo $page_desc; ?>" />
+    <meta name="keywords" content="<?php echo base64_decode(@$allmeta->content); ?>" />
+    <?php
+    $share_img = base_url('assest/img/blank.gif');
+    $twitter_card = 'summary';
+    if ($segment == 'jhashi_report' || (isset($allmeta->title) && strpos(base64_decode($allmeta->title), 'Jhansi') !== false)) {
+        $share_img = base_url('assest/img/jhansi-cover.jpg');
+        $twitter_card = 'summary_large_image';
+    }
+    ?>
+    <meta property="og:image" content="<?php echo $share_img; ?>" />
+    <meta name="twitter:card" content="<?php echo $twitter_card; ?>" />
+    <meta name="twitter:image" content="<?php echo $share_img; ?>" />
+
+
+
     <!-- google fonts preconnect -->
 
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
@@ -36,15 +79,81 @@
     echo link_tag("assest/css/magnific-popup.css");
     echo link_tag("assest/css/main.css");
     ?>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
 
     <style>
+        html {
+            scrollbar-gutter: stable;
+        }
+        .brand-logo {
+            height: 64px !important;
+            width: auto !important;
+            display: inline-block !important;
+            vertical-align: middle;
+        }
         .border-radius {
             border-radius: 25px;
         }
+
+        /* Global fix to disable double-text hover glitch on template buttons */
+        .them-btn .btn_label::before,
+        .them-btn .btn_label::after {
+            content: none !important;
+            display: none !important;
+        }
+        /* Stop the original text from flying off the button when hovered */
+        .them-btn:hover .btn_label, 
+        .them-btn .btn_label {
+            transform: none !important;
+        }
+        .them-btn {
+            text-decoration: none !important;
+        }
+
+        /* Make all social media icons brand yellow circles with teal icons globally */
+        .footer-social a, .widget__social li a, .widget__social a {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 36px !important;
+            height: 36px !important;
+            background-color: #c8ff08 !important;
+            border-radius: 50% !important;
+            text-decoration: none !important;
+            transition: all 0.3s ease !important;
+            margin: 0 3px !important;
+            flex-shrink: 0 !important;
+        }
+        .widget__social li {
+            list-style: none !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        .widget__social {
+            padding-left: 0 !important;
+            display: flex !important;
+            flex-wrap: nowrap !important;
+            gap: 6px !important;
+            overflow: visible;
+        }
+        .footer-social a i, .widget__social li a i, .widget__social a i {
+            color: #025b5f !important;
+            font-size: 16px !important;
+            transition: all 0.3s ease !important;
+        }
+        
+        /* Hover Effect: elevate and change background */
+        .footer-social a:hover, .widget__social li a:hover, .widget__social a:hover {
+            transform: translateY(-4px) !important;
+            box-shadow: 0 5px 15px rgba(200, 255, 8, 0.4) !important;
+            background-color: #ffffff !important;
+        }
+        .footer-social a:hover i, .widget__social li a:hover i, .widget__social a:hover i {
+            color: #025b5f !important;
+        }
     </style>
+    <?php if (!empty($extraHeadHTML)) { echo $extraHeadHTML; } ?>
 </head>
 
 <body>
